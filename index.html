@@ -13,35 +13,47 @@
    Identidade única: papel técnico azul + tinta branca + tipografia técnica
    Cromática: bg quase-preto neutro / papel cyan profundo / acento âmbar
 ============================================================ */
-:root{
-  --bg:#0e1116;
-  --bg-2:#151920;
-  --bg-3:#1d222c;
-  --bg-4:#262c38;
-  --line:rgba(255,255,255,.07);
-  --line-2:rgba(255,255,255,.14);
-  --line-3:rgba(255,255,255,.28);
-  --ink:#eef1f6;
-  --ink-2:#a8b0c2;
-  --ink-3:#6b7388;
-  --accent:#ffb547;            /* âmbar = único, não-vermelho */
-  --accent-2:#ffd089;
-  --accent-soft:rgba(255,181,71,.13);
-  --accent-glow:rgba(255,181,71,.4);
-  --info:#5fb6ff;
-  --good:#54d39a;
-  --bad:#ff6b7a;
-  --paper:#0d3b56;             /* papel azul cyan profundo (blueprint) */
-  --paper-grid:rgba(255,255,255,.08);
-  --paper-grid-major:rgba(255,255,255,.18);
-  --paper-ink:#f5fbff;         /* tinta branca sobre papel */
-  --scale:50;                  /* px por metro */
-  --r:10px;
-  --r-sm:6px;
-  --r-lg:16px;
-  --shadow:0 8px 32px rgba(0,0,0,.45), 0 2px 6px rgba(0,0,0,.3);
-  --shadow-soft:0 2px 12px rgba(0,0,0,.25);
-  --t:.18s cubic-bezier(.4,.0,.2,1);
+:root {
+  /* Mantendo a base escura geral do site, se necessário */
+  --bg: #f4f6f9;
+  --bg-2: #e0e4eb;
+  --bg-3: #d1d7e0;
+  --bg-4: #bcc3d1;
+  
+  /* Linhas gerais ajustadas para tons escuros */
+  --line: rgba(0, 0, 0, 0.07);
+  --line-2: rgba(0, 0, 0, 0.14);
+  --line-3: rgba(0, 0, 0, 0.28);
+  
+  /* Tinta (texto) escura sobre fundo claro */
+  --ink: #1a1d23;
+  --ink-2: #4a5060;
+  --ink-3: #757d91;
+  
+  /* Âmbar mantém o destaque */
+  --accent: #ffb547;
+  --accent-2: #e0992a;
+  --accent-soft: rgba(255, 181, 71, 0.2);
+  --accent-glow: rgba(255, 181, 71, 0.4);
+  
+  --info: #2d89e5;
+  --good: #28a745;
+  --bad: #d9534f;
+  
+  /* Blueprint em modo claro (Papel técnico branco) */
+  --paper: #ffffff;
+  --paper-grid: rgba(0, 0, 0, 0.08);
+  --paper-grid-major: rgba(0, 0, 0, 0.18);
+  --paper-ink: #0e1116;
+  
+  /* Mantendo as constantes de layout */
+  --scale: 50;
+  --r: 10px;
+  --r-sm: 6px;
+  --r-lg: 16px;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.05);
+  --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --t: .18s cubic-bezier(.4, .0, .2, 1);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
@@ -196,7 +208,7 @@ input,select{font-family:inherit;}
 }
 .paper{
   position:relative;
-  background:var(--paper);
+  background:#dbdbdb;
   background-image:
     linear-gradient(var(--paper-grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--paper-grid) 1px, transparent 1px),
@@ -219,7 +231,7 @@ input,select{font-family:inherit;}
   content:'BLUEPRINT • ESCALA 1:20 • MODESK';
   position:absolute;bottom:8px;right:12px;
   font-family:'JetBrains Mono',monospace;font-size:10px;
-  letter-spacing:2px;color:rgba(255,255,255,.35);
+  letter-spacing:2px;color:rgb(32 28 28 / 35%);
   pointer-events:none;
 }
 
