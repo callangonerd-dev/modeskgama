@@ -13,47 +13,35 @@
    Identidade única: papel técnico azul + tinta branca + tipografia técnica
    Cromática: bg quase-preto neutro / papel cyan profundo / acento âmbar
 ============================================================ */
-:root {
-  /* Mantendo a base escura geral do site, se necessário */
-  --bg: #f4f6f9;
-  --bg-2: #e0e4eb;
-  --bg-3: #d1d7e0;
-  --bg-4: #bcc3d1;
-  
-  /* Linhas gerais ajustadas para tons escuros */
-  --line: rgba(0, 0, 0, 0.07);
-  --line-2: rgba(0, 0, 0, 0.14);
-  --line-3: rgba(0, 0, 0, 0.28);
-  
-  /* Tinta (texto) escura sobre fundo claro */
-  --ink: #1a1d23;
-  --ink-2: #4a5060;
-  --ink-3: #757d91;
-  
-  /* Âmbar mantém o destaque */
-  --accent: #ffb547;
-  --accent-2: #e0992a;
-  --accent-soft: rgba(255, 181, 71, 0.2);
-  --accent-glow: rgba(255, 181, 71, 0.4);
-  
-  --info: #2d89e5;
-  --good: #28a745;
-  --bad: #d9534f;
-  
-  /* Blueprint em modo claro (Papel técnico branco) */
-  --paper: #ffffff;
-  --paper-grid: rgba(0, 0, 0, 0.08);
-  --paper-grid-major: rgba(0, 0, 0, 0.18);
-  --paper-ink: #0e1116;
-  
-  /* Mantendo as constantes de layout */
-  --scale: 50;
-  --r: 10px;
-  --r-sm: 6px;
-  --r-lg: 16px;
-  --shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.05);
-  --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.08);
-  --t: .18s cubic-bezier(.4, .0, .2, 1);
+:root{
+  --bg:#0e1116;
+  --bg-2:#151920;
+  --bg-3:#1d222c;
+  --bg-4:#262c38;
+  --line:rgba(255,255,255,.07);
+  --line-2:rgba(255,255,255,.14);
+  --line-3:rgba(255,255,255,.28);
+  --ink:#eef1f6;
+  --ink-2:#a8b0c2;
+  --ink-3:#6b7388;
+  --accent:#ffb547;            /* âmbar = único, não-vermelho */
+  --accent-2:#ffd089;
+  --accent-soft:rgba(255,181,71,.13);
+  --accent-glow:rgba(255,181,71,.4);
+  --info:#5fb6ff;
+  --good:#54d39a;
+  --bad:#ff6b7a;
+  --paper:#0d3b56;             /* papel azul cyan profundo (blueprint) */
+  --paper-grid:rgba(255,255,255,.08);
+  --paper-grid-major:rgba(255,255,255,.18);
+  --paper-ink:#f5fbff;         /* tinta branca sobre papel */
+  --scale:50;                  /* px por metro */
+  --r:10px;
+  --r-sm:6px;
+  --r-lg:16px;
+  --shadow:0 8px 32px rgba(0,0,0,.45), 0 2px 6px rgba(0,0,0,.3);
+  --shadow-soft:0 2px 12px rgba(0,0,0,.25);
+  --t:.18s cubic-bezier(.4,.0,.2,1);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
@@ -208,7 +196,7 @@ input,select{font-family:inherit;}
 }
 .paper{
   position:relative;
-  background:#dbdbdb;
+  background:var(--paper);
   background-image:
     linear-gradient(var(--paper-grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--paper-grid) 1px, transparent 1px),
@@ -231,7 +219,7 @@ input,select{font-family:inherit;}
   content:'BLUEPRINT • ESCALA 1:20 • MODESK';
   position:absolute;bottom:8px;right:12px;
   font-family:'JetBrains Mono',monospace;font-size:10px;
-  letter-spacing:2px;color:rgb(32 28 28 / 35%);
+  letter-spacing:2px;color:rgba(255,255,255,.35);
   pointer-events:none;
 }
 
@@ -359,31 +347,6 @@ body.hide-dims .el .dim{display:none;}
   box-shadow:-8px 0 32px rgba(0,0,0,.4);
 }
 .slide-panel.right.open{transform:translateX(0);}
-
-/* ====== PAINÉIS EMPURRAM O CANVAS (não sobrepõem) ====== */
-.stage-scroll, .ruler-h, .ruler-v, .ruler-corner, .cursor-line.h, .cursor-line.v,
-.hud, .minimap, .zoom-ctl{
-  transition: left .25s cubic-bezier(.4,0,.2,1), right .25s cubic-bezier(.4,0,.2,1);
-}
-.stage.pl-open .stage-scroll{ left:340px; }
-.stage.pl-open .ruler-h{ left:calc(64px + 340px); }
-.stage.pl-open .ruler-v{ left:calc(64px + 340px); }
-.stage.pl-open .ruler-corner{ left:calc(64px + 340px); }
-.stage.pl-open .cursor-line.h{ left:340px; }
-.stage.pl-open .minimap{ left:calc(14px + 340px); }
-
-.stage.pr-open .stage-scroll{ right:340px; }
-.stage.pr-open .ruler-h{ right:340px; }
-.stage.pr-open .cursor-line.h{ right:340px; }
-.stage.pr-open .hud{ right:calc(14px + 340px); }
-.stage.pr-open .zoom-ctl{ right:calc(14px + 340px); }
-
-/* Centraliza o papel na área visível restante (safe = permite scroll quando excede) */
-.stage-scroll{
-  display:flex;
-  align-items:safe flex-start;
-  justify-content:safe center;
-}
 .sp-head{
   display:flex;align-items:center;justify-content:space-between;
   padding:14px 16px;border-bottom:1px solid var(--line);
@@ -1215,27 +1178,19 @@ function buildPaper(){
 function renderRulers(){
   const rh = document.getElementById('rulerH');
   const rv = document.getElementById('rulerV');
-  const paper = document.getElementById('paper');
-  if(!rh || !rv || !paper) return;
-  const pr  = paper.getBoundingClientRect();
-  const rhr = rh.getBoundingClientRect();
-  const rvr = rv.getBoundingClientRect();
-  // offset do papel em relação ao próprio ruler (coordenadas internas do ruler)
-  const offX = pr.left - rhr.left;
-  const offY = pr.top  - rvr.top;
   rh.innerHTML = ''; rv.innerHTML = '';
   const W = plan.w, H = plan.h;
   for(let i=0;i<=W;i++){
     const tick = document.createElement('div');
     tick.className = 'r-tick major';
-    tick.style.cssText = `left:${offX + i*SCALE*zoom}px;top:6px;`;
+    tick.style.cssText = `left:${80 + i*SCALE*zoom}px;top:6px;`;
     tick.textContent = i + 'm';
     rh.appendChild(tick);
   }
   for(let i=0;i<=H;i++){
     const tick = document.createElement('div');
     tick.className = 'r-tick major';
-    tick.style.cssText = `top:${offY + i*SCALE*zoom}px;left:4px;`;
+    tick.style.cssText = `top:${80 + i*SCALE*zoom}px;left:4px;`;
     tick.textContent = i + 'm';
     rv.appendChild(tick);
   }
@@ -1421,24 +1376,18 @@ function onMove(ev){
   const py = (ev.clientY - pr.top) / zoom / SCALE;
   const curH = document.getElementById('curH');
   const curV = document.getElementById('curV');
-  const hudX = document.getElementById('hudX');
-  const hudY = document.getElementById('hudY');
-  const onStage = ev.clientX >= sr.left && ev.clientX <= sr.right && ev.clientY >= sr.top && ev.clientY <= sr.bottom;
-  if(onStage){
-    // update HUD/cotas em tempo real (sempre, mesmo fora do papel — clamped)
-    const cx = Math.max(0, Math.min(plan.w, px));
-    const cy = Math.max(0, Math.min(plan.h, py));
-    hudX.textContent = cx.toFixed(2)+'m';
-    hudY.textContent = cy.toFixed(2)+'m';
-    document.getElementById('curHtip').textContent = 'Y ' + cy.toFixed(2) + 'm';
-    document.getElementById('curVtip').textContent = 'X ' + cx.toFixed(2) + 'm';
+  if(ev.clientX >= sr.left && ev.clientX <= sr.right && ev.clientY >= sr.top && ev.clientY <= sr.bottom){
+    if(px>=0 && py>=0 && px<=plan.w && py<=plan.h){
+      document.getElementById('hudX').textContent = px.toFixed(2)+'m';
+      document.getElementById('hudY').textContent = py.toFixed(2)+'m';
+      document.getElementById('curHtip').textContent = 'Y ' + py.toFixed(2) + 'm';
+      document.getElementById('curVtip').textContent = 'X ' + px.toFixed(2) + 'm';
+    }
     curH.style.display='block';
     curV.style.display='block';
-    // posiciona linhas usando transform (mais leve, sem layout thrash)
-    curH.style.transform = `translateY(${ev.clientY - sr.top}px)`;
-    curV.style.transform = `translateX(${ev.clientX - sr.left}px)`;
-    curH.style.top = '0px';
-    curV.style.left = '0px';
+    // position relative to .stage (the positioned ancestor)
+    curH.style.top  = (ev.clientY - sr.top)  + 'px';
+    curV.style.left = (ev.clientX - sr.left) + 'px';
   } else {
     curH.style.display='none';
     curV.style.display='none';
@@ -1645,31 +1594,19 @@ function resetView(){
 }
 
 /* ===== PANELS ===== */
-function _stageEl(){ return document.querySelector('.stage'); }
-function _syncStagePanelClasses(){
-  const stage = _stageEl(); if(!stage) return;
-  const libOpen = document.getElementById('panel-library')?.classList.contains('open');
-  const layOpen = document.getElementById('panel-layers')?.classList.contains('open');
-  const insOpen = document.getElementById('panel-inspector')?.classList.contains('open');
-  stage.classList.toggle('pl-open', !!(libOpen || layOpen));
-  stage.classList.toggle('pr-open', !!insOpen);
-}
 function openPanel(name){
   if(currentPanel===name){ closePanel(name); return; }
   if(currentPanel) closePanel(currentPanel);
   if(name==='inspector') return openPanelSilent(name);
   document.getElementById('panel-'+name).classList.add('open');
   currentPanel = name;
-  _syncStagePanelClasses();
 }
 function openPanelSilent(name){
   document.getElementById('panel-'+name).classList.add('open');
-  _syncStagePanelClasses();
 }
 function closePanel(name){
   document.getElementById('panel-'+name).classList.remove('open');
   if(currentPanel===name) currentPanel=null;
-  _syncStagePanelClasses();
 }
 
 /* ===== MODALS ===== */
@@ -1710,13 +1647,6 @@ function attachStageEvents(){
   document.getElementById('stageScroll').addEventListener('wheel', (e)=>{
     if(e.ctrlKey || e.metaKey){ e.preventDefault(); setZoom(zoom + (e.deltaY<0?0.1:-0.1)); }
   }, {passive:false});
-  // mantém o ruler alinhado com o papel ao rolar/redimensionar/abrir-painel
-  document.getElementById('stageScroll').addEventListener('scroll', renderRulers, {passive:true});
-  window.addEventListener('resize', renderRulers);
-  // re-render após transição dos painéis
-  document.querySelectorAll('.slide-panel').forEach(p=>{
-    p.addEventListener('transitionend', renderRulers);
-  });
 }
 
 /* ===== KEYBOARD ===== */
