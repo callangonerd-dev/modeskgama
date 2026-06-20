@@ -773,6 +773,19 @@ body.hide-dims .el .dim{display:none;}
       <button class="tb-btn" onclick="openPanel('layers')"><i class="fa fa-layer-group"></i> Camadas</button>
       <button class="tb-btn" onclick="openModal('settings')"><i class="fa fa-sliders"></i> Planta</button>
     </div>
+    <div class="divider-v"></div>
+
+    <div class="tb-group" title="Tamanho do papel (metros)">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-3);letter-spacing:1px;">PAPEL</span>
+      <input id="tbPaperW" type="number" min="1" step="0.5" value="8"
+        style="width:62px;background:var(--bg-3);border:1px solid var(--line-2);border-radius:6px;padding:5px 8px;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:12px;text-align:right;"
+        oninput="setPaperSize(+this.value, +document.getElementById('tbPaperH').value)"/>
+      <span style="color:var(--ink-3);font-size:11px;">×</span>
+      <input id="tbPaperH" type="number" min="1" step="0.5" value="6"
+        style="width:62px;background:var(--bg-3);border:1px solid var(--line-2);border-radius:6px;padding:5px 8px;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:12px;text-align:right;"
+        oninput="setPaperSize(+document.getElementById('tbPaperW').value, +this.value)"/>
+      <span style="color:var(--ink-3);font-size:11px;">m</span>
+    </div>
 
     <div class="tb-spacer"></div>
 
@@ -1193,7 +1206,25 @@ function buildPaper(){
   paper.style.height = (plan.h * SCALE) + 'px';
   document.getElementById('sbDims').textContent = plan.w.toFixed(2) + ' × ' + plan.h.toFixed(2) + ' m';
   document.getElementById('sbSnap').textContent = plan.snap > 0 ? plan.snap + 'cm' : 'OFF';
+  const tw = document.getElementById('tbPaperW'); if(tw && document.activeElement!==tw) tw.value = plan.w;
+  const th = document.getElementById('tbPaperH'); if(th && document.activeElement!==th) th.value = plan.h;
   renderRulers();
+}
+
+/* Quick paper resize from topbar (meters). Clamps elements inside new bounds. */
+function setPaperSize(w, h){
+  w = Math.max(1, +w || plan.w);
+  h = Math.max(1, +h || plan.h);
+  if(w===plan.w && h===plan.h) return;
+  push();
+  plan.w = w; plan.h = h;
+  elements.forEach(e=>{
+    e.w = Math.min(e.w, plan.w);
+    e.h = Math.min(e.h, plan.h);
+    e.x = Math.max(0, Math.min(plan.w - e.w, e.x));
+    e.y = Math.max(0, Math.min(plan.h - e.h, e.y));
+  });
+  buildPaper(); renderAll();
 }
 
 /* ===== RULERS ===== */
