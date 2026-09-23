@@ -330,6 +330,29 @@ body.console-shell::after{display:none!important}
 @media(prefers-reduced-motion:reduce){.orb,.orb:before,.orb:after,.orb-count,.agenda-urgent,.dot-ur{animation:none!important}}
 
 
+/* v13 — telas únicas e mobile em largura integral */
+#tab-dashboard .dashboard-stats{margin-top:24px}
+#tab-estoque .overflow-x-auto,#tab-painel .expiry-table,#tab-cursos .overflow-x-auto{background:var(--c-surface);border:1px solid var(--c-line);border-radius:10px}
+@media(max-width:700px){
+ html,body{width:100%;max-width:100%;overflow-x:hidden}
+ body.console-shell{width:100%;padding-left:0!important;padding-bottom:72px!important}
+ main{width:100%!important;max-width:none!important;margin:0!important;padding:14px 12px 28px!important;min-width:0}
+ main>div,#tab-dashboard,#tab-estoque,#tab-painel,#tab-cursos,#tab-cadastro-curso{min-width:0;width:100%}
+ .dashboard-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+ .dashboard-stats>div{min-width:0;padding:15px!important}.dashboard-stats>div h3{font-size:26px!important}.dashboard-stats>div:first-child h3{font-size:30px!important}
+ #tab-estoque>.flex,#tab-painel>.flex{align-items:stretch;gap:10px}
+ #tab-estoque>.flex>div{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+ #busca{grid-column:1/-1;width:100%!important}#filtro-status,#filtro-produto{min-width:0;width:100%}
+ #tab-estoque>.flex>button,#tab-painel>.flex>button{width:100%;justify-content:center}
+ #tab-estoque .overflow-x-auto,#tab-painel .expiry-table,#tab-cursos .overflow-x-auto{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+ #tab-estoque table,#tab-painel table,#tab-cursos table{min-width:760px}
+ #tab-painel h2{font-size:18px}.console-sidebar{left:0!important;right:0!important;bottom:0!important;border-radius:0!important;width:100vw!important;z-index:100}
+ .console-nav{gap:1px}.console-nav .side-link{width:auto!important;flex:1;min-width:0}.console-nav .side-link i{min-width:0}
+ .app-footer{position:relative!important;padding:16px 12px 20px!important}
+ #expiry-popup{bottom:74px!important}#sabi-fab{bottom:82px!important}
+}
+@media(max-width:390px){.dashboard-stats{grid-template-columns:1fr!important}}
+
 /* v11 — dashboard operacional Vega */
 main{display:grid!important;grid-template-columns:minmax(0,1fr);align-content:start}
 .dashboard-intro{margin-bottom:0!important}.dashboard-intro h2{font-size:clamp(28px,3vw,42px)!important;letter-spacing:0!important}.dashboard-intro>p:last-child{max-width:680px;font-size:14px!important}
@@ -340,6 +363,43 @@ main{display:grid!important;grid-template-columns:minmax(0,1fr);align-content:st
 @media(max-width:900px){.dashboard-stats{grid-template-columns:1fr 1fr!important}.daily-card{grid-template-columns:auto 1fr}.daily-date-wrap{grid-column:2;align-items:flex-start;text-align:left}}
 @media(max-width:560px){.dashboard-stats{grid-template-columns:1fr!important}.daily-card{grid-template-columns:auto 1fr;padding:19px!important}.daily-date-wrap{grid-column:1/-1;align-items:flex-start}.daily-card:after{display:none}}
 
+
+/* v14 — espaços de trabalho reunidos e indicadores cromáticos */
+:root{--dash-1:#b7f34a;--dash-2:#4dd9dc;--dash-3:#f8b84e;--dash-4:#e9a0d4;--dash-5:#76b4ff;--dash-6:#ffbd74;--dash-7:#ff7878;--dash-8:#77dfaa}
+html:not(.dark){--dash-1:#639b13;--dash-2:#087e85;--dash-3:#9b6400;--dash-4:#9d4480;--dash-5:#3169ad;--dash-6:#a65b1b;--dash-7:#b73e4d;--dash-8:#19794d}
+.workspace-block{min-width:0;display:block;animation:workspace-enter .55s ease both}
+.workspace-block+.workspace-block{animation-delay:.12s}
+.workspace-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.workspace-heading h2{font-family:'Sora',sans-serif;font-size:19px;font-weight:700}
+.workspace-heading span{font:600 11px 'JetBrains Mono',monospace;color:var(--c-muted)}
+#tab-estoque .inventory-list,#tab-cursos>.workspace-block:nth-child(2),#tab-cursos>.workspace-block:nth-child(3){border-top:1px solid var(--c-line);padding-top:24px}
+#tab-cursos>.workspace-block:nth-child(3) .workspace-heading{margin-bottom:0}
+.course-items-title{margin-top:22px;font:700 13px 'Sora',sans-serif;color:var(--c-text)}
+#tab-dashboard>.grid:nth-of-type(2)>div,#tab-dashboard .dashboard-stats>div{--item-color:var(--dash-1);border-left:4px solid var(--item-color)!important;animation:metric-enter .65s cubic-bezier(.2,.8,.2,1) both;transition:transform .3s ease,box-shadow .3s ease!important}
+#tab-dashboard>.grid:nth-of-type(2)>div:hover,#tab-dashboard .dashboard-stats>div:hover{transform:translateY(-5px)!important;box-shadow:var(--c-shadow-hover)!important}
+#tab-dashboard>.grid:nth-of-type(2)>div:nth-child(1),#tab-dashboard .dashboard-stats>div:nth-child(1){--item-color:var(--dash-1)}
+#tab-dashboard>.grid:nth-of-type(2)>div:nth-child(2),#tab-dashboard .dashboard-stats>div:nth-child(2){--item-color:var(--dash-2)}
+#tab-dashboard>.grid:nth-of-type(2)>div:nth-child(3),#tab-dashboard .dashboard-stats>div:nth-child(3){--item-color:var(--dash-3)}
+#tab-dashboard>.grid:nth-of-type(2)>div:nth-child(4),#tab-dashboard .dashboard-stats>div:nth-child(4){--item-color:var(--dash-4)}
+#tab-dashboard>.grid:nth-of-type(2)>div:nth-child(1){--item-color:var(--dash-5)}
+#tab-dashboard>.grid:nth-of-type(2)>div:nth-child(2){--item-color:var(--dash-6)}
+#tab-dashboard>.grid:nth-of-type(2)>div:nth-child(3){--item-color:var(--dash-7)}
+#tab-dashboard>.grid:nth-of-type(2)>div:nth-child(4){--item-color:var(--dash-8)}
+#tab-dashboard .dashboard-stats>div:before{background:var(--item-color)!important}
+#tab-dashboard .dashboard-stats>div h3,#tab-dashboard>.grid:nth-of-type(2)>div h3{color:var(--item-color)!important}
+#tab-dashboard .dashboard-stats>div .w-12{color:var(--item-color)!important;background:color-mix(in oklab,var(--item-color) 15%,transparent)!important;animation:icon-breathe 3.5s ease-in-out infinite}
+#tab-dashboard .dashboard-stats>div:nth-child(2) .w-12,#tab-dashboard .dashboard-stats>div:nth-child(3) .w-12,#tab-dashboard .dashboard-stats>div:nth-child(4) .w-12{color:var(--item-color)!important;background:color-mix(in oklab,var(--item-color) 15%,transparent)!important}
+#tab-dashboard .dashboard-stats>div:nth-child(2),#tab-dashboard>.grid:nth-of-type(2)>div:nth-child(2){animation-delay:.08s}
+#tab-dashboard .dashboard-stats>div:nth-child(3),#tab-dashboard>.grid:nth-of-type(2)>div:nth-child(3){animation-delay:.16s}
+#tab-dashboard .dashboard-stats>div:nth-child(4),#tab-dashboard>.grid:nth-of-type(2)>div:nth-child(4){animation-delay:.24s}
+#tab-dashboard #tbody-bi tr{animation:workspace-enter .35s ease both}
+#tab-dashboard #tbody-bi tr:nth-child(2n){animation-delay:.07s}
+@keyframes metric-enter{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes workspace-enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes icon-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@media(max-width:700px){#tab-estoque .inventory-list,#tab-cursos>.workspace-block:nth-child(2),#tab-cursos>.workspace-block:nth-child(3){padding-top:18px}#tab-dashboard .dashboard-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}#tab-dashboard .dashboard-stats>div{min-height:120px}#tab-dashboard .dashboard-stats>div:first-child h3{font-size:30px!important}}
+@media(max-width:390px){#tab-dashboard .dashboard-stats{grid-template-columns:1fr!important}}
+@media(prefers-reduced-motion:reduce){.workspace-block,#tab-dashboard>.grid:nth-of-type(2)>div,#tab-dashboard .dashboard-stats>div,#tab-dashboard .dashboard-stats>div .w-12,#tab-dashboard #tbody-bi tr{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body class="console-shell bg-[#f3f5f8] dark:bg-[#0f1218] text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
@@ -347,8 +407,8 @@ main{display:grid!important;grid-template-columns:minmax(0,1fr);align-content:st
 <button aria-label="Expandir ou recolher menu" class="console-logo" onclick="toggleSidebar()" title="Expandir ou recolher menu"><i class="fa-solid fa-utensils"></i></button>
 <nav class="console-nav">
 <button class="side-link active" data-side="dashboard" onclick="switchTab('dashboard')" title="Dashboard"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></button>
-<button class="side-link" data-side="cadastro" onclick="switchTab('cadastro')" title="Cadastro"><i class="fa-solid fa-square-plus"></i><span>Cadastro</span></button>
 <button class="side-link" data-side="estoque" onclick="switchTab('estoque')" title="Estoque geral"><i class="fa-solid fa-cubes-stacked"></i><span>Estoque geral</span></button>
+<button class="side-link" data-side="cursos" onclick="switchTab('cursos')" title="Cursos"><i class="fa-solid fa-graduation-cap"></i><span>Cursos</span></button>
 <button class="side-link" data-side="painel" onclick="switchTab('painel')" title="Vencimentos"><i class="fa-solid fa-clock-rotate-left"></i><span>Vencimentos</span></button>
 <button class="side-link" data-side="agenda" onclick="switchTab('agenda')" title="Agenda"><i class="fa-solid fa-calendar-days"></i><span>Agenda</span></button>
 
@@ -411,23 +471,12 @@ main{display:grid!important;grid-template-columns:minmax(0,1fr);align-content:st
 </div>
 </div>
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-xl"><p class="text-xs uppercase text-slate-400 font-semibold">Valor total em estoque</p><h3 class="text-2xl font-extrabold mt-1" id="bi-valor">R$ 0,00</h3></div>
-<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-xl"><p class="text-xs uppercase text-slate-400 font-semibold">Perda potencial (vencidos)</p><h3 class="text-2xl font-extrabold mt-1 text-red-500" id="bi-perda">R$ 0,00</h3></div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-xl"><p class="text-xs uppercase text-slate-400 font-semibold">Unidades em estoque</p><h3 class="text-2xl font-extrabold mt-1" id="bi-unidades">0</h3></div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-xl"><p class="text-xs uppercase text-slate-400 font-semibold">Unidades utilizadas em cursos</p><h3 class="text-2xl font-extrabold mt-1 text-brand-600" id="bi-cursos">0</h3></div>
 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-xl"><p class="text-xs uppercase text-slate-400 font-semibold">SKUs cadastrados</p><h3 class="text-2xl font-extrabold mt-1" id="bi-skus">0</h3></div>
 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-xl"><p class="text-xs uppercase text-slate-400 font-semibold">Saúde do estoque</p><h3 class="text-2xl font-extrabold mt-1 text-emerald-500" id="bi-saude">100%</h3></div>
 </div>
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-xl"><h3 class="font-semibold mb-4">Insumos por categoria</h3><div class="h-72"><canvas id="chart-cat"></canvas></div></div>
-<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-xl"><h3 class="font-semibold mb-4">Distribuição por status de validade</h3><div class="h-72"><canvas id="chart-status"></canvas></div></div>
-<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-xl lg:col-span-2"><h3 class="font-semibold mb-4">Itens vencendo por mês</h3><div class="h-64"><canvas id="chart-mes"></canvas></div></div>
-</div>
-<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-x-auto">
-<table class="w-full text-sm">
-<thead class="text-xs uppercase text-slate-400 border-b border-slate-200 dark:border-slate-800"><tr><th class="text-left px-4 py-3">Categoria</th><th class="text-right px-4 py-3">Itens</th><th class="text-right px-4 py-3">Quantidade</th><th class="text-right px-4 py-3">Valor (R$)</th><th class="text-right px-4 py-3">Vencidos</th><th class="text-right px-4 py-3">Próximos 15d</th></tr></thead>
-<tbody id="tbody-bi"></tbody>
-</table>
-</div>
-</div><div class="dashboard-stats grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+<div class="dashboard-stats grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-xl shadow-sm flex items-center justify-between">
 <div><p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total em Estoque</p><h3 class="text-3xl font-extrabold mt-1" id="stat-total">0</h3></div>
 <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center text-xl"><i class="fa-solid fa-box-archive"></i></div>
@@ -445,8 +494,22 @@ main{display:grid!important;grid-template-columns:minmax(0,1fr);align-content:st
 <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-xl"><i class="fa-solid fa-calendar-check"></i></div>
 </div>
 </div>
-<!-- CADASTRO -->
-<div class="hidden space-y-6" id="tab-cadastro">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-xl"><h3 class="font-semibold mb-4">Insumos por categoria</h3><div class="h-72"><canvas id="chart-cat"></canvas></div></div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-xl"><h3 class="font-semibold mb-4">Distribuição por status de validade</h3><div class="h-72"><canvas id="chart-status"></canvas></div></div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-xl lg:col-span-2"><h3 class="font-semibold mb-4">Itens vencendo por mês</h3><div class="h-64"><canvas id="chart-mes"></canvas></div></div>
+</div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-x-auto">
+<table class="w-full text-sm">
+<thead class="text-xs uppercase text-slate-400 border-b border-slate-200 dark:border-slate-800"><tr><th class="text-left px-4 py-3">Categoria</th><th class="text-right px-4 py-3">Itens</th><th class="text-right px-4 py-3">Quantidade</th><th class="text-right px-4 py-3">Vencidos</th><th class="text-right px-4 py-3">Próximos 15d</th></tr></thead>
+<tbody id="tbody-bi"></tbody>
+</table>
+</div>
+
+</div>
+<!-- ESTOQUE -->
+<div class="hidden space-y-6" id="tab-estoque">
+<section class="workspace-block" aria-label="Cadastro de estoque">
 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 rounded-xl shadow-sm">
 <div class="mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">
 <h2 class="text-xl font-bold">Novo ingrediente ou insumo</h2>
@@ -465,8 +528,6 @@ main{display:grid!important;grid-template-columns:minmax(0,1fr);align-content:st
 <input class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-600" id="cad-qtd" min="1" required="" type="number" value="1"/></div>
 <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Unidade</label>
 <input class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-600" id="cad-unidade" placeholder="Un, Kg, L, Pct" required="" type="text"/></div>
-<div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Valor unitário (R$)</label>
-<input class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-600" id="cad-valor" min="0" step="0.01" type="number" value="0"/></div>
 <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Data de Entrada</label>
 <input class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-600" id="cad-entrada" required="" type="date"/></div>
 <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Data de Validade</label>
@@ -477,26 +538,60 @@ main{display:grid!important;grid-template-columns:minmax(0,1fr);align-content:st
 </div>
 </form>
 </div>
-</div>
-<!-- ESTOQUE -->
-<div class="hidden space-y-4" id="tab-estoque">
+</section>
+<section class="workspace-block inventory-list" aria-label="Lista de estoque">
+<div class="workspace-heading"><h2>Itens em estoque</h2><span id="estoque-contagem" aria-live="polite"></span></div>
 <div class="flex flex-wrap gap-3 items-center justify-between">
 <div class="flex gap-3 flex-wrap">
 <input class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm w-72" id="busca" oninput="renderEstoque()" placeholder="Buscar por nome, código ou categoria..."/>
 <select class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm" id="filtro-status" onchange="renderEstoque()">
 <option value="">Todos os status</option><option value="OK">OK</option><option value="PROXIMO">Próximos (15d)</option><option value="VENCIDO">Vencidos</option>
 </select>
+<select class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm" id="filtro-produto" onchange="renderEstoque()"><option value="">Todos os produtos</option></select>
 </div>
 <button class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold flex items-center gap-2" onclick="exportarExcel('estoque')"><i class="fa-solid fa-file-excel"></i> Baixar lista em Excel</button>
 </div>
+
 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-x-auto">
 <table class="w-full text-sm">
 <thead class="text-xs uppercase text-slate-400 border-b border-slate-200 dark:border-slate-800">
-<tr><th class="text-left px-4 py-3">Código</th><th class="text-left px-4 py-3">Produto</th><th class="text-left px-4 py-3">Categoria</th><th class="text-right px-4 py-3">Qtd</th><th class="text-right px-4 py-3">Valor total</th><th class="text-left px-4 py-3">Entrada</th><th class="text-left px-4 py-3">Validade</th><th class="text-left px-4 py-3">Status</th><th class="px-4 py-3"></th></tr>
+<tr><th class="text-left px-4 py-3">Código</th><th class="text-left px-4 py-3">Produto</th><th class="text-left px-4 py-3">Categoria</th><th class="text-right px-4 py-3">Qtd</th><th class="text-left px-4 py-3">Entrada</th><th class="text-left px-4 py-3">Validade</th><th class="text-left px-4 py-3">Status</th><th class="px-4 py-3"></th></tr>
 </thead>
 <tbody id="tbody-estoque"></tbody>
 </table>
 </div>
+</div>
+</section>
+</div>
+<!-- CURSOS CADASTRADOS -->
+<div class="hidden space-y-6" id="tab-cursos">
+<section class="workspace-block" aria-label="Cadastro de cursos">
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-xl shadow-sm">
+<div class="mb-5 pb-4 border-b border-slate-100 dark:border-slate-800"><h2 class="text-xl font-bold">Cadastro de cursos</h2><p class="text-sm text-slate-500">Informe o código externo fornecido para o curso.</p></div>
+<form class="grid grid-cols-1 md:grid-cols-3 gap-5" id="form-curso" onsubmit="cadastrarCurso(event)">
+<div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Nome do curso</label><input class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm" id="cur-nome" placeholder="Ex: Confeiteiro" required="" type="text"/></div>
+<div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Código do curso</label><input class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm" id="cur-codigo" placeholder="Ex: CONF-2026" required="" type="text"/></div>
+<div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Instrutor responsável</label><input class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm" id="cur-instrutor" placeholder="Nome do instrutor" type="text"/></div>
+<div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Turma</label><input class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm" id="cur-turma" placeholder="Ex: Turma A - manhã" type="text"/></div>
+<div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Início</label><input class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm" id="cur-inicio" type="date"/></div>
+<div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Término</label><input class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm" id="cur-fim" type="date"/></div>
+<div class="md:col-span-3"><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Observações</label><input class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm" id="cur-obs" placeholder="Informações adicionais do curso" type="text"/></div>
+<div class="md:col-span-3 flex justify-end gap-3"><button class="px-6 py-3 bg-slate-200 dark:bg-slate-800 font-semibold rounded-xl" type="reset">Limpar</button><button class="px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-glow flex items-center gap-2" type="submit"><i class="fa-solid fa-graduation-cap"></i> Cadastrar curso</button></div>
+</form>
+</div>
+</section>
+<section class="workspace-block" aria-label="Cursos e itens inseridos">
+<div class="flex items-center justify-between flex-wrap gap-3"><h2 class="text-xl font-bold">Cursos cadastrados</h2>
+<button class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold flex items-center gap-2" onclick="exportarExcel('cursos')"><i class="fa-solid fa-file-excel"></i> Baixar cursos em Excel</button></div>
+<div class="space-y-5" id="lista-cursos"></div>
+</section>
+<section class="workspace-block" aria-label="Movimentações dos cursos">
+<div class="workspace-heading"><h2>Movimentações dos cursos</h2></div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-x-auto">
+<div class="px-4 pt-4 font-semibold">Histórico de movimentações</div>
+<table class="w-full text-sm"><thead class="text-xs uppercase text-slate-400 border-b border-slate-200 dark:border-slate-800"><tr><th class="text-left px-4 py-3">Data</th><th class="text-left px-4 py-3">Movimento</th><th class="text-left px-4 py-3">Item</th><th class="text-left px-4 py-3">Validade</th><th class="text-right px-4 py-3">Qtd</th><th class="text-left px-4 py-3">Curso</th></tr></thead><tbody id="tbody-movimentos"></tbody></table>
+</div>
+</section>
 </div>
 <!-- PAINEL VENCIMENTOS -->
 <div class="hidden space-y-4" id="tab-painel">
@@ -504,7 +599,7 @@ main{display:grid!important;grid-template-columns:minmax(0,1fr);align-content:st
 <h2 class="text-xl font-bold">Painel de Vencimentos (próximos 15 dias e vencidos)</h2>
 <button class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold flex items-center gap-2" onclick="exportarExcel('painel')"><i class="fa-solid fa-file-excel"></i> Baixar em Excel</button>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="grid-painel"></div>
+<div class="overflow-x-auto expiry-table"><table class="w-full text-sm"><thead><tr><th class="text-left px-4 py-3">Código</th><th class="text-left px-4 py-3">Produto</th><th class="text-left px-4 py-3">Categoria</th><th class="text-right px-4 py-3">Qtd</th><th class="text-left px-4 py-3">Entrada</th><th class="text-left px-4 py-3">Validade</th><th class="text-left px-4 py-3">Status</th></tr></thead><tbody id="tbody-painel"></tbody></table></div>
 </div>
 <!-- AGENDA -->
 <div class="hidden space-y-4" id="tab-agenda">
@@ -626,25 +721,32 @@ main{display:grid!important;grid-template-columns:minmax(0,1fr);align-content:st
 <button aria-label="Enviar" type="submit"><i class="fa-solid fa-paper-plane"></i></button>
 </form>
 </section>
+<div class="hidden fixed inset-0 z-[80] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4" id="modal-wrap" onclick="if(event.target===this)fecharModal()">
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-lg max-h-[88vh] overflow-auto p-6" id="modal-box"></div></div>
 <div aria-hidden="true" id="print-area"></div>
-<footer class="app-footer"><span>COZINHA SENAC ALDEOTA — ESTOQUE</span><span class="sync-info" id="sync-info"></span><span class="footer-tech"><i class="fa-solid fa-bolt"></i> Tecnologia <strong>MoDesk</strong></span></footer>
+<footer class="app-footer"><span>COZINHA SENAC ALDEOTA — ESTOQUE</span><span class="sync-info" id="sync-info"></span><span class="footer-tech"><i class="fa-solid fa-bolt"></i> Tecnologia <strong>MoDesk</strong> - by Marcio Oliveira</span></footer>
 <script>
-const LS_E='modesk_senac_estoque', LS_A='modesk_senac_agenda';
+const LS_E='modesk_senac_estoque', LS_A='modesk_senac_agenda', LS_C='modesk_senac_cursos', LS_CI='modesk_senac_curso_itens', LS_MV='modesk_senac_movimentos';
+let cursos = JSON.parse(localStorage.getItem(LS_C)||'null') || [];
+let cursoItens = JSON.parse(localStorage.getItem(LS_CI)||'null') || [];
+let movimentos = JSON.parse(localStorage.getItem(LS_MV)||'null') || [];
 let estoque = JSON.parse(localStorage.getItem(LS_E)||'null') || [
- {id:'LAT-021',nome:'Creme de leite fresco 1L',categoria:'Laticínios',qtd:12,unidade:'Un',valor:24.90,entrada:'2026-09-18',validade:'2026-09-27'},
- {id:'CONF-114',nome:'Frutas vermelhas congeladas',categoria:'Confeitaria',qtd:8,unidade:'Kg',valor:42.50,entrada:'2026-09-18',validade:'2026-09-25'},
- {id:'HORT-008',nome:'Manjericão fresco',categoria:'Hortifruti',qtd:6,unidade:'Maço',valor:5.80,entrada:'2026-09-20',validade:'2026-09-22'},
- {id:'CONF-057',nome:'Chocolate belga 70%',categoria:'Confeitaria',qtd:15,unidade:'Kg',valor:89.90,entrada:'2026-08-15',validade:'2027-02-28'},
- {id:'FAR-042',nome:'Farinha de trigo especial',categoria:'Farinhas e grãos',qtd:25,unidade:'Kg',valor:7.80,entrada:'2026-09-10',validade:'2027-01-10'}
+ {id:'LAT-021',nome:'Creme de leite fresco 1L',categoria:'Laticínios',qtd:12,unidade:'Un',entrada:'2026-09-18',validade:'2026-09-27'},
+ {id:'CONF-114',nome:'Frutas vermelhas congeladas',categoria:'Confeitaria',qtd:8,unidade:'Kg',entrada:'2026-09-18',validade:'2026-09-25'},
+ {id:'HORT-008',nome:'Manjericão fresco',categoria:'Hortifruti',qtd:6,unidade:'Maço',entrada:'2026-09-20',validade:'2026-09-22'},
+ {id:'CONF-057',nome:'Chocolate belga 70%',categoria:'Confeitaria',qtd:15,unidade:'Kg',entrada:'2026-08-15',validade:'2027-02-28'},
+ {id:'FAR-042',nome:'Farinha de trigo especial',categoria:'Farinhas e grãos',qtd:25,unidade:'Kg',entrada:'2026-09-10',validade:'2027-01-10'}
 ];
 let agenda = JSON.parse(localStorage.getItem(LS_A)||'null') || [
  {id:'AG1',titulo:'Produção de tortas para vitrine',data:'2026-09-26',prioridade:'Urgente',obs:'Separar frutas e preparar massas às 7h.'}
 ];
 
-const TABS=[['dashboard','fa-gauge-high','Dashboard'],['cadastro','fa-circle-plus','Cadastro'],['estoque','fa-warehouse','Estoque Geral'],['painel','fa-chart-pie','Painel de Vencimentos'],['agenda','fa-calendar-days','Agenda']];
+const TABS=[['dashboard','fa-gauge-high','Dashboard'],['estoque','fa-warehouse','Estoque Geral'],['cursos','fa-graduation-cap','Cursos cadastrados'],['painel','fa-chart-pie','Painel de Vencimentos'],['agenda','fa-calendar-days','Agenda']];
 document.getElementById('tabs').innerHTML = TABS.map(([id,ic,lb],i)=>`<button id="btn-tab-${id}" onclick="switchTab('${id}')" class="pb-3 ${i===0?'font-semibold text-brand-600 border-b-2 border-brand-600':'font-medium text-slate-500'} flex items-center gap-2 whitespace-nowrap"><i class="fa-solid ${ic}"></i> ${lb}</button>`).join('');
 
 function switchTab(t){
+  if(t==='cadastro')t='estoque';
+  if(t==='cadastro-curso')t='cursos';
   document.querySelectorAll('[data-side]').forEach(x=>x.classList.toggle('active',x.dataset.side===t));
   TABS.forEach(([id])=>{
     document.getElementById('tab-'+id).classList.add('hidden');
@@ -656,13 +758,13 @@ function switchTab(t){
   const b=document.getElementById('btn-tab-'+t);
   b.classList.add('border-b-2','border-brand-600','text-brand-600','font-semibold');
   b.classList.remove('font-medium','text-slate-500');
-  if(t==='dashboard'){atualizarStats();renderBI();} if(t==='estoque')renderEstoque(); if(t==='painel')renderPainel(); if(t==='agenda')renderAgenda();
+  if(t==='dashboard'){atualizarStats();renderBI();} if(t==='estoque')renderEstoque(); if(t==='cursos')renderCursos(); if(t==='painel')renderPainel(); if(t==='agenda')renderAgenda();
 }
 function toggleTheme(){document.documentElement.classList.toggle('dark');localStorage.setItem('modesk_senac_tema',document.documentElement.classList.contains('dark')?'dark':'light');
  const icon=document.getElementById('theme-icon');if(icon)icon.className=document.documentElement.classList.contains('dark')?'fa-solid fa-sun':'fa-solid fa-moon';}
 function toggleSidebar(){document.body.classList.toggle('sidebar-open');}
 
-function salvarDados(){localStorage.setItem(LS_E,JSON.stringify(estoque));localStorage.setItem(LS_A,JSON.stringify(agenda));carimbo();atualizarStats();mostrarAvisoVencimentos();}
+function salvarDados(){localStorage.setItem(LS_E,JSON.stringify(estoque));localStorage.setItem(LS_A,JSON.stringify(agenda));localStorage.setItem(LS_C,JSON.stringify(cursos));localStorage.setItem(LS_CI,JSON.stringify(cursoItens));localStorage.setItem(LS_MV,JSON.stringify(movimentos));carimbo();atualizarStats();mostrarAvisoVencimentos();}
 function status(v){const h=new Date();h.setHours(0,0,0,0);const d=Math.ceil((new Date(v+'T00:00:00')-h)/86400000);
  if(d<0)return{key:'VENCIDO',texto:'VENCIDO',classe:'bg-red-500/10 text-red-500 border border-red-500/20',dias:d};
  if(d<=15)return{key:'PROXIMO',texto:`PRÓXIMO (${d}d)`,classe:'bg-amber-500/10 text-amber-500 border border-amber-500/20',dias:d};
@@ -678,37 +780,45 @@ function atualizarStats(){
 }
 
 function cadastrarItem(e){e.preventDefault();
- estoque.unshift({id:cadCodigo.value,nome:cadNome.value,categoria:cadCategoria.value,qtd:parseInt(cadQtd.value),unidade:cadUnidade.value,valor:parseFloat(cadValor.value||0),entrada:cadEntrada.value,validade:cadValidade.value});
+ estoque.unshift({id:cadCodigo.value,nome:cadNome.value,categoria:cadCategoria.value,qtd:parseInt(cadQtd.value),unidade:cadUnidade.value,entrada:cadEntrada.value,validade:cadValidade.value});
  salvarDados();e.target.reset();document.getElementById('cad-entrada').valueAsDate=new Date();switchTab('estoque');}
-const cadCodigo=document.getElementById('cad-codigo'),cadNome=document.getElementById('cad-nome'),cadCategoria=document.getElementById('cad-categoria'),cadQtd=document.getElementById('cad-qtd'),cadUnidade=document.getElementById('cad-unidade'),cadValor=document.getElementById('cad-valor'),cadEntrada=document.getElementById('cad-entrada'),cadValidade=document.getElementById('cad-validade');
+const cadCodigo=document.getElementById('cad-codigo'),cadNome=document.getElementById('cad-nome'),cadCategoria=document.getElementById('cad-categoria'),cadQtd=document.getElementById('cad-qtd'),cadUnidade=document.getElementById('cad-unidade'),cadEntrada=document.getElementById('cad-entrada'),cadValidade=document.getElementById('cad-validade');
 
 function excluirItem(i){if(confirm('Remover este item do estoque?')){estoque.splice(i,1);salvarDados();renderEstoque();}}
 
 function listaFiltrada(){
  const q=(document.getElementById('busca').value||'').toLowerCase(), f=document.getElementById('filtro-status').value;
+ const pEl=document.getElementById('filtro-produto'), pr=pEl?pEl.value:'';
  return estoque.map((it,idx)=>({it,idx})).filter(({it})=>
-  (!q||[it.id,it.nome,it.categoria].join(' ').toLowerCase().includes(q)) && (!f||status(it.validade).key===f));
+  (!q||[it.id,it.nome,it.categoria].join(' ').toLowerCase().includes(q)) && (!f||status(it.validade).key===f) && (!pr||it.nome===pr));
+}
+function preencherFiltroProduto(){
+ const el=document.getElementById('filtro-produto'); if(!el)return; const atual=el.value;
+ const nomes=[...new Set(estoque.map(i=>i.nome))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+ el.innerHTML='<option value="">Todos os produtos</option>'+nomes.map(n=>`<option value="${n}">${n}</option>`).join('');
+ if(nomes.includes(atual))el.value=atual;
 }
 function renderEstoque(){
+ preencherFiltroProduto();
+
+  document.getElementById('estoque-contagem').textContent=listaFiltrada().length+' lote(s)';
  document.getElementById('tbody-estoque').innerHTML = listaFiltrada().map(({it,idx})=>{const s=status(it.validade);
   return `<tr class="border-b border-slate-100 dark:border-slate-800">
    <td class="px-4 py-3 font-mono text-xs">${it.id}</td><td class="px-4 py-3 font-medium">${it.nome}</td>
    <td class="px-4 py-3 text-slate-500">${it.categoria}</td><td class="px-4 py-3 text-right">${it.qtd} ${it.unidade||''}</td>
-   <td class="px-4 py-3 text-right">${brl(Number(it.valor||0)*Number(it.qtd||0))}</td>
    <td class="px-4 py-3">${dt(it.entrada)}</td><td class="px-4 py-3">${dt(it.validade)}</td>
    <td class="px-4 py-3"><span class="text-xs px-2.5 py-1 rounded-lg font-bold ${s.classe}">${s.texto}</span></td>
-   <td class="px-4 py-3 text-right"><button onclick="excluirItem(${idx})" class="text-slate-400 hover:text-red-500"><i class="fa-solid fa-trash"></i></button></td></tr>`;
- }).join('') || '<tr><td colspan="9" class="px-4 py-8 text-center text-slate-400">Nenhum item encontrado.</td></tr>';
+   <td class="px-4 py-3 text-right whitespace-nowrap">
+     <button onclick="abrirEnvio(${idx})" class="px-3 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold mr-2"><i class="fa-solid fa-paper-plane"></i> Enviar</button>
+     <button onclick="excluirItem(${idx})" class="text-slate-400 hover:text-red-500"><i class="fa-solid fa-trash"></i></button></td></tr>`;
+ }).join('') || '<tr><td colspan="8" class="px-4 py-8 text-center text-slate-400">Nenhum item encontrado.</td></tr>';
  atualizarStats();
 }
 function itensCriticos(){return estoque.filter(i=>status(i.validade).key!=='OK').sort((a,b)=>status(a.validade).dias-status(b.validade).dias);}
 function renderPainel(){
- document.getElementById('grid-painel').innerHTML = itensCriticos().map(it=>{const s=status(it.validade);
-  return `<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 ${s.key==='VENCIDO'?'alert-pulse':''}">
-   <div class="flex justify-between items-start gap-2"><h4 class="font-bold">${it.nome}</h4><span class="text-[10px] px-2 py-1 rounded-lg font-bold ${s.classe}">${s.texto}</span></div>
-   <p class="text-xs text-slate-500 mt-1">${it.categoria} · ${it.qtd} ${it.unidade||''} · cód. ${it.id}</p>
-   <p class="text-sm mt-3">Validade: <strong>${dt(it.validade)}</strong></p></div>`;
- }).join('') || '<p class="text-slate-400">Nenhum item crítico. Estoque em dia.</p>';
+ document.getElementById('tbody-painel').innerHTML=itensCriticos().map(it=>{const st=status(it.validade);
+  return `<tr class="border-b border-slate-100 dark:border-slate-800"><td class="px-4 py-3 font-mono text-xs">${it.id}</td><td class="px-4 py-3 font-medium">${it.nome}</td><td class="px-4 py-3">${it.categoria}</td><td class="px-4 py-3 text-right">${it.qtd} ${it.unidade||''}</td><td class="px-4 py-3">${dt(it.entrada)}</td><td class="px-4 py-3">${dt(it.validade)}</td><td class="px-4 py-3"><span class="text-xs px-2 py-1 rounded font-bold ${st.classe}">${st.texto}</span></td></tr>`;
+ }).join('')||'<tr><td colspan="7" class="px-4 py-8 text-center">Nenhum item vencido ou próximo do vencimento.</td></tr>';
 }
 function addAgenda(e){e.preventDefault();
  agenda.push({id:'AG'+Date.now(),titulo:agTitulo.value,data:agData.value,prioridade:agPrioridade.value,obs:agObs.value});
@@ -742,38 +852,36 @@ let charts={};
 function agregado(){
  const m={};
  estoque.forEach(i=>{const c=i.categoria||'Sem categoria';const s=status(i.validade).key;
-  m[c]=m[c]||{itens:0,qtd:0,valor:0,venc:0,prox:0};
-  m[c].itens++;m[c].qtd+=Number(i.qtd||0);m[c].valor+=Number(i.valor||0)*Number(i.qtd||0);
+  m[c]=m[c]||{itens:0,qtd:0,venc:0,prox:0};
+  m[c].itens++;m[c].qtd+=Number(i.qtd||0);
   if(s==='VENCIDO')m[c].venc++; if(s==='PROXIMO')m[c].prox++;});
  return m;
 }
 function renderBI(){
- const total=estoque.reduce((s,i)=>s+Number(i.valor||0)*Number(i.qtd||0),0);
- const perda=estoque.filter(i=>status(i.validade).key==='VENCIDO').reduce((s,i)=>s+Number(i.valor||0)*Number(i.qtd||0),0);
  const ok=estoque.filter(i=>status(i.validade).key==='OK').length;
- document.getElementById('bi-valor').textContent=brl(total);
- document.getElementById('bi-perda').textContent=brl(perda);
+ document.getElementById('bi-unidades').textContent=estoque.reduce((a,i)=>a+Number(i.qtd||0),0);
+ document.getElementById('bi-cursos').textContent=cursoItens.reduce((a,i)=>a+Number(i.enviada||0)-Number(i.devolvida||0),0);
  document.getElementById('bi-skus').textContent=estoque.length;
  document.getElementById('bi-saude').textContent=(estoque.length?Math.round(ok/estoque.length*100):100)+'%';
 
  const ag=agregado(), cats=Object.keys(ag);
- document.getElementById('tbody-bi').innerHTML=cats.map(c=>`<tr class="border-b border-slate-100 dark:border-slate-800"><td class="px-4 py-3 font-medium">${c}</td><td class="px-4 py-3 text-right">${ag[c].itens}</td><td class="px-4 py-3 text-right">${ag[c].qtd}</td><td class="px-4 py-3 text-right">${brl(ag[c].valor)}</td><td class="px-4 py-3 text-right text-red-500">${ag[c].venc}</td><td class="px-4 py-3 text-right text-amber-500">${ag[c].prox}</td></tr>`).join('')||'<tr><td colspan="6" class="px-4 py-8 text-center text-slate-400">Sem dados.</td></tr>';
+ document.getElementById('tbody-bi').innerHTML=cats.map(c=>`<tr class="border-b border-slate-100 dark:border-slate-800"><td class="px-4 py-3 font-medium">${c}</td><td class="px-4 py-3 text-right">${ag[c].itens}</td><td class="px-4 py-3 text-right">${ag[c].qtd}</td><td class="px-4 py-3 text-right text-red-500">${ag[c].venc}</td><td class="px-4 py-3 text-right text-amber-500">${ag[c].prox}</td></tr>`).join('')||'<tr><td colspan="5" class="px-4 py-8 text-center text-slate-400">Sem dados.</td></tr>';
 
  const meses={};estoque.forEach(i=>{const k=(i.validade||'').slice(0,7);if(k)meses[k]=(meses[k]||0)+1;});
  const mk=Object.keys(meses).sort();
  const cnt={OK:0,PROXIMO:0,VENCIDO:0};estoque.forEach(i=>cnt[status(i.validade).key]++);
- draw('chart-cat','bar',{labels:cats,datasets:[{label:'Quantidade',data:cats.map(c=>ag[c].qtd),backgroundColor:'#b7f34a',borderRadius:6}]});
- draw('chart-status','doughnut',{labels:['OK','Próximos 15d','Vencidos'],datasets:[{data:[cnt.OK,cnt.PROXIMO,cnt.VENCIDO],backgroundColor:['#22c55e','#f59e0b','#ef4444']}]});
- draw('chart-mes','line',{labels:mk,datasets:[{label:'Itens vencendo',data:mk.map(k=>meses[k]),borderColor:'#9fda35',backgroundColor:'rgba(159,218,53,.14)',fill:true,tension:.35}]});
+ draw('chart-cat','bar',{labels:cats,datasets:[{label:'Quantidade',data:cats.map(c=>ag[c].qtd),backgroundColor:cats.map((_,i)=>['#b7f34a','#4dd9dc','#f8b84e','#ff7878','#8fa8f6','#e9a0d4'][i%6]),borderRadius:6}]});
+ draw('chart-status','doughnut',{labels:['OK','Próximos 15d','Vencidos'],datasets:[{data:[cnt.OK,cnt.PROXIMO,cnt.VENCIDO],backgroundColor:['#b7f34a','#f8b84e','#ff7878']}]});
+ draw('chart-mes','line',{labels:mk,datasets:[{label:'Itens vencendo',data:mk.map(k=>meses[k]),borderColor:'#4dd9dc',backgroundColor:'rgba(77,217,220,.14)',fill:true,tension:.35}]});
 }
 function draw(id,type,data){
  if(charts[id])charts[id].destroy();
- charts[id]=new Chart(document.getElementById(id),{type,data,options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:type!=='bar'}},scales:type==='doughnut'?{}:{y:{beginAtZero:true}}}});
+ charts[id]=new Chart(document.getElementById(id),{type,data,options:{responsive:true,maintainAspectRatio:false,animation:{duration:window.matchMedia('(prefers-reduced-motion: reduce)').matches?0:950,easing:'easeOutQuart'},plugins:{legend:{display:type!=='bar'}},scales:type==='doughnut'?{}:{y:{beginAtZero:true}}}});
 }
 
 /* ---------- Excel ---------- */
 function linhasEstoque(lista){return lista.map(i=>({Código:i.id,Produto:i.nome,Categoria:i.categoria,Quantidade:Number(i.qtd||0),Unidade:i.unidade||'',
- 'Valor unitário':Number(i.valor||0),'Valor total':Number(i.valor||0)*Number(i.qtd||0),Entrada:dt(i.entrada),Validade:dt(i.validade),
+ Entrada:dt(i.entrada),Validade:dt(i.validade),
  Status:status(i.validade).texto,'Dias p/ vencer':status(i.validade).dias}));}
 function baixar(wb,nome){XLSX.writeFile(wb,nome+'_'+new Date().toISOString().slice(0,10)+'.xlsx');}
 function exportarExcel(tipo){
@@ -781,8 +889,13 @@ function exportarExcel(tipo){
  if(tipo==='estoque'){XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(linhasEstoque(listaFiltrada().map(x=>x.it))),'Estoque');baixar(wb,'estoque_senac');}
  else if(tipo==='painel'){XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(linhasEstoque(itensCriticos())),'Vencimentos');baixar(wb,'vencimentos_senac');}
  else if(tipo==='agenda'){XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(agenda.map(a=>({Título:a.titulo,Data:dt(a.data),Prioridade:a.prioridade,Observações:a.obs||''}))),'Agenda');baixar(wb,'agenda_senac');}
+ else if(tipo==='cursos'){
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(cursos.map(c=>({Curso:c.nome,Código:c.codigo,Instrutor:c.instrutor||'',Turma:c.turma||'',Início:dt(c.inicio),Término:dt(c.fim),Observações:c.obs||''}))),'Cursos');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(cursoItens.map(i=>{const c=cursos.find(x=>x.cid===i.cid)||{};return {Curso:c.nome||'',Item:i.nome,Código:i.codigo,Validade:dt(i.validade),'Qtd enviada':i.enviada,'Qtd utilizada':Number(i.enviada)-Number(i.devolvida||0),'Qtd devolvida':Number(i.devolvida||0)};})),'Itens nos cursos');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(movimentos.map(m=>({Data:new Date(m.quando).toLocaleString('pt-BR'),Movimento:m.tipo,Item:m.nome,Código:m.codigo,Validade:dt(m.validade),Quantidade:m.qtd,Curso:m.curso}))),'Movimentações');
+  baixar(wb,'cursos_senac');}
  else if(tipo==='bi'){const ag=agregado();
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(Object.keys(ag).map(c=>({Categoria:c,Itens:ag[c].itens,Quantidade:ag[c].qtd,'Valor (R$)':ag[c].valor,Vencidos:ag[c].venc,'Próximos 15d':ag[c].prox}))),'Resumo BI');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(Object.keys(ag).map(c=>({Categoria:c,Itens:ag[c].itens,Quantidade:ag[c].qtd,Vencidos:ag[c].venc,'Próximos 15d':ag[c].prox}))),'Resumo BI');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(linhasEstoque(estoque)),'Estoque');baixar(wb,'relatorio_bi_senac');}
 }
 function exportarTudoExcel(){
@@ -790,7 +903,7 @@ function exportarTudoExcel(){
  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(linhasEstoque(estoque)),'Estoque');
  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(linhasEstoque(itensCriticos())),'Vencimentos');
  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(agenda.map(a=>({Título:a.titulo,Data:dt(a.data),Prioridade:a.prioridade,Observações:a.obs||''}))),'Agenda');
- XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(Object.keys(ag).map(c=>({Categoria:c,Itens:ag[c].itens,Quantidade:ag[c].qtd,'Valor (R$)':ag[c].valor,Vencidos:ag[c].venc,'Próximos 15d':ag[c].prox}))),'Resumo BI');
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(Object.keys(ag).map(c=>({Categoria:c,Itens:ag[c].itens,Quantidade:ag[c].qtd,Vencidos:ag[c].venc,'Próximos 15d':ag[c].prox}))),'Resumo BI');
  baixar(wb,'modesk_core_completo');
 }
 
@@ -801,7 +914,7 @@ function mostrarSync(){const el=document.getElementById('sync-info');if(!el)retu
  el.innerHTML=m.atualizadoEm?'<i class="fa-solid fa-floppy-disk"></i> Salvo neste computador: '+new Date(m.atualizadoEm).toLocaleString('pt-BR'):'';}
 function salvarProjeto(){
  const pacote={app:'modesk-core',versao:3,salvoEm:new Date().toISOString(),tema:document.documentElement.classList.contains('dark')?'dark':'light',
-  totais:{itens:estoque.length,demandas:agenda.length},estoque,agenda};
+  totais:{itens:estoque.length,demandas:agenda.length,cursos:cursos.length},estoque,agenda,cursos,cursoItens,movimentos};
  const blob=new Blob([JSON.stringify(pacote,null,2)],{type:'application/json'});
  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
  a.download='cozinha_senac_backup_'+new Date().toISOString().slice(0,16).replace(/[:T]/g,'-')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
@@ -812,7 +925,7 @@ function carregarProjeto(ev){
    if(!Array.isArray(d.estoque))throw 0;
    const quando=d.salvoEm?new Date(d.salvoEm).toLocaleString('pt-BR'):'data desconhecida';
    if(!confirm('Carregar arquivo salvo em '+quando+'?\n'+d.estoque.length+' itens de estoque e '+(d.agenda||[]).length+' demandas da agenda.\nOs dados atuais deste computador serão substituídos.'))return;
-   estoque=d.estoque;agenda=Array.isArray(d.agenda)?d.agenda:[];
+   estoque=d.estoque;agenda=Array.isArray(d.agenda)?d.agenda:[];cursos=Array.isArray(d.cursos)?d.cursos:[];cursoItens=Array.isArray(d.cursoItens)?d.cursoItens:[];movimentos=Array.isArray(d.movimentos)?d.movimentos:[];
    if(d.tema){document.documentElement.classList.toggle('dark',d.tema==='dark');localStorage.setItem('modesk_senac_tema',d.tema);aplicarIconeTema();}
    salvarDados();switchTab('dashboard');alert('Dados carregados! O dashboard foi atualizado.');
  }catch(e){alert('Arquivo inválido. Selecione um arquivo salvo por este sistema.');}
@@ -821,7 +934,7 @@ function carregarProjeto(ev){
 }
 function aplicarIconeTema(){const icon=document.getElementById('theme-icon');if(icon)icon.className=document.documentElement.classList.contains('dark')?'fa-solid fa-sun':'fa-solid fa-moon';}
 (function(){const t=localStorage.getItem('modesk_senac_tema');if(t){document.documentElement.classList.toggle('dark',t==='dark');aplicarIconeTema();}})();
-window.addEventListener('beforeunload',()=>{localStorage.setItem(LS_E,JSON.stringify(estoque));localStorage.setItem(LS_A,JSON.stringify(agenda));});
+window.addEventListener('beforeunload',()=>{salvarDados();});
 mostrarSync();
 
 document.getElementById('cad-entrada').valueAsDate=new Date();
@@ -840,7 +953,8 @@ let config=Object.assign({},cfgDefault,JSON.parse(localStorage.getItem(LS_CFG)||
 TABS.push(['config','fa-gear','Configurações']);
 document.getElementById('tabs').insertAdjacentHTML('beforeend','<button id="btn-tab-config" onclick="switchTab(\'config\')" class="pb-3 font-medium text-slate-500 flex items-center gap-2 whitespace-nowrap"><i class="fa-solid fa-gear"></i> Configurações</button>');
 const _switchTab=switchTab;
-switchTab=function(t){_switchTab(t);if(t==='config')preencherConfig();if(t==='agenda')renderCalendario();};
+switchTab=function(t){_switchTab(t);if(t==='config')preencherConfig();
+renderCursos();if(t==='agenda')renderCalendario();};
 
 function preencherConfig(){
   cfgEl('cfg-nome','nome');cfgEl('cfg-cargo','cargo');cfgEl('cfg-login','login');cfgEl('cfg-senha','senha');
@@ -969,24 +1083,22 @@ function gerarPDF(tipo){
   const sub='Unidade '+(config.unidade||'Senac Aldeota')+' · '+new Date().toLocaleDateString('pt-BR')+assinado;
   let corpo='';
   if(tipo==='bi'){
-    const total=estoque.reduce((s,i)=>s+Number(i.valor||0)*Number(i.qtd||0),0);
-    const perda=estoque.filter(i=>status(i.validade).key==='VENCIDO').reduce((s,i)=>s+Number(i.valor||0)*Number(i.qtd||0),0);
     const ok=estoque.filter(i=>status(i.validade).key==='OK').length;
     const ag=agregado();
     corpo='<div class="print-kpis">'+
-      '<div class="print-kpi"><span>Valor em estoque</span><strong>'+brl(total)+'</strong></div>'+
-      '<div class="print-kpi"><span>Perda potencial</span><strong>'+brl(perda)+'</strong></div>'+
+      '<div class="print-kpi"><span>Unidades em estoque</span><strong>'+estoque.reduce((a,i)=>a+Number(i.qtd||0),0)+'</strong></div>'+
+      '<div class="print-kpi"><span>Unidades em cursos</span><strong>'+cursoItens.reduce((a,i)=>a+Number(i.enviada||0)-Number(i.devolvida||0),0)+'</strong></div>'+
       '<div class="print-kpi"><span>SKUs</span><strong>'+estoque.length+'</strong></div>'+
       '<div class="print-kpi"><span>Saúde do estoque</span><strong>'+(estoque.length?Math.round(ok/estoque.length*100):100)+'%</strong></div></div>'+
       '<h2 class="print-h2">Resumo por categoria</h2>'+
-      tabela([['Categoria'],['Itens',1],['Quantidade',1],['Valor (R$)',1],['Vencidos',1],['Próx. 15d',1]],
-        Object.keys(ag).map(c=>[c,ag[c].itens,ag[c].qtd,brl(ag[c].valor),ag[c].venc,ag[c].prox]))+
+      tabela([['Categoria'],['Itens',1],['Quantidade',1],['Vencidos',1],['Próx. 15d',1]],
+        Object.keys(ag).map(c=>[c,ag[c].itens,ag[c].qtd,ag[c].venc,ag[c].prox]))+
       '<h2 class="print-h2">Itens críticos</h2>'+
       tabela([['Código'],['Produto'],['Validade'],['Status']],itensCriticos().map(i=>[i.id,i.nome,dt(i.validade),status(i.validade).texto]));
     area.innerHTML=cabecalhoPagina('Relatório de BI — Estoque da Cozinha',sub,corpo);
   }else if(tipo==='estoque'){
-    corpo=tabela([['Código'],['Produto'],['Categoria'],['Qtd',1],['Valor total',1],['Entrada'],['Validade'],['Status']],
-      estoque.map(i=>[i.id,i.nome,i.categoria,i.qtd+' '+(i.unidade||''),brl(Number(i.valor||0)*Number(i.qtd||0)),dt(i.entrada),dt(i.validade),status(i.validade).texto]));
+    corpo=tabela([['Código'],['Produto'],['Categoria'],['Qtd',1],['Entrada'],['Validade'],['Status']],
+      estoque.map(i=>[i.id,i.nome,i.categoria,i.qtd+' '+(i.unidade||''),dt(i.entrada),dt(i.validade),status(i.validade).texto]));
     area.innerHTML=cabecalhoPagina('Relatório de Estoque Geral',sub,corpo);
   }else if(tipo==='vencimentos'){
     corpo=tabela([['Código'],['Produto'],['Categoria'],['Qtd',1],['Validade'],['Status']],
@@ -1043,7 +1155,7 @@ function sabiResponde(q){
     return 'Pronto! Marquei **'+titulo+'** para '+dt(data)+(urgente?' como **urgente**':'')+'. Já aparece no calendário da Agenda.';
   }
   if(/tutorial|como usar|ajuda|aprender|passo a passo/.test(t)){
-    return 'Tutorial rápido do sistema:\n1. **Cadastro** — registre código, produto, quantidade, valor, entrada e validade.\n2. **Estoque geral** — busque, filtre por status e exporte em Excel.\n3. **Vencimentos** — cartões dos itens vencidos e a vencer em 15 dias.\n4. **Agenda** — calendário com lembretes e vencimentos; clique num dia para ver os detalhes.\n5. **Relatórios** — gráficos e botão **BI em PDF (timbrado)** para imprimir.\n6. **Configurações** — nome do usuário (assina relatórios e mensagens), papel timbrado e feriados.\n7. **Salvar arquivo / Abrir arquivo** — backup dos dados em JSON.';
+    return 'Tutorial rápido do sistema:\n1. **Cadastro** — registre código, produto, quantidade, unidade, entrada e validade.\n2. **Estoque geral** — busque, filtre por status e exporte em Excel.\n3. **Vencimentos** — planilha dos itens vencidos e a vencer em 15 dias.\n4. **Agenda** — calendário com lembretes e vencimentos; clique num dia para ver os detalhes.\n5. **Relatórios** — gráficos e botão **BI em PDF (timbrado)** para imprimir.\n6. **Configurações** — nome do usuário (assina relatórios e mensagens), papel timbrado e feriados.\n7. **Salvar arquivo / Abrir arquivo** — backup dos dados em JSON.';
   }
   if(/vencid|vencimento|validade|vencer/.test(t)){
     const c=itensCriticos();
@@ -1051,10 +1163,9 @@ function sabiResponde(q){
     const venc=c.filter(i=>status(i.validade).key==='VENCIDO');
     return 'Atenção: **'+venc.length+' vencido(s)** e **'+(c.length-venc.length)+' a vencer em 15 dias**.\n'+c.slice(0,6).map(i=>'• '+i.nome+' — '+dt(i.validade)+' ('+status(i.validade).texto+')').join('\n');
   }
-  if(/valor|custo|financeiro|perda|dinheiro/.test(t)){
-    const total=estoque.reduce((s,i)=>s+Number(i.valor||0)*Number(i.qtd||0),0);
-    const perda=estoque.filter(i=>status(i.validade).key==='VENCIDO').reduce((s,i)=>s+Number(i.valor||0)*Number(i.qtd||0),0);
-    return 'Valor total em estoque: **'+brl(total)+'**.\nPerda potencial com itens vencidos: **'+brl(perda)+'**.';
+  if(/curso|turma|remanej|envi/.test(t)){
+    const enviado=cursoItens.reduce((a,i)=>a+Number(i.enviada||0)-Number(i.devolvida||0),0);
+    return 'Cursos cadastrados: **'+cursos.length+'**.\nUnidades atualmente em cursos: **'+enviado+'**.';
   }
   if(/agenda|hoje|semana|atividade|compromisso/.test(t)){
     const hoje=iso(new Date());
@@ -1076,14 +1187,152 @@ function sabiResponde(q){
     const h=new Date().getHours();
     return (h<12?'Bom dia':h<18?'Boa tarde':'Boa noite')+(primeiroNome()?', '+primeiroNome():'')+'! Em que posso ajudar na cozinha hoje?';
   }
-  return 'Ainda não entendi. Posso ajudar com: **estoque**, **vencimentos**, **valor do estoque**, **agenda**, **relatório em PDF**, **configurações** e **tutorial**. Também crio lembretes: "lembrete Conferir freezer em 05/10".';
+  return 'Ainda não entendi. Posso ajudar com: **estoque**, **vencimentos**, **cursos**, **agenda**, **relatório em PDF**, **configurações** e **tutorial**. Também crio lembretes: "lembrete Conferir freezer em 05/10".';
 }
+
+/* ---------- CURSOS ---------- */
+const ICONES_CURSO=['fa-cake-candles','fa-bread-slice','fa-utensils','fa-kitchen-set','fa-mug-hot','fa-pizza-slice','fa-fish','fa-carrot','fa-ice-cream','fa-wine-glass','fa-bowl-food','fa-cheese','fa-drumstick-bite','fa-cookie-bite'];
+function iconeAutomatico(nome,codigo){
+ const t=(nome||'').toLowerCase();
+ const mapa=[[/confeit|doce|bolo|torta/,'fa-cake-candles'],[/panific|p(ã|a)o|massa/,'fa-bread-slice'],[/caf(é|e)|barista|bebida/,'fa-mug-hot'],[/pizza/,'fa-pizza-slice'],[/peixe|frutos do mar|pescad/,'fa-fish'],[/vegan|vegetarian|salad/,'fa-carrot'],[/sorvet|gelat/,'fa-ice-cream'],[/som(e)?li|vinho|bar/,'fa-wine-glass'],[/churrasc|carne|grelh/,'fa-drumstick-bite'],[/queijo|laticin/,'fa-cheese'],[/cozinha|chef|gastro|culin/,'fa-kitchen-set']];
+ for(const [re,ic] of mapa) if(re.test(t)) return ic;
+ let h=0; const base=(nome||'')+(codigo||''); for(let i=0;i<base.length;i++) h=(h*31+base.charCodeAt(i))>>>0;
+ return ICONES_CURSO[h%ICONES_CURSO.length];
+}
+function cadastrarCurso(e){e.preventDefault();
+ const nome=document.getElementById('cur-nome').value.trim(), codigo=document.getElementById('cur-codigo').value.trim();
+ cursos.unshift({cid:'C'+Date.now(),nome,codigo,instrutor:document.getElementById('cur-instrutor').value.trim(),turma:document.getElementById('cur-turma').value.trim(),inicio:document.getElementById('cur-inicio').value,fim:document.getElementById('cur-fim').value,obs:document.getElementById('cur-obs').value.trim(),icone:iconeAutomatico(nome,codigo)});
+  salvarDados();e.target.reset();renderCursos();switchTab('cursos');
+}
+function excluirCurso(cid){
+ if(cursoItens.some(i=>i.cid===cid)){alert('Este curso possui histórico de consumo ou devoluções e não pode ser excluído.');return;}
+ if(!confirm('Excluir este curso?'))return;
+ cursos=cursos.filter(c=>c.cid!==cid);salvarDados();renderCursos();
+}
+function registrarMov(tipo,it,qtd,curso){movimentos.unshift({quando:new Date().toISOString(),tipo,nome:it.nome,codigo:it.codigo||it.id,validade:it.validade,qtd,curso});}
+function abrirModal(html){document.getElementById('modal-box').innerHTML=html;document.getElementById('modal-wrap').classList.remove('hidden');}
+function fecharModal(){document.getElementById('modal-wrap').classList.add('hidden');}
+const inputCls='w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm';
+function lotesDoProduto(nome){return estoque.map((it,idx)=>({it,idx})).filter(x=>x.it.nome===nome);}
+
+function abrirEnvio(idx){
+ const it=estoque[idx]; if(!it)return;
+ if(!cursos.length){alert('Cadastre um curso antes de enviar itens.');switchTab('cadastro-curso');return;}
+ const lotes=lotesDoProduto(it.nome);
+ abrirModal(`<h3 class="text-lg font-bold mb-1">Enviar item para um curso</h3>
+  <p class="text-sm text-slate-500 mb-5">${it.nome} · cód. ${it.id}</p>
+  <div class="space-y-4">
+   <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Curso de destino</label>
+    <select class="${inputCls}" id="env-curso">${cursos.map(c=>`<option value="${c.cid}">${c.nome} — ${c.codigo}</option>`).join('')}</select></div>
+   <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Validade (lote)</label>
+    <select class="${inputCls}" id="env-lote">${lotes.map(l=>`<option value="${l.idx}" ${l.idx===idx?'selected':''}>${dt(l.it.validade)} — ${l.it.qtd} ${l.it.unidade||''} disponíveis</option>`).join('')}</select></div>
+   <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Quantidade a enviar</label>
+    <input class="${inputCls}" id="env-qtd" type="number" min="1" max="${it.qtd}" value="1"/></div>
+  </div>
+  <div class="flex justify-end gap-3 mt-6"><button class="px-5 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 font-semibold" onclick="fecharModal()">Cancelar</button>
+  <button class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold" onclick="confirmarEnvio()">Confirmar envio</button></div>`);
+ document.getElementById('env-lote').onchange=function(){const l=estoque[Number(this.value)];document.getElementById('env-qtd').max=l.qtd;};
+}
+function confirmarEnvio(){
+ const idx=Number(document.getElementById('env-lote').value), cid=document.getElementById('env-curso').value, qtd=parseInt(document.getElementById('env-qtd').value||0);
+ enviarParaCurso(idx,cid,qtd);
+}
+function enviarParaCurso(idx,cid,qtd){
+ const it=estoque[idx], curso=cursos.find(c=>c.cid===cid);
+ if(!it||!curso)return;
+ if(!(qtd>0)||qtd>Number(it.qtd)){alert('Informe uma quantidade válida (máximo '+it.qtd+').');return;}
+ it.qtd=Number(it.qtd)-qtd;
+ const ex=cursoItens.find(x=>x.cid===cid&&x.codigo===it.id&&x.validade===it.validade);
+ if(ex){ex.enviada=Number(ex.enviada)+qtd;}
+ else cursoItens.push({cid,codigo:it.id,nome:it.nome,categoria:it.categoria,unidade:it.unidade||'',validade:it.validade,entrada:it.entrada,enviada:qtd,devolvida:0,quando:new Date().toISOString()});
+ registrarMov('Consumo do curso (envio)',it,qtd,curso.nome);
+ if(Number(it.qtd)===0) estoque.splice(idx,1);
+ salvarDados();fecharModal();renderEstoque();renderCursos();
+}
+function abrirInsercao(cid){
+ if(!estoque.length){alert('Não há itens no estoque.');return;}
+ const nomes=[...new Set(estoque.map(i=>i.nome))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+ abrirModal(`<h3 class="text-lg font-bold mb-5">Inserir itens do estoque no curso</h3>
+  <div class="space-y-4">
+   <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Item</label>
+    <select class="${inputCls}" id="ins-item" onchange="atualizarLotesInsercao()">${nomes.map(n=>`<option value="${n}">${n}</option>`).join('')}</select></div>
+   <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Validade (lote)</label><select class="${inputCls}" id="ins-lote"></select></div>
+   <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Quantidade</label><input class="${inputCls}" id="ins-qtd" type="number" min="1" value="1"/></div>
+  </div>
+  <div class="flex justify-end gap-3 mt-6"><button class="px-5 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 font-semibold" onclick="fecharModal()">Cancelar</button>
+  <button class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold" onclick="enviarParaCurso(Number(document.getElementById('ins-lote').value),'${cid}',parseInt(document.getElementById('ins-qtd').value||0))">Confirmar</button></div>`);
+ atualizarLotesInsercao();
+}
+function atualizarLotesInsercao(){
+ const nome=document.getElementById('ins-item').value, sel=document.getElementById('ins-lote');
+ const lotes=lotesDoProduto(nome);
+ sel.innerHTML=lotes.map(l=>`<option value="${l.idx}">${dt(l.it.validade)} — ${l.it.qtd} ${l.it.unidade||''} disponíveis</option>`).join('');
+ sel.onchange=()=>{document.getElementById('ins-qtd').max=estoque[Number(sel.value)].qtd;};
+ if(lotes.length)document.getElementById('ins-qtd').max=estoque[Number(sel.value)].qtd;
+}
+function abrirDevolucao(cid){
+ const itens=cursoItens.filter(i=>i.cid===cid&&Number(i.enviada)>Number(i.devolvida||0));
+ if(!itens.length){alert('Não há itens elegíveis para retorno neste curso.');return;}
+ abrirModal(`<h3 class="text-lg font-bold mb-1">Retorno ao estoque</h3>
+  <p class="text-sm text-slate-500 mb-5">Informe apenas os itens e quantidades que realmente sobraram. Deixe zero nos demais.</p>
+  <div class="space-y-4">${itens.map(i=>{const disp=Number(i.enviada)-Number(i.devolvida||0);
+   return `<div class="border border-slate-200 dark:border-slate-800 rounded-xl p-3">
+    <p class="font-semibold text-sm">${i.nome}</p><p class="text-xs text-slate-500 mb-2">cód. ${i.codigo} · validade ${dt(i.validade)} · enviado ${i.enviada} ${i.unidade} · já devolvido ${i.devolvida||0}</p>
+    <label class="block text-xs text-slate-500 mb-1">Quantidade que irá retornar (máx. ${disp})</label>
+    <input class="${inputCls}" data-dev="${i.cid}|${i.codigo}|${i.validade}" max="${disp}" min="0" step="1" type="number" value="0"/></div>`;}).join('')}</div>
+  <div class="flex justify-end gap-3 mt-6"><button class="px-5 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 font-semibold" onclick="fecharModal()">Cancelar</button>
+  <button class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold" onclick="confirmarDevolucao('${cid}')">Confirmar retorno</button></div>`);
+}
+function confirmarDevolucao(cid){
+ const curso=cursos.find(c=>c.cid===cid)||{nome:''};
+ const inputs=[...document.querySelectorAll('#modal-box [data-dev]')];
+ const operacoes=[];
+ for(const inp of inputs){
+  const [c,codigo,validade]=inp.dataset.dev.split('|');
+  const item=cursoItens.find(x=>x.cid===c&&x.codigo===codigo&&x.validade===validade);if(!item)continue;
+  const disp=Number(item.enviada)-Number(item.devolvida||0),dev=Number(inp.value);
+  if(!Number.isInteger(dev)||dev<0||dev>disp){alert('Quantidade inválida para '+item.nome+'.');return;}
+  if(dev>0)operacoes.push({item,dev});
+ }
+ if(!operacoes.length){alert('Informe pelo menos uma quantidade maior que zero para retornar.');return;}
+ for(const {item,dev} of operacoes){
+  const alvo=estoque.find(e=>e.id===item.codigo&&e.validade===item.validade);
+  if(alvo)alvo.qtd=Number(alvo.qtd)+dev;
+  else estoque.unshift({id:item.codigo,nome:item.nome,categoria:item.categoria,qtd:dev,unidade:item.unidade,entrada:item.entrada||new Date().toISOString().slice(0,10),validade:item.validade});
+  item.devolvida=Number(item.devolvida||0)+dev;
+  registrarMov('Curso → Estoque (retorno)',item,dev,curso.nome);
+ }
+ salvarDados();fecharModal();renderCursos();renderEstoque();
+}
+function renderCursos(){
+ const el=document.getElementById('lista-cursos');
+ el.innerHTML=cursos.map(c=>{const itens=cursoItens.filter(i=>i.cid===c.cid);
+  return `<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+   <div class="flex items-start justify-between gap-4 flex-wrap">
+    <div class="flex items-center gap-4">
+     <div class="w-14 h-14 rounded-2xl bg-brand-600/10 text-brand-600 flex items-center justify-center text-2xl"><i class="fa-solid ${c.icone||'fa-graduation-cap'}"></i></div>
+     <div><h3 class="font-bold text-lg">${c.nome}</h3>
+      <p class="text-xs text-slate-500">Código ${c.codigo}${c.turma?' · '+c.turma:''}${c.instrutor?' · '+c.instrutor:''}${c.inicio?' · '+dt(c.inicio):''}${c.fim?' a '+dt(c.fim):''}</p>
+      ${c.obs?`<p class="text-xs text-slate-400 mt-1">${c.obs}</p>`:''}</div></div>
+    <div class="flex gap-2 flex-wrap">
+     <button class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold" onclick="abrirInsercao('${c.cid}')"><i class="fa-solid fa-box-open"></i> Inserir itens do estoque</button>
+     <button class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold" onclick="abrirDevolucao('${c.cid}')"><i class="fa-solid fa-rotate-left"></i> Devolver itens ao estoque</button>
+     <button class="px-3 py-2 rounded-xl text-slate-400 hover:text-red-500" onclick="excluirCurso('${c.cid}')"><i class="fa-solid fa-trash"></i></button></div></div>
+   <h4 class="course-items-title">Itens inseridos no curso</h4><div class="overflow-x-auto mt-4"><table class="w-full text-sm">
+    <thead class="text-xs uppercase text-slate-400 border-b border-slate-200 dark:border-slate-800"><tr><th class="text-left px-3 py-2">Item</th><th class="text-left px-3 py-2">Código</th><th class="text-right px-3 py-2">Qtd enviada</th><th class="text-left px-3 py-2">Validade</th><th class="text-right px-3 py-2">Qtd utilizada</th><th class="text-right px-3 py-2">Qtd devolvida</th></tr></thead>
+    <tbody>${itens.map(i=>`<tr class="border-b border-slate-100 dark:border-slate-800"><td class="px-3 py-2 font-medium">${i.nome}</td><td class="px-3 py-2 font-mono text-xs">${i.codigo}</td><td class="px-3 py-2 text-right">${i.enviada} ${i.unidade}</td><td class="px-3 py-2">${dt(i.validade)}</td><td class="px-3 py-2 text-right">${Number(i.enviada)-Number(i.devolvida||0)}</td><td class="px-3 py-2 text-right font-semibold">${Number(i.devolvida||0)}</td></tr>`).join('')||'<tr><td colspan="6" class="px-3 py-6 text-center text-slate-400">Nenhum item vinculado a este curso.</td></tr>'}</tbody></table></div></div>`;
+ }).join('')||'<p class="text-slate-400">Nenhum curso cadastrado ainda.</p>';
+ const mv=document.getElementById('tbody-movimentos');
+ mv.innerHTML=movimentos.slice(0,60).map(m=>`<tr class="border-b border-slate-100 dark:border-slate-800"><td class="px-4 py-3">${new Date(m.quando).toLocaleString('pt-BR')}</td><td class="px-4 py-3">${m.tipo}</td><td class="px-4 py-3">${m.nome} <span class="text-xs text-slate-400">(${m.codigo})</span></td><td class="px-4 py-3">${dt(m.validade)}</td><td class="px-4 py-3 text-right">${m.qtd}</td><td class="px-4 py-3">${m.curso||'—'}</td></tr>`).join('')||'<tr><td colspan="6" class="px-4 py-8 text-center text-slate-400">Sem movimentações registradas.</td></tr>';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')fecharModal();});
 
 /* ---------- inicialização v9 ---------- */
 document.addEventListener('keydown',e=>{if(e.key==='Escape')fecharVega();});
 preencherConfig();
 aplicarSaudacao();
 renderCalendario();
+renderBI();
 setInterval(aplicarSaudacao,60*60*1000);
 </script>
 </body>
