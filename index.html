@@ -946,13 +946,19 @@ function status(v){const h=new Date();h.setHours(0,0,0,0);const d=Math.ceil((new
  return{key:'OK',texto:'OK',classe:'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20',dias:d};}
 const brl=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 const dt=s=>s?s.split('-').reverse().join('/'):'';
+const numQ=v=>{const n=parseFloat(String(v==null?'':v).replace(',','.'));return isNaN(n)?0:n;};
+const fmtQ=v=>{const n=numQ(v);return Number.isInteger(n)?String(n):n.toLocaleString('pt-BR',{maximumFractionDigits:3});};
+const itemDisponivel=i=>numQ(i.qtd)>0&&status(i.validade).key!=='VENCIDO';
+const estoqueDisponivel=()=>estoque.filter(itemDisponivel);
+const totalDisponivel=()=>estoqueDisponivel().reduce((a,i)=>a+numQ(i.qtd),0);
 
 function atualizarStats(){
- const totalEstoque=estoque.reduce((s,i)=>s+Number(i.qtd||0),0);
+ const disp=estoqueDisponivel();
+ const totalEstoque=fmtQ(disp.reduce((a,i)=>a+numQ(i.qtd),0));
  document.getElementById('stat-total').textContent=totalEstoque;
  const totalVisual=document.getElementById('bi-total-visual');if(totalVisual)totalVisual.textContent=totalEstoque;
- document.getElementById('stat-proximos').textContent=estoque.filter(i=>status(i.validade).key==='PROXIMO').length;
- document.getElementById('stat-vencidos').textContent=estoque.filter(i=>status(i.validade).key==='VENCIDO').length;
+ document.getElementById('stat-proximos').textContent=disp.filter(i=>status(i.validade).key==='PROXIMO').length;
+ document.getElementById('stat-vencidos').textContent=estoque.filter(i=>status(i.validade).key==='VENCIDO'&&numQ(i.qtd)>0).length;
  document.getElementById('stat-agenda').textContent=agenda.length;
 }
 
@@ -963,7 +969,7 @@ const hoje=()=>new Date().toISOString().slice(0,10);
 
 function abrirCadastroItem(idx){
  const ed=(typeof idx==='number'&&idx>=0&&estoque[idx])?estoque[idx]:null;
- const it=ed||{id:'',nome:'',categoria:'Confeitaria',qtd:1,unidade:'',entrada:hoje(),validade:''};
+ const it=ed||{id:'',nome:'',categoria:'Confeitaria',qtd:1,unidade:'',embalagem:'',entrada:hoje(),validade:''};
  abrirModal(`<div class="mb-5 pb-4 border-b border-slate-100 dark:border-slate-800">
    <h3 class="text-xl font-bold">${ed?'Editar item do estoque':'Novo ingrediente ou insumo'}</h3>
    <p class="text-sm text-slate-500">Preencha os dados e salve — a janela fecha automaticamente.</p></div>
@@ -971,7 +977,7 @@ function abrirCadastroItem(idx){
    <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Código / Lote</label><input class="${inputClsForm}" id="cad-codigo" required value="${esc(it.id)}"/></div>
    <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Descrição do produto</label><input class="${inputClsForm}" id="cad-nome" required value="${esc(it.nome)}"/></div>
    <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Categoria</label><select class="${inputClsForm}" id="cad-categoria">${CATEGORIAS.map(c=>`<option ${c===it.categoria?'selected':''}>${c}</option>`).join('')}</select></div>
-   <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Quantidade</label><input class="${inputClsForm}" id="cad-qtd" type="number" min="1" required value="${esc(it.qtd)}"/></div>
+   <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Quantidade</label><input class="${inputClsForm}" id="cad-qtd" type="number" min="0.001" step="any" inputmode="decimal" required value="${esc(it.qtd)}"/></div>
    <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Unidade</label><input class="${inputClsForm}" id="cad-unidade" placeholder="Un, Kg, L, Pct" required value="${esc(it.unidade)}"/></div>
    <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Data de entrada</label><input class="${inputClsForm}" id="cad-entrada" type="date" required value="${esc(it.entrada)}"/></div>
    <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Data de validade</label><input class="${inputClsForm}" id="cad-validade" type="date" required value="${esc(it.validade)}"/></div>
@@ -981,7 +987,7 @@ function abrirCadastroItem(idx){
    </div></form>`,true);
 }
 function salvarItem(e,idx){e.preventDefault();
- const d={id:document.getElementById('cad-codigo').value.trim(),nome:document.getElementById('cad-nome').value.trim(),categoria:document.getElementById('cad-categoria').value,qtd:parseInt(document.getElementById('cad-qtd').value),unidade:document.getElementById('cad-unidade').value.trim(),entrada:document.getElementById('cad-entrada').value,validade:document.getElementById('cad-validade').value};
+ const d={id:document.getElementById('cad-codigo').value.trim(),nome:document.getElementById('cad-nome').value.trim(),categoria:document.getElementById('cad-categoria').value,qtd:numQ(document.getElementById('cad-qtd').value),unidade:document.getElementById('cad-unidade').value.trim(),embalagem:(document.getElementById('cad-embalagem')||{value:''}).value.trim(),entrada:document.getElementById('cad-entrada').value,validade:document.getElementById('cad-validade').value};
  if(idx>=0&&estoque[idx])estoque[idx]=Object.assign({},estoque[idx],d); else estoque.unshift(d);
  salvarDados();fecharModal();switchTab('estoque');renderEstoque();
 }
@@ -1006,7 +1012,7 @@ function renderEstoque(){
  document.getElementById('tbody-estoque').innerHTML = listaFiltrada().map(({it,idx})=>{const s=status(it.validade);
   return `<tr class="border-b border-slate-100 dark:border-slate-800">
    <td class="px-4 py-3 font-mono text-xs">${it.id}</td><td class="px-4 py-3 font-medium">${it.nome}</td>
-   <td class="px-4 py-3 text-slate-500">${it.categoria}</td><td class="px-4 py-3 text-right">${it.qtd} ${it.unidade||''}</td>
+   <td class="px-4 py-3 text-slate-500">${it.categoria}</td><td class="px-4 py-3 text-right">${fmtQ(it.qtd)} ${it.unidade||''}${it.embalagem?`<span class="block text-[11px] text-slate-400">${esc(it.embalagem)}</span>`:''}</td>
    <td class="px-4 py-3">${dt(it.entrada)}</td><td class="px-4 py-3">${dt(it.validade)}</td>
    <td class="px-4 py-3"><span class="text-xs px-2.5 py-1 rounded-lg font-bold ${s.classe}">${s.texto}</span></td>
    <td class="px-4 py-3 text-right whitespace-nowrap">
@@ -1019,7 +1025,7 @@ function renderEstoque(){
 function itensCriticos(){return estoque.filter(i=>status(i.validade).key!=='OK').sort((a,b)=>status(a.validade).dias-status(b.validade).dias);}
 function renderPainel(){
  document.getElementById('tbody-painel').innerHTML=itensCriticos().map(it=>{const st=status(it.validade);
-  return `<tr class="border-b border-slate-100 dark:border-slate-800"><td class="px-4 py-3 font-mono text-xs">${it.id}</td><td class="px-4 py-3 font-medium">${it.nome}</td><td class="px-4 py-3">${it.categoria}</td><td class="px-4 py-3 text-right">${it.qtd} ${it.unidade||''}</td><td class="px-4 py-3">${dt(it.entrada)}</td><td class="px-4 py-3">${dt(it.validade)}</td><td class="px-4 py-3"><span class="text-xs px-2 py-1 rounded font-bold ${st.classe}">${st.texto}</span></td></tr>`;
+  return `<tr class="border-b border-slate-100 dark:border-slate-800"><td class="px-4 py-3 font-mono text-xs">${it.id}</td><td class="px-4 py-3 font-medium">${it.nome}</td><td class="px-4 py-3">${it.categoria}</td><td class="px-4 py-3 text-right">${fmtQ(it.qtd)} ${it.unidade||''}</td><td class="px-4 py-3">${dt(it.entrada)}</td><td class="px-4 py-3">${dt(it.validade)}</td><td class="px-4 py-3"><span class="text-xs px-2 py-1 rounded font-bold ${st.classe}">${st.texto}</span></td></tr>`;
  }).join('')||'<tr><td colspan="7" class="px-4 py-8 text-center">Nenhum item vencido ou próximo do vencimento.</td></tr>';
 }
 function addAgenda(e){e.preventDefault();
@@ -1061,7 +1067,7 @@ function agregado(){
 }
 function renderBI(){
  const ok=estoque.filter(i=>status(i.validade).key==='OK').length;
- document.getElementById('bi-unidades').textContent=estoque.reduce((a,i)=>a+Number(i.qtd||0),0);
+ document.getElementById('bi-unidades').textContent=fmtQ(totalDisponivel());
  document.getElementById('bi-cursos').textContent=cursoItens.reduce((a,i)=>a+Number(i.enviada||0)-Number(i.devolvida||0),0);
  document.getElementById('bi-skus').textContent=estoque.length;
  document.getElementById('bi-saude').textContent=(estoque.length?Math.round(ok/estoque.length*100):100)+'%';
@@ -1234,7 +1240,7 @@ function irHoje(){calRef=new Date();calSel=iso(new Date());renderCalendario();}
 function eventosDoDia(k){
   const evs=[];
   agenda.forEach(a=>{if(a.data===k)evs.push({tipo:a.prioridade==='Urgente'?'urgente':'agenda',titulo:a.titulo,obs:a.obs||''});});
-  estoque.forEach(i=>{if(i.validade===k)evs.push({tipo:'vencimento',titulo:'Vence: '+i.nome,obs:i.qtd+' '+(i.unidade||'')+' · cód. '+i.id});});
+  estoque.forEach(i=>{if(i.validade===k)evs.push({tipo:'vencimento',titulo:'Vence: '+i.nome,obs:fmtQ(i.qtd)+' '+(i.unidade||'')+' · cód. '+i.id});});
   return evs;
 }
 function renderCalendario(){
@@ -1288,7 +1294,7 @@ function gerarPDF(tipo){
     const ok=estoque.filter(i=>status(i.validade).key==='OK').length;
     const ag=agregado();
     corpo='<div class="print-kpis">'+
-      '<div class="print-kpi"><span>Unidades em estoque</span><strong>'+estoque.reduce((a,i)=>a+Number(i.qtd||0),0)+'</strong></div>'+
+      '<div class="print-kpi"><span>Unidades em estoque</span><strong>'+fmtQ(totalDisponivel())+'</strong></div>'+
       '<div class="print-kpi"><span>Unidades em cursos</span><strong>'+cursoItens.reduce((a,i)=>a+Number(i.enviada||0)-Number(i.devolvida||0),0)+'</strong></div>'+
       '<div class="print-kpi"><span>SKUs</span><strong>'+estoque.length+'</strong></div>'+
       '<div class="print-kpi"><span>Saúde do estoque</span><strong>'+(estoque.length?Math.round(ok/estoque.length*100):100)+'%</strong></div></div>'+
@@ -1300,11 +1306,11 @@ function gerarPDF(tipo){
     area.innerHTML=cabecalhoPagina('Relatório de BI — Estoque da Cozinha',sub,corpo);
   }else if(tipo==='estoque'){
     corpo=tabela([['Código'],['Produto'],['Categoria'],['Qtd',1],['Entrada'],['Validade'],['Status']],
-      estoque.map(i=>[i.id,i.nome,i.categoria,i.qtd+' '+(i.unidade||''),dt(i.entrada),dt(i.validade),status(i.validade).texto]));
+      estoque.map(i=>[i.id,i.nome,i.categoria,fmtQ(i.qtd)+' '+(i.unidade||''),dt(i.entrada),dt(i.validade),status(i.validade).texto]));
     area.innerHTML=cabecalhoPagina('Relatório de Estoque Geral',sub,corpo);
   }else if(tipo==='vencimentos'){
     corpo=tabela([['Código'],['Produto'],['Categoria'],['Qtd',1],['Validade'],['Status']],
-      itensCriticos().map(i=>[i.id,i.nome,i.categoria,i.qtd+' '+(i.unidade||''),dt(i.validade),status(i.validade).texto]))+
+      itensCriticos().map(i=>[i.id,i.nome,i.categoria,fmtQ(i.qtd)+' '+(i.unidade||''),dt(i.validade),status(i.validade).texto]))+
       '<h2 class="print-h2">Agenda e lembretes</h2>'+
       tabela([['Data'],['Atividade'],['Prioridade'],['Observações']],agenda.slice().sort((a,b)=>a.data.localeCompare(b.data)).map(a=>[dt(a.data),a.titulo,a.prioridade,a.obs||'—']));
     area.innerHTML=cabecalhoPagina('Relatório de Vencimentos e Agenda',sub,corpo);
@@ -1376,7 +1382,7 @@ function sabiResponde(q){
     return 'Próximos compromissos:\n'+prox.map(a=>'• '+dt(a.data)+' — '+a.titulo+(a.prioridade==='Urgente'?' (urgente)':'')).join('\n');
   }
   if(/estoque|resumo|quantos|itens|sku|painel/.test(t)){
-    const qtd=estoque.reduce((s,i)=>s+Number(i.qtd||0),0);
+    const qtd=totalDisponivel();
     const c=itensCriticos();
     return 'Resumo: **'+estoque.length+' SKUs**, **'+qtd+' unidades** no total, **'+c.length+' item(ns) em alerta** de validade e **'+agenda.length+' atividade(s)** na agenda.';
   }
@@ -1449,28 +1455,28 @@ function abrirEnvio(idx){_det=null;
    <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Curso de destino</label>
     <select class="${inputCls}" id="env-curso">${cursos.map(c=>`<option value="${c.cid}">${c.nome} — ${c.codigo}</option>`).join('')}</select></div>
    <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Validade (lote)</label>
-    <select class="${inputCls}" id="env-lote">${lotes.map(l=>`<option value="${l.idx}" ${l.idx===idx?'selected':''}>${dt(l.it.validade)} — ${l.it.qtd} ${l.it.unidade||''} disponíveis</option>`).join('')}</select></div>
+    <select class="${inputCls}" id="env-lote">${lotes.map(l=>`<option value="${l.idx}" ${l.idx===idx?'selected':''}>${dt(l.it.validade)} — ${fmtQ(l.it.qtd)} ${l.it.unidade||''} disponíveis</option>`).join('')}</select></div>
    <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Quantidade a enviar</label>
-    <input class="${inputCls}" id="env-qtd" type="number" min="1" max="${it.qtd}" value="1"/></div>
+    <input class="${inputCls}" id="env-qtd" type="number" min="0.001" step="any" inputmode="decimal" max="${it.qtd}" value="1"/></div>
   </div>
   <div class="flex justify-end gap-3 mt-6"><button class="px-5 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 font-semibold" onclick="fecharModal()">Cancelar</button>
   <button class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold" onclick="confirmarEnvio()">Confirmar envio</button></div>`);
  document.getElementById('env-lote').onchange=function(){const l=estoque[Number(this.value)];document.getElementById('env-qtd').max=l.qtd;};
 }
 function confirmarEnvio(){
- const idx=Number(document.getElementById('env-lote').value), cid=document.getElementById('env-curso').value, qtd=parseInt(document.getElementById('env-qtd').value||0);
+ const idx=Number(document.getElementById('env-lote').value), cid=document.getElementById('env-curso').value, qtd=numQ(document.getElementById('env-qtd').value||0);
  enviarParaCurso(idx,cid,qtd);
 }
 function enviarParaCurso(idx,cid,qtd){
  const it=estoque[idx], curso=cursos.find(c=>c.cid===cid);
  if(!it||!curso)return;
- if(!(qtd>0)||qtd>Number(it.qtd)){alert('Informe uma quantidade válida (máximo '+it.qtd+').');return;}
+ if(!(qtd>0)||qtd>Number(it.qtd)){alert('Informe uma quantidade válida (máximo '+fmtQ(it.qtd)+').');return;}
  it.qtd=Number(it.qtd)-qtd;
  const ex=cursoItens.find(x=>x.cid===cid&&x.codigo===it.id&&x.validade===it.validade);
  if(ex){ex.enviada=Number(ex.enviada)+qtd;}
  else cursoItens.push({cid,codigo:it.id,nome:it.nome,categoria:it.categoria,unidade:it.unidade||'',validade:it.validade,entrada:it.entrada,enviada:qtd,devolvida:0,quando:new Date().toISOString()});
  registrarMov('Consumo do curso (envio)',it,qtd,curso.nome);
- if(Number(it.qtd)===0) estoque.splice(idx,1);
+ if(numQ(it.qtd)<=0.0001){it.qtd=0;estoque.splice(idx,1);}
  salvarDados();fecharModal();renderEstoque();renderCursos();
 }
 function abrirInsercao(cid){
@@ -1490,10 +1496,10 @@ function addLinhaInsercao(){
  const row=document.createElement('div');row.className='grid grid-cols-12 gap-2 items-center ins-linha';
  row.innerHTML=`<select class="${inputCls} col-span-5 ins-item">${nomes.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('')}</select>
   <select class="${inputCls} col-span-4 ins-lote"></select>
-  <input class="${inputCls} col-span-2 ins-qtd" type="number" min="1" value="1"/>
+  <input class="${inputCls} col-span-2 ins-qtd" type="number" min="0.001" step="any" inputmode="decimal" value="1"/>
   <button type="button" class="col-span-1 text-slate-400 hover:text-red-500" title="Remover linha"><i class="fa-solid fa-xmark"></i></button>`;
  const it=row.querySelector('.ins-item'),lt=row.querySelector('.ins-lote'),q=row.querySelector('.ins-qtd');
- const upd=()=>{lt.innerHTML=lotesDoProduto(it.value).map(l=>`<option value="${l.idx}">${dt(l.it.validade)} — ${l.it.qtd} ${l.it.unidade||''}</option>`).join('');q.max=estoque[Number(lt.value)]?.qtd||'';};
+ const upd=()=>{lt.innerHTML=lotesDoProduto(it.value).map(l=>`<option value="${l.idx}">${dt(l.it.validade)} — ${fmtQ(l.it.qtd)} ${l.it.unidade||''}</option>`).join('');q.max=estoque[Number(lt.value)]?.qtd||'';};
  it.onchange=upd;lt.onchange=()=>{q.max=estoque[Number(lt.value)]?.qtd||'';};
  row.querySelector('button').onclick=()=>{if(document.querySelectorAll('.ins-linha').length>1)row.remove();};
  document.getElementById('ins-linhas').appendChild(row);upd();
@@ -1502,9 +1508,9 @@ function confirmarInsercaoLote(cid){
  const curso=cursos.find(c=>c.cid===cid);if(!curso)return;
  const ops=[],soma={};
  for(const r of document.querySelectorAll('.ins-linha')){
-  const idx=Number(r.querySelector('.ins-lote').value),qtd=parseInt(r.querySelector('.ins-qtd').value||0),it=estoque[idx];
+  const idx=Number(r.querySelector('.ins-lote').value),qtd=numQ(r.querySelector('.ins-qtd').value||0),it=estoque[idx];
   if(!it)continue; soma[idx]=(soma[idx]||0)+qtd;
-  if(!(qtd>0)||soma[idx]>Number(it.qtd)){alert('Quantidade inválida para '+it.nome+' (máximo '+it.qtd+').');return;}
+  if(!(qtd>0)||soma[idx]>Number(it.qtd)){alert('Quantidade inválida para '+it.nome+' (máximo '+fmtQ(it.qtd)+').');return;}
   ops.push({it,qtd});
  }
  if(!ops.length)return;
@@ -1515,7 +1521,7 @@ function confirmarInsercaoLote(cid){
   else cursoItens.push({cid,codigo:it.id,nome:it.nome,categoria:it.categoria,unidade:it.unidade||'',validade:it.validade,entrada:it.entrada,enviada:qtd,devolvida:0,quando:new Date().toISOString()});
   registrarMov('Consumo do curso (envio)',it,qtd,curso.nome);
  }
- estoque=estoque.filter(e=>Number(e.qtd)>0);
+ estoque=estoque.filter(e=>numQ(e.qtd)>0.0001);
  salvarDados();fecharModal();renderEstoque();renderCursos();abrirDetalheCurso(cid);
 }
 function abrirDevolucao(cid){
@@ -1527,7 +1533,7 @@ function abrirDevolucao(cid){
    return `<div class="border border-slate-200 dark:border-slate-800 rounded-xl p-3">
     <p class="font-semibold text-sm">${i.nome}</p><p class="text-xs text-slate-500 mb-2">cód. ${i.codigo} · validade ${dt(i.validade)} · enviado ${i.enviada} ${i.unidade} · já devolvido ${i.devolvida||0}</p>
     <label class="block text-xs text-slate-500 mb-1">Quantidade que irá retornar (máx. ${disp})</label>
-    <input class="${inputCls}" data-dev="${i.cid}|${i.codigo}|${i.validade}" max="${disp}" min="0" step="1" type="number" value="0"/></div>`;}).join('')}</div>
+    <input class="${inputCls}" data-dev="${i.cid}|${i.codigo}|${i.validade}" max="${disp}" min="0" step="any" inputmode="decimal" type="number" value="0"/></div>`;}).join('')}</div>
   <div class="flex justify-end gap-3 mt-6"><button class="px-5 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 font-semibold" onclick="fecharModal()">Cancelar</button>
   <button class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold" onclick="confirmarDevolucao('${cid}')">Confirmar retorno</button></div>`);
 }
@@ -1599,12 +1605,12 @@ function insumoIndividual(cid,codigo,validade,modo){
  if(modo==='add'){
   const idx=estoque.findIndex(e=>e.id===codigo&&e.validade===validade);
   if(idx<0){alert('Este lote não possui saldo no estoque.');return;}
-  const q=parseInt(prompt(`Quantidade de "${item.nome}" a adicionar (disponível: ${estoque[idx].qtd} ${estoque[idx].unidade||''})`,'1')||0);
+  const q=numQ(prompt(`Quantidade de "${item.nome}" a adicionar (disponível: ${estoque[idx].qtd} ${estoque[idx].unidade||''})`,'1')||0);
   if(!q)return; _det=null; enviarParaCurso(idx,cid,q); return;
  }
  const disp=Number(item.enviada)-Number(item.devolvida||0);
- const q=parseInt(prompt(`Quantidade de "${item.nome}" a retornar ao estoque (máx. ${disp})`,String(disp))||0);
- if(!q)return; if(!(q>0)||q>disp){alert('Quantidade inválida (máximo '+disp+').');return;}
+ const q=numQ(prompt(`Quantidade de "${item.nome}" a retornar ao estoque (máx. ${disp})`,String(disp))||0);
+ if(!q)return; if(!(q>0)||q>disp){alert('Quantidade inválida (máximo '+fmtQ(disp)+').');return;}
  const alvo=estoque.find(e=>e.id===item.codigo&&e.validade===item.validade);
  if(alvo)alvo.qtd=Number(alvo.qtd)+q;
  else estoque.unshift({id:item.codigo,nome:item.nome,categoria:item.categoria,qtd:q,unidade:item.unidade,entrada:item.entrada||new Date().toISOString().slice(0,10),validade:item.validade});
@@ -1780,7 +1786,7 @@ window.renderDescarte=function(){
     const d=Math.abs(status(it.validade).dias);
     return `<tr class="border-b border-slate-100 dark:border-slate-800">
       <td class="px-4 py-3 font-mono text-xs">${esc(it.id)}</td><td class="px-4 py-3 font-medium">${esc(it.nome)}</td>
-      <td class="px-4 py-3 text-slate-500">${esc(it.categoria)}</td><td class="px-4 py-3 text-right">${it.qtd} ${esc(it.unidade||'')}</td>
+      <td class="px-4 py-3 text-slate-500">${esc(it.categoria)}</td><td class="px-4 py-3 text-right">${fmtQ(it.qtd)} ${esc(it.unidade||'')}</td>
       <td class="px-4 py-3">${dt(it.validade)}</td><td class="px-4 py-3 text-red-500 font-semibold">${d} dia(s)</td>
       <td class="px-4 py-3 text-right"><button class="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-semibold" onclick="abrirDescarte(${idx})"><i class="fa-solid fa-trash-can"></i> Descartar</button></td></tr>`;
   }).join('')||'<tr><td colspan="7" class="px-4 py-8 text-center text-slate-400">Nenhum item vencido no estoque. 🎉</td></tr>';
@@ -1794,8 +1800,8 @@ window.abrirDescarte=function(idx){
   abrirModal(`<h3 class="text-lg font-bold mb-1">Descartar item vencido</h3>
    <p class="text-sm text-slate-500 mb-5">${esc(it.nome)} · cód. ${esc(it.id)} · validade ${dt(it.validade)}</p>
    <div class="space-y-4">
-    <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Quantidade a descartar (máx. ${it.qtd})</label>
-     <input class="${inputCls}" id="dsc-qtd" type="number" min="1" max="${it.qtd}" value="${it.qtd}"/></div>
+    <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Quantidade a descartar (máx. ${fmtQ(it.qtd)})</label>
+     <input class="${inputCls}" id="dsc-qtd" type="number" min="0.001" step="any" inputmode="decimal" max="${it.qtd}" value="${it.qtd}"/></div>
     <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Motivo</label>
      <select class="${inputCls}" id="dsc-motivo">${MOTIVOS.map(m=>`<option>${m}</option>`).join('')}</select></div>
     <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Responsável</label>
@@ -1813,17 +1819,17 @@ function baixarDescarte(it,qtd,motivo,resp,obs){
 }
 window.confirmarDescarte=function(idx){
   const it=estoque[idx]; if(!it)return;
-  const qtd=parseInt(document.getElementById('dsc-qtd').value||0);
-  if(!(qtd>0)||qtd>Number(it.qtd)){alert('Quantidade inválida (máximo '+it.qtd+').');return;}
+  const qtd=numQ(document.getElementById('dsc-qtd').value||0);
+  if(!(qtd>0)||qtd>Number(it.qtd)){alert('Quantidade inválida (máximo '+fmtQ(it.qtd)+').');return;}
   baixarDescarte(it,qtd,document.getElementById('dsc-motivo').value,document.getElementById('dsc-resp').value.trim(),document.getElementById('dsc-obs').value.trim());
-  estoque=estoque.filter(e=>Number(e.qtd)>0);
+  estoque=estoque.filter(e=>numQ(e.qtd)>0.0001);
   salvarDados();fecharModal();renderDescarte();renderEstoque();
 };
 window.descartarTodosVencidos=function(){
   const v=vencidosEstoque(); if(!v.length){alert('Não há itens vencidos.');return;}
   if(!confirm('Descartar '+v.length+' lote(s) vencido(s) do estoque? Esta ação dá baixa em todas as unidades vencidas.'))return;
   v.forEach(({it})=>baixarDescarte(it,Number(it.qtd),'Produto vencido',(config&&config.nome)||'',''));
-  estoque=estoque.filter(e=>Number(e.qtd)>0);
+  estoque=estoque.filter(e=>numQ(e.qtd)>0.0001);
   salvarDados();renderDescarte();renderEstoque();
 };
 window.exportarDescartes=function(){
@@ -1863,7 +1869,7 @@ window.abrirEncerramento=function(cid,modo){
       <p class="font-semibold text-sm">${esc(i.nome)}</p>
       <p class="text-xs text-slate-500 mb-2">cód. ${esc(i.codigo)} · validade ${dt(i.validade)} · em uso ${disp} ${esc(i.unidade||'')}</p>
       <label class="block text-xs text-slate-500 mb-1">Quantidade que retorna ao estoque (máx. ${disp})</label>
-      <input class="${inputCls} enc-ret" data-enc="${esc(i.codigo)}|${esc(i.validade)}" max="${disp}" min="0" step="1" type="number" value="0"/></div>`;}).join('')}</div>
+      <input class="${inputCls} enc-ret" data-enc="${esc(i.codigo)}|${esc(i.validade)}" max="${disp}" min="0" step="any" inputmode="decimal" type="number" value="0"/></div>`;}).join('')}</div>
    <div class="flex justify-end gap-3 mt-6"><button class="px-5 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 font-semibold" onclick="fecharModal()">Cancelar</button>
    <button class="px-5 py-2.5 rounded-xl ${modo==='curso'?'bg-red-600 hover:bg-red-700':'bg-brand-600 hover:bg-brand-700'} text-white font-semibold" onclick="confirmarEncerramento('${cid}','${modo}')"><i class="fa-solid fa-flag-checkered"></i> ${titulo}</button></div>`,true);
 };
@@ -2031,9 +2037,9 @@ window.addLinhaReq=function(dados){
   const row=document.createElement('div'); row.className='grid grid-cols-12 gap-2 items-center rq-linha';
   row.innerHTML=`<input class="${inputCls} col-span-4 rq-nome" list="bib-itens" placeholder="Produto" value="${esc(d.nome)}"/>
    <input class="${inputCls} col-span-2 rq-un" placeholder="Un" value="${esc(d.unidade||'')}"/>
-   <input class="${inputCls} col-span-2 rq-nec" type="number" min="1" value="${esc(d.necessario||1)}"/>
+   <input class="${inputCls} col-span-2 rq-nec" type="number" min="0.001" step="any" inputmode="decimal" value="${esc(d.necessario||1)}"/>
    <input class="${inputCls} col-span-1 rq-est bg-slate-100 dark:bg-slate-800" readonly value="0"/>
-   <input class="${inputCls} col-span-2 rq-req" type="number" min="0" value="${esc(d.requisitar||0)}"/>
+   <input class="${inputCls} col-span-2 rq-req" type="number" min="0" step="any" inputmode="decimal" value="${esc(d.requisitar||0)}"/>
    <button type="button" class="col-span-1 text-slate-400 hover:text-red-500" title="Remover linha"><i class="fa-solid fa-xmark"></i></button>`;
   const nome=row.querySelector('.rq-nome'),nec=row.querySelector('.rq-nec'),est=row.querySelector('.rq-est'),req=row.querySelector('.rq-req'),un=row.querySelector('.rq-un');
   const calc=()=>{ const e=estoqueDoProduto(nome.value); est.value=e;
@@ -2097,7 +2103,7 @@ window.abrirConferencia=function(num){
      <div class="border border-slate-200 dark:border-slate-800 rounded-xl p-3 space-y-2" data-cf="${k}">
       <p class="font-semibold text-sm">${esc(i.nome)} <small class="text-slate-400">solicitado: ${i.requisitar} ${esc(i.unidade||'')}</small></p>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-       <div><label class="block text-[11px] text-slate-500 mb-1">Qtd recebida</label><input class="${inputCls} cf-qtd" type="number" min="0" value="${i.requisitar}"/></div>
+       <div><label class="block text-[11px] text-slate-500 mb-1">Qtd recebida</label><input class="${inputCls} cf-qtd" type="number" min="0" step="any" inputmode="decimal" value="${i.requisitar}"/></div>
        <div><label class="block text-[11px] text-slate-500 mb-1">Código / lote</label><input class="${inputCls} cf-cod" value="${esc(i.codigoLote||'')}" placeholder="Ex: LAT-030"/></div>
        <div><label class="block text-[11px] text-slate-500 mb-1">Validade</label><input class="${inputCls} cf-val" type="date"/></div>
       </div>
@@ -2318,7 +2324,7 @@ atualizarAlertasGerais();
   }
   window.renderPainel=function(){
     const body=document.getElementById('tbody-painel'); if(!body)return;
-    body.innerHTML=itensCriticos().map(it=>{const st=status(it.validade),idx=estoque.indexOf(it);return `<tr class="border-b border-slate-100 dark:border-slate-800"><td class="px-4 py-3 font-mono text-xs">${escV24(it.id)}</td><td class="px-4 py-3 font-medium">${escV24(it.nome)}</td><td class="px-4 py-3">${escV24(it.categoria)}</td><td class="px-4 py-3 text-right">${it.qtd} ${escV24(it.unidade||'')}</td><td class="px-4 py-3">${dt(it.entrada)}</td><td class="px-4 py-3">${dt(it.validade)}</td><td class="px-4 py-3 whitespace-nowrap"><span class="text-xs px-2 py-1 rounded font-bold ${st.classe}">${st.texto}</span>${st.key==='VENCIDO'?`<button class="ml-2 px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-bold" onclick="abrirDescarte(${idx})"><i class="fa-solid fa-trash-can"></i> DESCARTAR</button>`:''}</td></tr>`}).join('')||'<tr><td colspan="7" class="px-4 py-8 text-center">Nenhum item vencido ou próximo do vencimento.</td></tr>';
+    body.innerHTML=itensCriticos().map(it=>{const st=status(it.validade),idx=estoque.indexOf(it);return `<tr class="border-b border-slate-100 dark:border-slate-800"><td class="px-4 py-3 font-mono text-xs">${escV24(it.id)}</td><td class="px-4 py-3 font-medium">${escV24(it.nome)}</td><td class="px-4 py-3">${escV24(it.categoria)}</td><td class="px-4 py-3 text-right">${fmtQ(it.qtd)} ${escV24(it.unidade||'')}</td><td class="px-4 py-3">${dt(it.entrada)}</td><td class="px-4 py-3">${dt(it.validade)}</td><td class="px-4 py-3 whitespace-nowrap"><span class="text-xs px-2 py-1 rounded font-bold ${st.classe}">${st.texto}</span>${st.key==='VENCIDO'?`<button class="ml-2 px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-bold" onclick="abrirDescarte(${idx})"><i class="fa-solid fa-trash-can"></i> DESCARTAR</button>`:''}</td></tr>`}).join('')||'<tr><td colspan="7" class="px-4 py-8 text-center">Nenhum item vencido ou próximo do vencimento.</td></tr>';
     const hist=document.getElementById('tbody-painel-descarte-hist');
     if(hist)hist.innerHTML=(window.descartes||[]).map(d=>`<tr class="border-b border-slate-100 dark:border-slate-800"><td class="px-4 py-3">${new Date(d.quando).toLocaleString('pt-BR')}</td><td class="px-4 py-3 font-medium">${escV24(d.nome)}</td><td class="px-4 py-3 font-mono text-xs">${escV24(d.codigo)}</td><td class="px-4 py-3 text-right">${d.qtd} ${escV24(d.unidade||'')}</td><td class="px-4 py-3">${dt(d.validade)}</td><td class="px-4 py-3">${escV24(d.motivo||'')}</td><td class="px-4 py-3">${escV24(d.responsavel||'')}</td></tr>`).join('')||'<tr><td colspan="7" class="px-4 py-8 text-center text-slate-400">Nenhum descarte registrado.</td></tr>';
   };
@@ -2441,7 +2447,7 @@ atualizarAlertasGerais();
       const req=it.reqNum?`<b class="text-brand-600">${E(it.reqNum)}</b><br><small class="text-slate-400">chegou ${it.chegouEm?dt(it.chegouEm):'—'}</small>`:'<span class="text-slate-400">—</span>';
       return `<tr class="border-b border-slate-100 dark:border-slate-800">
        <td class="px-4 py-3 font-mono text-xs">${E(it.id)}</td><td class="px-4 py-3 font-medium">${E(it.nome)}</td>
-       <td class="px-4 py-3 text-slate-500">${E(it.categoria)}</td><td class="px-4 py-3 text-right">${it.qtd} ${E(it.unidade||'')}</td>
+       <td class="px-4 py-3 text-slate-500">${E(it.categoria)}</td><td class="px-4 py-3 text-right">${fmtQ(it.qtd)} ${E(it.unidade||'')}</td>
        <td class="px-4 py-3">${dt(it.entrada)}</td><td class="px-4 py-3">${dt(it.validade)}</td>
        <td class="px-4 py-3 text-xs">${req}</td>
        <td class="px-4 py-3"><span class="text-xs px-2.5 py-1 rounded-lg font-bold ${s.classe}">${s.texto}</span></td>
@@ -2504,7 +2510,7 @@ atualizarAlertasGerais();
      <div class="space-y-2 max-h-[42vh] overflow-auto pr-1">${r.itens.map((i,k)=>`
       <div class="grid grid-cols-12 gap-2 items-center" data-rc="${k}">
         <div class="col-span-4 text-sm font-medium truncate">${E(i.nome)}</div>
-        <input class="${IN} col-span-2 rc-qtd" type="number" min="0" value="${i.requisitar}" title="Quantidade recebida"/>
+        <input class="${IN} col-span-2 rc-qtd" type="number" min="0" step="any" inputmode="decimal" value="${i.requisitar}" title="Quantidade recebida"/>
         <input class="${IN} col-span-2 rc-cod" value="${E(i.codigoLote||(r.num+'-'+String(k+1).padStart(2,'0')))}" title="Código / lote"/>
         <input class="${IN} col-span-2 rc-val" type="date" title="Validade"/>
         <select class="${IN} col-span-2 rc-cat" title="Categoria">${cats.map(c=>`<option>${E(c)}</option>`).join('')}</select>
@@ -2612,7 +2618,7 @@ atualizarAlertasGerais();
     body.innerHTML=itensCriticos().map(it=>{const st=status(it.validade),idx=estoque.indexOf(it);
       return `<tr class="border-b border-slate-100 dark:border-slate-800">
        <td class="px-4 py-3 font-mono text-xs">${E(it.id)}</td><td class="px-4 py-3 font-medium">${E(it.nome)}</td>
-       <td class="px-4 py-3">${E(it.categoria)}</td><td class="px-4 py-3 text-right">${it.qtd} ${E(it.unidade||'')}</td>
+       <td class="px-4 py-3">${E(it.categoria)}</td><td class="px-4 py-3 text-right">${fmtQ(it.qtd)} ${E(it.unidade||'')}</td>
        <td class="px-4 py-3">${dt(it.entrada)}</td><td class="px-4 py-3">${dt(it.validade)}</td>
        <td class="px-4 py-3 whitespace-nowrap"><span class="text-xs px-2 py-1 rounded font-bold ${st.classe}">${st.texto}</span>
         <button class="ml-2 px-3 py-1.5 rounded-lg ${st.key==='VENCIDO'?'bg-red-600 hover:bg-red-700 text-white':'bg-slate-200 dark:bg-slate-800'} text-xs font-bold" onclick="abrirDescarte(${idx})"><i class="fa-solid fa-trash-can"></i> Descartar</button></td></tr>`;
@@ -3013,7 +3019,7 @@ atualizarAlertasGerais();
     <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">N° Requisição EST01</label><input class="${cls}" id="cad-requisicao" placeholder="Ex.: EST01-2026-001" required value="${safe(it.reqNum||'')}"/></div>
     <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Descrição do produto</label><input class="${cls}" id="cad-nome" required value="${safe(it.nome)}"/></div>
     <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Categoria</label><div class="flex gap-2"><select class="${cls}" id="cad-categoria">${CATEGORIAS.map(c=>`<option ${c===it.categoria?'selected':''}>${safe(c)}</option>`).join('')}</select><button type="button" title="Nova categoria" class="shrink-0 px-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold" onclick="novaCategoria('cad-categoria')"><i class="fa-solid fa-plus"></i></button></div></div>
-    <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Quantidade</label><input class="${cls}" id="cad-qtd" type="number" min="1" required value="${safe(it.qtd)}"/></div>
+    <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Quantidade</label><input class="${cls}" id="cad-qtd" type="number" min="0.001" step="any" inputmode="decimal" required value="${safe(it.qtd)}"/></div>
     <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Unidade</label><input class="${cls}" id="cad-unidade" placeholder="Un, Kg, L, Pct" required value="${safe(it.unidade)}"/></div>
     <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Data de entrada</label><input class="${cls}" id="cad-entrada" type="date" required value="${safe(it.entrada)}"/></div>
     <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Data de validade</label><input class="${cls}" id="cad-validade" type="date" required value="${safe(it.validade)}"/></div>
@@ -3021,7 +3027,7 @@ atualizarAlertasGerais();
    </form>`,true);
  };
  window.salvarItemV28=function(e,idx){e.preventDefault();
-  const d={id:document.getElementById('cad-codigo').value.trim(),reqNum:document.getElementById('cad-requisicao').value.trim(),nome:document.getElementById('cad-nome').value.trim(),categoria:document.getElementById('cad-categoria').value,qtd:parseInt(document.getElementById('cad-qtd').value),unidade:document.getElementById('cad-unidade').value.trim(),entrada:document.getElementById('cad-entrada').value,validade:document.getElementById('cad-validade').value};
+  const d={id:document.getElementById('cad-codigo').value.trim(),reqNum:document.getElementById('cad-requisicao').value.trim(),nome:document.getElementById('cad-nome').value.trim(),categoria:document.getElementById('cad-categoria').value,qtd:numQ(document.getElementById('cad-qtd').value),unidade:document.getElementById('cad-unidade').value.trim(),embalagem:(document.getElementById('cad-embalagem')||{value:''}).value.trim(),entrada:document.getElementById('cad-entrada').value,validade:document.getElementById('cad-validade').value};
   if(idx>=0&&estoque[idx])estoque[idx]=Object.assign({},estoque[idx],d);else estoque.unshift(d);
   salvarDados();fecharModal();switchTab('estoque');renderEstoque();
  };
@@ -3029,7 +3035,7 @@ atualizarAlertasGerais();
  function linhaLote(){const id='lote-'+(++loteSeq);return `<div id="${id}" class="grid grid-cols-12 gap-2 items-end border-b border-slate-200 dark:border-slate-800 pb-3">
   <div class="col-span-12 sm:col-span-2"><label class="block text-[10px] uppercase text-slate-500 mb-1">Código / lote</label><input class="${cls} lote-cod" required/></div>
   <div class="col-span-12 sm:col-span-3"><label class="block text-[10px] uppercase text-slate-500 mb-1">Produto</label><input class="${cls} lote-nome" required/></div>
-  <div class="col-span-4 sm:col-span-2"><label class="block text-[10px] uppercase text-slate-500 mb-1">Qtd.</label><input class="${cls} lote-qtd" type="number" min="1" value="1" required/></div>
+  <div class="col-span-4 sm:col-span-2"><label class="block text-[10px] uppercase text-slate-500 mb-1">Qtd.</label><input class="${cls} lote-qtd" type="number" min="0.001" step="any" inputmode="decimal" value="1" required/></div>
   <div class="col-span-4 sm:col-span-2"><label class="block text-[10px] uppercase text-slate-500 mb-1">Unidade</label><input class="${cls} lote-un" placeholder="Kg, Un..." required/></div>
   <div class="col-span-10 sm:col-span-2"><label class="block text-[10px] uppercase text-slate-500 mb-1">Validade</label><input class="${cls} lote-val" type="date" required/></div>
   <button type="button" class="col-span-2 sm:col-span-1 h-[42px] text-slate-400 hover:text-red-500" title="Remover item" onclick="document.getElementById('${id}').remove()"><i class="fa-solid fa-trash"></i></button></div>`;}
@@ -3044,26 +3050,26 @@ atualizarAlertasGerais();
   const box=document.getElementById('modal-box');if(box)box.classList.add('max-w-5xl');
  };
  window.salvarLoteV28=function(e){e.preventDefault();const req=document.getElementById('lote-req').value.trim(),entrada=document.getElementById('lote-entrada').value,cat=document.getElementById('lote-cat').value,linhas=[...document.querySelectorAll('#lote-itens>div')];
-  const novos=linhas.map(b=>({id:b.querySelector('.lote-cod').value.trim(),reqNum:req,nome:b.querySelector('.lote-nome').value.trim(),categoria:cat,qtd:parseInt(b.querySelector('.lote-qtd').value),unidade:b.querySelector('.lote-un').value.trim(),entrada,validade:b.querySelector('.lote-val').value,chegouEm:entrada}));
+  const novos=linhas.map(b=>({id:b.querySelector('.lote-cod').value.trim(),reqNum:req,nome:b.querySelector('.lote-nome').value.trim(),categoria:cat,qtd:numQ(b.querySelector('.lote-qtd').value),unidade:b.querySelector('.lote-un').value.trim(),embalagem:(b.querySelector('.lote-emb')||{value:''}).value.trim(),entrada,validade:b.querySelector('.lote-val').value,chegouEm:entrada}));
   estoque.unshift(...novos);salvarDados();fecharModal();switchTab('estoque');renderEstoque();
  };
  document.querySelectorAll('button[onclick="abrirCadastroItem()"]')[0]?.insertAdjacentHTML('afterend','<button type="button" class="px-6 py-3 bg-slate-200 dark:bg-slate-800 font-semibold rounded-xl transition flex items-center gap-2" onclick="abrirCadastroLote()"><i class="fa-solid fa-table-list"></i> Cadastro em lote</button>');
  window.confirmarDescarte=function(idx){
   const it=estoque[idx];if(!it)return;
-  const qtd=parseInt(document.getElementById('dsc-qtd').value||0);
-  if(!(qtd>0)||qtd>Number(it.qtd)){alert('Quantidade inválida (máximo '+it.qtd+').');return;}
+  const qtd=numQ(document.getElementById('dsc-qtd').value||0);
+  if(!(qtd>0)||qtd>Number(it.qtd)){alert('Quantidade inválida (máximo '+fmtQ(it.qtd)+').');return;}
   const motivo=document.getElementById('dsc-motivo').value,resp=document.getElementById('dsc-resp').value.trim(),obs=document.getElementById('dsc-obs').value.trim();
   window.descartes.unshift({quando:new Date().toISOString(),codigo:it.id,nome:it.nome,categoria:it.categoria,qtd,unidade:it.unidade||'',validade:it.validade,motivo,responsavel:resp,obs});
   if(typeof registrarMov==='function')registrarMov('Descarte de vencido',it,qtd,motivo||'Descarte');
   it.qtd=Number(it.qtd)-qtd;
-  estoque=estoque.filter(e=>Number(e.qtd)>0);
+  estoque=estoque.filter(e=>numQ(e.qtd)>0.0001);
   salvarDados();fecharModal();renderPainel();renderEstoque();mostrarAvisoVencimentos();
  };
  window.descartarTodosVencidos=function(){
   const v=vencidosEstoque();if(!v.length){alert('Não há itens vencidos.');return;}
   if(!confirm('Descartar '+v.length+' lote(s) vencido(s) do estoque? Esta ação dá baixa em todas as unidades vencidas.'))return;
   v.forEach(({it})=>{const qtd=Number(it.qtd);window.descartes.unshift({quando:new Date().toISOString(),codigo:it.id,nome:it.nome,categoria:it.categoria,qtd,unidade:it.unidade||'',validade:it.validade,motivo:'Produto vencido',responsavel:(config&&config.nome)||'',obs:''});if(typeof registrarMov==='function')registrarMov('Descarte de vencido',it,qtd,'Produto vencido');it.qtd=0;});
-  estoque=estoque.filter(e=>Number(e.qtd)>0);
+  estoque=estoque.filter(e=>numQ(e.qtd)>0.0001);
   salvarDados();renderPainel();renderEstoque();mostrarAvisoVencimentos();
  };
 })();
@@ -3282,7 +3288,7 @@ function dados(){
     venc:s.filter(x=>x.st.key==='VENCIDO').sort((a,b)=>a.st.dias-b.st.dias),
     prox:s.filter(x=>x.st.key==='PROXIMO').sort((a,b)=>a.st.dias-b.st.dias),
     ok:s.filter(x=>x.st.key==='OK'),
-    unid:est.reduce((a,i)=>a+Number(i.qtd||0),0)};
+    unid:est.reduce((a,i)=>a+numQ(i.qtd),0)};
 }
 function porCategoria(s){
   const m={};s.forEach(({i,st})=>{const c=i.categoria||'Sem categoria';m[c]=m[c]||{itens:0,qtd:0,v:0,p:0,o:0,lista:[]};
@@ -3371,35 +3377,55 @@ window.gerarPDF=function(tipo){
 if(!window.firebase)return console.warn('Firebase não carregou (sem internet?) — usando só dados locais.');
 firebase.initializeApp({apiKey:"AIzaSyAiew99dRDo0Vx6cBi-MDg-OeGWnd_rRSw",authDomain:"mo-music-4481f.firebaseapp.com",projectId:"mo-music-4481f",storageBucket:"mo-music-4481f.firebasestorage.app",messagingSenderId:"397317753193",appId:"1:397317753193:web:40b97572a3b0a14ad115f8",measurementId:"G-Y0EBGBMQEB"});
 const db=firebase.firestore();
+try{db.settings({experimentalAutoDetectLongPolling:true,merge:true});}catch(e){}
+try{db.enablePersistence({synchronizeTabs:true}).catch(()=>{});}catch(e){}
 const ref=db.collection('sirius').doc('cozinha-senac');
 const PFX='modesk_senac_', SKIP=['modesk_senac_tema'];
 const LS=window.localStorage, setOrig=LS.setItem.bind(LS), remOrig=LS.removeItem.bind(LS);
 const CLIENTE=sessionStorage.getItem('sirius_cli')||(Math.random().toString(36).slice(2));sessionStorage.setItem('sirius_cli',CLIENTE);
 const chaves=()=>Object.keys(LS).filter(k=>k.startsWith(PFX)&&!SKIP.includes(k));
 const campo=k=>k.replace(/[^\w]/g,'_');
-let versaoLocal=Number(LS.getItem('sirius_sync_v')||0), timer=null, aplicando=false;
+let versaoLocal=Number(LS.getItem('sirius_sync_v')||0), timer=null, aplicando=false, pendente=LS.getItem('sirius_sync_pend')==='1';
 
 const badge=document.createElement('div');
-badge.style.cssText='position:fixed;right:12px;bottom:12px;z-index:9999;font:600 11px Manrope,Arial,sans-serif;padding:5px 10px;border-radius:999px;background:#0f172acc;color:#fff;pointer-events:none;transition:opacity .4s';
-const aviso=(t,c)=>{badge.textContent=t;badge.style.background=c;badge.style.opacity='1';clearTimeout(badge._t);badge._t=setTimeout(()=>badge.style.opacity='.35',2500);};
-document.addEventListener('DOMContentLoaded',()=>document.body.appendChild(badge));if(document.body)document.body.appendChild(badge);
+badge.style.cssText='position:static;flex:none;opacity:.8;z-index:150;font:600 10px Manrope,Arial,sans-serif;padding:5px 10px;border-radius:999px;background:#0f172acc;color:#fff;pointer-events:none;transition:opacity .4s;white-space:nowrap';
+badge.id='sirius-sync-status';badge.setAttribute('role','status');
+let estado='conectando';
+const CORES={online:'#22c55e',conectando:'#f59e0b',offline:'#94a3b8',erro:'#ef4444'};
+const TXT={online:'Online · tempo real',conectando:'Conectando…',offline:'Offline · salvo no aparelho',erro:'Sem acesso à nuvem'};
+function status(e){estado=e;badge.innerHTML='<span style="display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:1px;background:'+CORES[e]+(e==='online'?';box-shadow:0 0 0 3px '+CORES[e]+'33':'')+'"></span>'+TXT[e];badge.style.background='#0f172a99';badge.title=TXT[e];}
+const aviso=(t,c)=>{badge.textContent=t;badge.style.background=c;badge.style.opacity='1';clearTimeout(badge._t);badge._t=setTimeout(()=>{status(estado);badge.style.opacity='.8';},2200);};
+status('conectando');
+window.addEventListener('offline',()=>status('offline'));
+function inserirBadge(){const acoes=document.querySelector('body>header>div:last-child');if(acoes)acoes.prepend(badge);else document.body.appendChild(badge);}document.addEventListener('DOMContentLoaded',inserirBadge);if(document.body)inserirBadge();
 
-function enviar(){
-  clearTimeout(timer);
+function enviar(imediato){
+  pendente=true;setOrig('sirius_sync_pend','1');clearTimeout(timer);
   timer=setTimeout(async()=>{
     const dados={};chaves().forEach(k=>dados[campo(k)]={k,v:LS.getItem(k)});
     if(!Object.keys(dados).length)return; /* nunca envia base vazia */
     versaoLocal=Date.now();setOrig('sirius_sync_v',String(versaoLocal));
-    try{await ref.set({dados,versao:versaoLocal,cliente:CLIENTE});aviso('☁ Sincronizado','#15803dcc');}
-    catch(e){console.error(e);aviso('⚠ Falha ao sincronizar','#b91c1ccc');}
-  },800);
+    try{await ref.set({dados,versao:versaoLocal,cliente:CLIENTE});pendente=false;setOrig('sirius_sync_pend','0');aviso('☁ Sincronizado','#15803dcc');}
+    catch(e){console.error(e);aviso('⚠ Falha ao sincronizar','#b91c1ccc');setTimeout(()=>enviar(),5000);}
+  },imediato?0:800);
 }
-LS.setItem=function(k,v){setOrig(k,v);if(!aplicando&&String(k).startsWith(PFX)&&!SKIP.includes(k))enviar();};
-LS.removeItem=function(k){remOrig(k);if(!aplicando&&String(k).startsWith(PFX)&&!SKIP.includes(k))enviar();};
+/* celular: envia na hora ao minimizar/trocar de app (senão o envio se perde) */
+const flush=()=>{if(pendente)enviar(true);};
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')flush();});
+window.addEventListener('pagehide',flush);
+window.addEventListener('online',()=>{status('conectando');if(pendente)enviar(true);});
+/* ao voltar para o app, confere a nuvem de novo */
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){if(pendente)enviar(true);else ref.get({source:'server'}).then(d=>{if(d.exists&&aplicar(d))recarregar();}).catch(()=>{});}});
+const T0=Date.now();let interagiu=false;['pointerdown','keydown','input','change','touchstart'].forEach(ev=>document.addEventListener(ev,()=>{interagiu=true;},true));
+const podeEnviar=()=>interagiu||Date.now()-T0>8000; /* gravações automáticas da inicialização não viram envio (evita pingue-pongue) */
+LS.setItem=function(k,v){const igual=LS.getItem(k)===String(v);setOrig(k,v);if(igual)return;if(!aplicando&&podeEnviar()&&String(k).startsWith(PFX)&&!SKIP.includes(k))enviar();};
+LS.removeItem=function(k){const tinha=LS.getItem(k)!==null;remOrig(k);if(tinha&&!aplicando&&podeEnviar()&&String(k).startsWith(PFX)&&!SKIP.includes(k))enviar();};
 
 function aplicar(doc){
   const d=doc.data();if(!d||!d.dados||!Object.keys(d.dados).length)return false; /* nunca aplica base vazia */
-  if(d.cliente===CLIENTE||d.versao<=versaoLocal)return false;
+  if(d.cliente===CLIENTE||pendente||Number(d.versao)===versaoLocal)return false; /* não depende do relógio do aparelho */
+  const remotas0=Object.values(d.dados);const dif=remotas0.some(x=>x.v!=null&&LS.getItem(x.k)!==String(x.v))||chaves().some(k=>!remotas0.find(x=>x.k===k));
+  if(!dif){versaoLocal=d.versao;setOrig('sirius_sync_v',String(d.versao));return false;} /* conteúdo idêntico: não recarrega */
   aplicando=true;
   const remotas=Object.values(d.dados).map(x=>x.k);
   chaves().forEach(k=>{if(!remotas.includes(k))remOrig(k);});
@@ -3408,16 +3434,20 @@ function aplicar(doc){
   aplicando=false;return true;
 }
 let primeira=true;
-ref.onSnapshot(doc=>{
-  if(!doc.exists){if(primeira){primeira=false;enviar();}return;}
+function recarregar(){const ult=Number(sessionStorage.getItem('sirius_rl')||0);const esp=Math.max(600,15000-(Date.now()-ult));clearTimeout(window.__rlT);window.__rlT=setTimeout(()=>{sessionStorage.setItem('sirius_rl',String(Date.now()));location.reload();},esp);}
+ref.onSnapshot({includeMetadataChanges:true},doc=>{
+  status(doc.metadata.fromCache&&!navigator.onLine?'offline':doc.metadata.fromCache?'conectando':'online');
+  if(doc.metadata.hasPendingWrites)return;
+  if(!doc.exists){if(primeira&&!doc.metadata.fromCache){primeira=false;enviar();}return;}
+  if(primeira&&pendente&&!doc.metadata.fromCache){primeira=false;enviar(true);return;}
   const mudou=aplicar(doc);
-  if(primeira&&!mudou&&Number(doc.data().versao||0)<versaoLocal)enviar();
+  
   primeira=false;
   if(mudou){aviso('☁ Atualizado de outro dispositivo','#1d4ed8cc');
     const ativo=document.activeElement;const digitando=ativo&&/INPUT|TEXTAREA|SELECT/.test(ativo.tagName)&&ativo.value;
-    if(digitando){const f=()=>{ativo.removeEventListener('blur',f);location.reload();};ativo.addEventListener('blur',f);}
-    else setTimeout(()=>location.reload(),600);}
-},e=>{console.error(e);aviso('⚠ Sem acesso à nuvem (verifique as regras do Firestore)','#b91c1ccc');});
+    if(digitando){const f=()=>{ativo.removeEventListener('blur',f);recarregar();};ativo.addEventListener('blur',f);}
+    else recarregar();}
+},e=>{console.error(e);status('erro');aviso('⚠ Sem acesso à nuvem (verifique as regras do Firestore)','#b91c1ccc');});
 })();
 </script>
 <script id="sirius-v21-relatorios-cursos">
@@ -3576,7 +3606,8 @@ if(excluirOrig)window.excluirCurso=function(cid){const r=excluirOrig.apply(this,
    const ret=tabela(['Data','Tipo','Itens','Retornado','Consumido'],aulasCurso.map(a=>[D(a.data||a.quando),E(a.tipo),N(a.itens),N(a.retornado),N(a.consumido)]));
    const descartes=tabela(['Data','Item','Qtd.','Motivo','Responsável'],descPeriodo.map(d=>[D(d.quando),E(d.nome)+'<br><small>'+E(d.codigo||'')+'</small>',N(d.qtd)+' '+E(d.unidade||''),E(d.motivo||'—'),E(d.responsavel||'—')]));
    const reqs=tabela(['Requisição','Status','Data necessária','Itens','Solicitado'],reqCurso.map(r=>[E(r.num),E(r.status),D(r.dataNecessaria),N((r.itens||[]).length),N((r.itens||[]).reduce((s,i)=>s+Number(i.requisitar||0),0))]));
-   const html='<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Relatório do curso — '+E(c.nome)+'</title><style>'+css+'</style></head><body>'+(cfg.timbrado?'<div class="fundo"><img src="'+cfg.timbrado+'"></div>':'')+'<main class="pg"><div class="head"><div><h1>Relatório do curso</h1><p>'+E(cfg.unidade||'Senac Aldeota')+' · acompanhamento de insumos</p></div><div class="meta"><b>'+agora.toLocaleDateString('pt-BR')+'</b>emitido às '+agora.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'</div></div><section class="info"><div><small>Curso</small><b>'+E(c.nome)+'</b></div><div><small>Código</small><b>'+E(c.codigo||'—')+'</b></div><div><small>Instrutor</small><b>'+E(c.instrutor||'—')+'</b></div><div><small>Período</small><b>'+D(inicio)+' a '+D(fim)+'</b></div></section><section class="kpis"><div class="k"><span>Enviado ao curso</span><strong>'+N(total('enviado'))+'</strong></div><div class="k ret"><span>Retornado</span><strong>'+N(total('retornado'))+'</strong></div><div class="k cons"><span>Consumido</span><strong>'+N(total('consumido'))+'</strong></div><div class="k desc"><span>Descartado no período</span><strong>'+N(descPeriodo.reduce((s,d)=>s+Number(d.qtd||0),0))+'</strong></div></section><h2>Resumo dos itens utilizados</h2>'+resumo+'<h2>Aulas, retornos e consumo</h2>'+ret+'<h2>Histórico de movimentações do curso</h2>'+eventos+'<h2>Requisições vinculadas ao curso</h2>'+reqs+'<h2>Descartes registrados durante o período do curso</h2>'+descartes+'<p class="note">Os descartes desta seção abrangem todos os registros feitos entre o início e o término do curso; o sistema anterior não vinculava o descarte diretamente a um curso.</p><div class="sign">'+resp+'<br><small>'+E(cfg.unidade||'Senac Aldeota')+'</small></div></main><div class="tb">Relatório pronto para impressão em PDF.<button onclick="print()">Imprimir / Salvar PDF</button><button class="close" onclick="close()">Fechar</button></div></body></html>';
+   const html='<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Relatório do curso — '+E(c.nome)+'</title><style>'+css+'</style>
+</head><body>'+(cfg.timbrado?'<div class="fundo"><img src="'+cfg.timbrado+'"></div>':'')+'<main class="pg"><div class="head"><div><h1>Relatório do curso</h1><p>'+E(cfg.unidade||'Senac Aldeota')+' · acompanhamento de insumos</p></div><div class="meta"><b>'+agora.toLocaleDateString('pt-BR')+'</b>emitido às '+agora.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'</div></div><section class="info"><div><small>Curso</small><b>'+E(c.nome)+'</b></div><div><small>Código</small><b>'+E(c.codigo||'—')+'</b></div><div><small>Instrutor</small><b>'+E(c.instrutor||'—')+'</b></div><div><small>Período</small><b>'+D(inicio)+' a '+D(fim)+'</b></div></section><section class="kpis"><div class="k"><span>Enviado ao curso</span><strong>'+N(total('enviado'))+'</strong></div><div class="k ret"><span>Retornado</span><strong>'+N(total('retornado'))+'</strong></div><div class="k cons"><span>Consumido</span><strong>'+N(total('consumido'))+'</strong></div><div class="k desc"><span>Descartado no período</span><strong>'+N(descPeriodo.reduce((s,d)=>s+Number(d.qtd||0),0))+'</strong></div></section><h2>Resumo dos itens utilizados</h2>'+resumo+'<h2>Aulas, retornos e consumo</h2>'+ret+'<h2>Histórico de movimentações do curso</h2>'+eventos+'<h2>Requisições vinculadas ao curso</h2>'+reqs+'<h2>Descartes registrados durante o período do curso</h2>'+descartes+'<p class="note">Os descartes desta seção abrangem todos os registros feitos entre o início e o término do curso; o sistema anterior não vinculava o descarte diretamente a um curso.</p><div class="sign">'+resp+'<br><small>'+E(cfg.unidade||'Senac Aldeota')+'</small></div></main><div class="tb">Relatório pronto para impressão em PDF.<button onclick="print()">Imprimir / Salvar PDF</button><button class="close" onclick="close()">Fechar</button></div></body></html>';
    const w=window.open('','_blank');if(!w){if(window.sysAlerta)sysAlerta('Permita a abertura de pop-ups para visualizar o relatório.','Relatório do curso');return;}w.document.open();w.document.write(html);w.document.close();const img=w.document.querySelector('.fundo img');const go=()=>setTimeout(()=>{w.focus();w.print();},220);if(img&&!img.complete){img.onload=go;img.onerror=go}else go();
  };
  const detalhe35=window.abrirDetalheCurso;
@@ -3609,3 +3640,24 @@ if(excluirOrig)window.excluirCurso=function(cid){const r=excluirOrig.apply(this,
 </script>
 </body>
 </html>
+<style id="sirius-mobile-nav-fix">
+@media(max-width:700px){
+ .console-sidebar{left:0!important;right:0!important;bottom:0!important;width:100%!important;height:auto!important;min-height:62px;padding:6px 6px calc(6px + env(safe-area-inset-bottom))!important;box-sizing:border-box;overflow:hidden}
+ .console-nav{display:flex!important;flex-direction:row!important;width:100%!important;gap:2px!important;overflow-x:auto;scrollbar-width:none;margin:0!important}
+ .console-nav::-webkit-scrollbar{display:none}
+ .console-nav .side-link{flex:1 0 44px!important;width:auto!important;min-width:44px!important;height:46px!important;padding:0!important;justify-content:center;transform:none!important}
+ body.console-shell{padding-bottom:calc(76px + env(safe-area-inset-bottom))!important}
+ #expiry-popup{bottom:calc(80px + env(safe-area-inset-bottom))!important}
+ #sabi-fab{bottom:calc(86px + env(safe-area-inset-bottom))!important}
+}
+</style>
+<style id="sirius-modal-footer-fix">
+body:has(#modal-wrap:not(.hidden)) .app-footer,body.modal-aberto .app-footer{display:none!important}
+#modal-wrap{z-index:120!important}
+@media(max-width:700px){
+ body:has(#modal-wrap:not(.hidden)) :is(.console-sidebar,#sabi-fab,#expiry-popup),body.modal-aberto :is(.console-sidebar,#sabi-fab,#expiry-popup){display:none!important}
+ #modal-wrap{padding:10px!important;align-items:flex-start!important;padding-top:max(14px,env(safe-area-inset-top))!important}
+ #modal-wrap>div{max-height:calc(100dvh - 28px)!important}
+}
+</style>
+<script>(function(){const m=document.getElementById('modal-wrap');if(!m)return;const f=()=>document.body.classList.toggle('modal-aberto',!m.classList.contains('hidden'));new MutationObserver(f).observe(m,{attributes:true,attributeFilter:['class']});f();})();</script>
