@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>COZINHA SENAC ALDEOTA — ESTOQUE — S.I.R.I.U.S. v36</title>
+<title>COZINHA SENAC ALDEOTA — ESTOQUE — S.I.R.I.U.S. v43</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = { darkMode:'class', theme:{ extend:{ colors:{ brand:{50:'#fff7ed',100:'#ffedd5',500:'#f97316',600:'#ea580c',700:'#c2410c',dark:'#101318'} }, boxShadow:{soft:'0 18px 45px rgba(15,23,42,.10)', glow:'0 12px 28px rgba(234,88,12,.24)'} } } }
@@ -126,14 +126,14 @@ html.dark{
 *{box-sizing:border-box}html{background:var(--c-bg)}body.console-shell{display:block!important;background:var(--c-bg)!important;background-image:radial-gradient(circle at 80% 0%,var(--c-lime-soft),transparent 24%)!important;color:var(--c-text)!important;font-family:'Manrope',sans-serif!important;transition:background-color .35s ease,color .35s ease!important;padding-left:var(--side-width)}
 h1,h2,h3,h4,header h1,main h2{font-family:'Sora',sans-serif!important}.font-mono,.text-xs.uppercase{font-family:'JetBrains Mono',monospace!important}
 .console-sidebar{position:fixed;inset:0 auto 0 0;z-index:90;width:var(--side-width);background:linear-gradient(180deg,var(--c-side-2),var(--c-side));border-right:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;align-items:center;padding:18px 14px;box-shadow:12px 0 40px rgba(0,0,0,.12);transition:width .35s var(--ease)}
-.console-logo{width:44px;height:44px;border:0;border-radius:12px;background:linear-gradient(135deg,var(--c-lime-bright),var(--c-lime));color:#111315;font-size:17px;display:grid;place-items:center;box-shadow:0 10px 26px rgba(183,243,74,.24);cursor:pointer;flex:none}.console-nav{display:flex;flex-direction:column;gap:7px;margin-top:24px;width:100%}.console-side-bottom{margin-top:auto;display:flex;flex-direction:column;gap:7px;width:100%}.side-link{position:relative;width:48px;height:46px;border:0;border-radius:10px;background:transparent;color:rgba(244,247,245,.46);display:flex;align-items:center;gap:13px;padding:0 15px;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;cursor:pointer;transition:background .2s ease,color .2s ease,transform .2s ease}.side-link i{width:18px;min-width:18px;text-align:center}.side-link span{opacity:0;transition:opacity .18s ease}.side-link:hover{color:#f4f7f5;background:rgba(255,255,255,.06);transform:translateX(2px)}.side-link.active{color:var(--c-lime);background:var(--c-lime-soft)}.side-link.active:before{content:"";position:absolute;left:0;width:3px;height:22px;border-radius:0 4px 4px 0;background:var(--c-lime);box-shadow:0 0 14px var(--c-lime)}
+.console-logo{width:44px;height:44px;border:0;border-radius:12px;background:linear-gradient(135deg,var(--c-lime-bright),var(--c-lime));color:#fff;font-size:17px;display:grid;place-items:center;box-shadow:0 10px 26px rgba(183,243,74,.24);cursor:pointer;flex:none}.console-nav{display:flex;flex-direction:column;gap:7px;margin-top:24px;width:100%}.console-side-bottom{margin-top:auto;display:flex;flex-direction:column;gap:7px;width:100%}.side-link{position:relative;width:48px;height:46px;border:0;border-radius:10px;background:transparent;color:rgba(244,247,245,.46);display:flex;align-items:center;gap:13px;padding:0 15px;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;cursor:pointer;transition:background .2s ease,color .2s ease,transform .2s ease}.side-link i{width:18px;min-width:18px;text-align:center}.side-link span{opacity:0;transition:opacity .18s ease}.side-link:hover{color:#f4f7f5;background:rgba(255,255,255,.06);transform:translateX(2px)}.side-link.active{color:var(--c-lime);background:var(--c-lime-soft)}.side-link.active:before{content:"";position:absolute;left:0;width:3px;height:22px;border-radius:0 4px 4px 0;background:var(--c-lime);box-shadow:0 0 14px var(--c-lime)}
 body.sidebar-open{--side-width:224px}.sidebar-open .console-sidebar{align-items:flex-start}.sidebar-open .console-logo{margin-left:2px}.sidebar-open .side-link{width:100%}.sidebar-open .side-link span{opacity:1}
-body>header{margin:0!important;position:sticky!important;top:0!important;z-index:70!important;height:66px!important;padding:0 24px!important;background:color-mix(in oklab,var(--c-bg) 84%,transparent)!important;backdrop-filter:blur(18px)!important;border-bottom:1px solid var(--c-line)!important;box-shadow:none!important;color:var(--c-text)!important}body>header h1{color:var(--c-text)!important;font-size:15px!important}body>header p{color:var(--c-muted)!important}body>header>div:first-child>div:first-child{width:10px!important;height:10px!important;border-radius:50%!important;background:var(--c-lime)!important;color:transparent!important;box-shadow:0 0 0 6px var(--c-lime-soft),0 0 18px var(--c-lime)!important}body>header .brand-tag{border:0!important;background:var(--c-panel)!important;color:var(--c-muted)!important}body>header button{height:38px!important;border:1px solid var(--c-line)!important;border-radius:8px!important;background:var(--c-surface)!important;color:var(--c-text)!important;box-shadow:none!important;backdrop-filter:none!important}body>header button:hover{background:var(--c-panel)!important;transform:translateY(-1px)!important}body>header button[onclick="salvarProjeto()"]{background:linear-gradient(135deg,var(--c-lime-bright),var(--c-lime))!important;color:#111315!important;border:0!important}body>header button[onclick="document.getElementById('file-projeto').click()"],body>header button[onclick="exportarTudoExcel()"]{background:var(--c-surface)!important;color:var(--c-text)!important}
+body>header{margin:0!important;position:sticky!important;top:0!important;z-index:70!important;height:66px!important;padding:0 24px!important;background:color-mix(in oklab,var(--c-bg) 84%,transparent)!important;backdrop-filter:blur(18px)!important;border-bottom:1px solid var(--c-line)!important;box-shadow:none!important;color:var(--c-text)!important}body>header h1{color:var(--c-text)!important;font-size:15px!important}body>header p{color:var(--c-muted)!important}body>header>div:first-child>div:first-child{width:10px!important;height:10px!important;border-radius:50%!important;background:var(--c-lime)!important;color:transparent!important;box-shadow:0 0 0 6px var(--c-lime-soft),0 0 18px var(--c-lime)!important}body>header .brand-tag{border:0!important;background:var(--c-panel)!important;color:var(--c-muted)!important}body>header button{height:38px!important;border:1px solid var(--c-line)!important;border-radius:8px!important;background:var(--c-surface)!important;color:var(--c-text)!important;box-shadow:none!important;backdrop-filter:none!important}body>header button:hover{background:var(--c-panel)!important;transform:translateY(-1px)!important}body>header button[onclick="salvarProjeto()"]{background:linear-gradient(135deg,var(--c-lime-bright),var(--c-lime))!important;color:#fff!important;border:0!important}body>header button[onclick="document.getElementById('file-projeto').click()"],body>header button[onclick="exportarTudoExcel()"]{background:var(--c-surface)!important;color:var(--c-text)!important}
 main{max-width:1500px!important;padding:28px!important;margin:0 auto!important}.kitchen-intro{padding:0 0 4px!important;background:transparent!important;border:0!important;box-shadow:none!important}.kitchen-intro:hover{transform:none!important;box-shadow:none!important}.kitchen-intro:after{display:none}.kitchen-intro>p:first-child{color:var(--c-lime)!important;font-family:'JetBrains Mono',monospace;font-size:10px!important;letter-spacing:.2em!important}.kitchen-intro h2{color:var(--c-text)!important;font-family:'Sora',sans-serif!important;font-size:32px!important;font-weight:800!important}.kitchen-intro p:last-child{color:var(--c-muted)!important}
 main>div:first-of-type{display:grid!important;grid-template-columns:5fr 3fr 2fr 2fr!important;gap:14px!important}main>div:first-of-type>div{min-height:142px!important;padding:22px!important;border:1px solid var(--c-line)!important;border-top:1px solid var(--c-line)!important;border-radius:12px!important;background:linear-gradient(145deg,var(--c-panel),var(--c-surface))!important;color:var(--c-text)!important;box-shadow:var(--c-shadow)!important;animation:console-rise .55s var(--ease) both;transition:transform .25s var(--ease),box-shadow .25s var(--ease)!important}main>div:first-of-type>div:nth-child(2){animation-delay:.06s}main>div:first-of-type>div:nth-child(3){animation-delay:.12s}main>div:first-of-type>div:nth-child(4){animation-delay:.18s}main>div:first-of-type>div:hover{transform:translateY(-4px)!important;box-shadow:var(--c-shadow-hover)!important}main>div:first-of-type>div:first-child{background:linear-gradient(135deg,var(--c-panel),var(--c-side-2))!important;color:#f4f7f5!important;position:relative}main>div:first-of-type>div:first-child:after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,var(--c-lime-soft),transparent 65%);transform:translateX(-100%);animation:console-sweep 4s var(--ease) infinite;pointer-events:none}main>div:first-of-type h3{font-size:38px!important;color:var(--c-text)!important;font-family:'Sora',sans-serif!important}main>div:first-of-type>div:first-child h3{color:var(--c-lime)!important}main>div:first-of-type p{color:var(--c-muted)!important}main>div:first-of-type .w-12{background:var(--c-lime-soft)!important;color:var(--c-lime)!important;border:1px solid color-mix(in oklab,var(--c-lime) 28%,transparent)!important}
 #tabs{display:none!important}
 #tab-cadastro>div,#tab-agenda>div,#tab-bi>div.bg-white,.grid>div.bg-white,main>div.bg-white,#tab-estoque>div.bg-white{background:linear-gradient(180deg,var(--c-panel),color-mix(in oklab,var(--c-panel) 72%,var(--c-bg)))!important;color:var(--c-text)!important;border:1px solid var(--c-line)!important;border-radius:12px!important;box-shadow:var(--c-shadow)!important}#tab-cadastro>div{padding:28px!important}#tab-cadastro h2,#tab-agenda h2,#tab-bi h2,#tab-painel h2{color:var(--c-text)!important}.text-slate-500,.text-slate-400{color:var(--c-muted)!important}
-input,select{background:color-mix(in oklab,var(--c-bg) 76%,var(--c-surface))!important;color:var(--c-text)!important;border:1px solid var(--c-line)!important;border-radius:8px!important}input:focus,select:focus{border-color:var(--c-lime)!important;box-shadow:0 0 0 3px var(--c-lime-soft)!important}form label{color:var(--c-muted)!important;font-family:'JetBrains Mono',monospace!important;letter-spacing:.11em!important}form button[type="submit"],#tab-agenda form button,.bg-emerald-600{background:linear-gradient(135deg,var(--c-lime-bright),var(--c-lime))!important;color:#111315!important;border:0!important;box-shadow:0 10px 28px rgba(143,197,47,.16)!important}form button[type="submit"]:hover,.bg-emerald-600:hover{filter:brightness(1.06);transform:translateY(-2px)!important}
+input,select{background:color-mix(in oklab,var(--c-bg) 76%,var(--c-surface))!important;color:var(--c-text)!important;border:1px solid var(--c-line)!important;border-radius:8px!important}input:focus,select:focus{border-color:var(--c-lime)!important;box-shadow:0 0 0 3px var(--c-lime-soft)!important}form label{color:var(--c-muted)!important;font-family:'JetBrains Mono',monospace!important;letter-spacing:.11em!important}form button[type="submit"],#tab-agenda form button,.bg-emerald-600{background:linear-gradient(135deg,var(--c-lime-bright),var(--c-lime))!important;color:#fff!important;border:0!important;box-shadow:0 10px 28px rgba(143,197,47,.16)!important}form button[type="submit"]:hover,.bg-emerald-600:hover{filter:brightness(1.06);transform:translateY(-2px)!important}
 table{color:var(--c-text)!important}table thead{background:var(--c-panel-2)!important}table th{color:var(--c-muted)!important;font-family:'JetBrains Mono',monospace!important;font-size:10px!important;letter-spacing:.08em!important}tbody tr{border-color:var(--c-line)!important}tbody tr:hover{background:var(--c-lime-soft)!important;transform:none!important}
 #expiry-popup{right:22px!important;bottom:22px!important;width:360px!important;border:1px solid color-mix(in oklab,var(--c-alert) 55%,transparent)!important;border-radius:12px!important;background:color-mix(in oklab,var(--c-side) 90%,transparent)!important;color:#f4f7f5!important;box-shadow:0 26px 70px rgba(0,0,0,.45),0 0 0 1px rgba(255,77,77,.14)!important;backdrop-filter:blur(20px)!important;animation:console-alert .5s var(--ease) both!important}#expiry-popup>div:first-child{padding:17px!important;background:linear-gradient(135deg,rgba(255,77,77,.22),rgba(255,77,77,.08))!important;border-color:rgba(255,77,77,.22)!important}#expiry-popup h3{color:#ff6565!important;font-family:'Sora',sans-serif!important}#expiry-popup p{color:rgba(244,247,245,.62)!important}.expiry-dot{background:rgba(255,77,77,.18)!important;color:#ff5e5e!important;animation:console-danger 1.9s ease-in-out infinite!important}#expiry-list{background:rgba(17,19,21,.78)!important}#expiry-list>div{border-color:rgba(255,255,255,.07)!important}#expiry-list>div:hover{background:rgba(255,77,77,.08)!important}#expiry-popup>button{background:linear-gradient(135deg,#ff5757,#d92f2f)!important;color:#fff!important}#expiry-popup>button:hover{filter:brightness(1.08)}
 footer{margin:0!important;padding:18px!important;background:var(--c-side)!important;color:rgba(244,247,245,.42)!important}
@@ -248,24 +248,24 @@ body.console-shell::after{display:none!important}
 #tab-config textarea{width:100%;background:color-mix(in oklab,var(--c-bg) 76%,var(--c-surface));color:var(--c-text);border:1px solid var(--c-line);border-radius:10px;font-family:'Manrope',sans-serif}
 #tab-config input[type=file]{padding:10px}
 
-#sabi-fab{position:fixed;right:22px;bottom:90px;z-index:95;width:56px;height:56px;border-radius:50%;border:0;cursor:pointer;font-size:20px;color:#111315;background:linear-gradient(135deg,var(--c-lime-bright),var(--c-lime));box-shadow:0 16px 40px color-mix(in oklab,var(--c-lime) 42%,transparent);transition:transform .22s ease}
+#sabi-fab{position:fixed;right:22px;bottom:90px;z-index:95;width:56px;height:56px;border-radius:50%;border:0;cursor:pointer;font-size:20px;color:#fff;background:linear-gradient(135deg,var(--c-lime-bright),var(--c-lime));box-shadow:0 16px 40px color-mix(in oklab,var(--c-lime) 42%,transparent);transition:transform .22s ease}
 #sabi-fab:hover{transform:translateY(-3px) scale(1.05)}
 #sabi-panel{position:fixed;right:22px;bottom:156px;z-index:96;width:min(380px,calc(100vw - 28px));max-height:min(620px,calc(100vh - 190px));display:flex;flex-direction:column;border-radius:16px;overflow:hidden;border:1px solid var(--c-line);background:var(--c-surface);box-shadow:0 30px 70px rgba(0,0,0,.28)}
 #sabi-panel.hidden{display:none}
 .sabi-head{display:flex;align-items:center;gap:11px;padding:14px;background:linear-gradient(135deg,var(--c-side-2),var(--c-side));color:#f4f7f5}
-.sabi-av{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--c-lime-bright),var(--c-lime));color:#111315}
+.sabi-av{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--c-lime-bright),var(--c-lime));color:#fff}
 .sabi-id{display:flex;flex-direction:column;line-height:1.2}.sabi-id strong{font-family:'Sora',sans-serif;font-size:14px}.sabi-id span{font-size:11px;opacity:.7}
 .sabi-head button{margin-left:auto;width:32px;height:32px;border:0;border-radius:9px;background:rgba(255,255,255,.12);color:#f4f7f5;cursor:pointer}
 .sabi-log{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:color-mix(in oklab,var(--c-bg) 60%,var(--c-surface))}
 .sabi-msg{max-width:86%;padding:10px 13px;border-radius:13px;font-size:13px;line-height:1.5;white-space:pre-line}
 .sabi-msg.bot{background:var(--c-panel);color:var(--c-text);border-bottom-left-radius:4px}
-.sabi-msg.me{margin-left:auto;background:linear-gradient(135deg,var(--c-lime-bright),var(--c-lime));color:#111315;border-bottom-right-radius:4px;font-weight:600}
+.sabi-msg.me{margin-left:auto;background:linear-gradient(135deg,var(--c-lime-bright),var(--c-lime));color:#fff;border-bottom-right-radius:4px;font-weight:600}
 .sabi-chips{display:flex;gap:6px;flex-wrap:wrap;padding:10px 12px 0}
 .sabi-chips button{font-size:11px;font-weight:700;padding:7px 11px;border-radius:20px;border:1px solid var(--c-line);background:var(--c-surface);color:var(--c-text);cursor:pointer}
 .sabi-chips button:hover{background:var(--c-lime-soft);border-color:var(--c-lime)}
 .sabi-form{display:flex;gap:8px;padding:12px}
 .sabi-form input{flex:1;min-height:42px;border-radius:11px}
-.sabi-form button{width:44px;border:0;border-radius:11px;background:linear-gradient(135deg,var(--c-lime-bright),var(--c-lime));color:#111315;cursor:pointer}
+.sabi-form button{width:44px;border:0;border-radius:11px;background:linear-gradient(135deg,var(--c-lime-bright),var(--c-lime));color:#fff;cursor:pointer}
 @media(max-width:700px){#sabi-fab{right:14px;bottom:150px;width:50px;height:50px}#sabi-panel{right:12px;left:12px;bottom:210px;width:auto;max-height:60vh}}
 
 /* ---------- Impressão em PDF com timbrado ---------- */
@@ -595,7 +595,7 @@ main{padding:20px 24px!important;row-gap:var(--compact-gap)!important}
 #tab-dashboard button{border:1px solid var(--dt-line)!important;background:var(--dt-panel-soft)!important;color:var(--dt-text)!important;border-radius:8px!important;box-shadow:none!important;transition:transform .2s ease,background .2s ease,border-color .2s ease!important}
 #tab-dashboard button:hover{transform:translateY(-2px);background:rgba(255,255,255,.075)!important;border-color:rgba(255,255,255,.16)!important}
 #tab-dashboard .dash-actions button{height:36px;padding:0 11px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:7px}
-#tab-dashboard button.dash-primary{background:linear-gradient(135deg,var(--c-lime-bright),var(--c-lime))!important;color:#111315!important;border:0!important}
+#tab-dashboard button.dash-primary{background:linear-gradient(135deg,var(--c-lime-bright),var(--c-lime))!important;color:#fff!important;border:0!important}
 #tab-dashboard .dash-kpis,#tab-dashboard .dash-course-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 #tab-dashboard .dash-kpi{--kpi:var(--dt-lime);position:relative;overflow:hidden;min-height:112px;padding:16px;display:flex;align-items:center;justify-content:space-between}
 #tab-dashboard .dash-kpi:before{content:"";position:absolute;left:0;top:18px;bottom:18px;width:3px;border-radius:0 3px 3px 0;background:var(--kpi);box-shadow:0 0 16px color-mix(in oklab,var(--kpi) 55%,transparent)}
@@ -752,19 +752,19 @@ html:not(.dark) #tab-dashboard .dash-table tbody tr:hover{background:rgba(134,18
 </section>
 </div>
 <!-- CURSOS CADASTRADOS -->
-<div class="hidden space-y-6" id="tab-cursos">
-<section class="workspace-block" aria-label="Cadastro de cursos">
+<div class="hidden space-y-6 cursos40" id="tab-cursos">
+<section class="workspace-block cursos40-cadastro" aria-label="Cadastro de cursos">
 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-xl shadow-sm flex items-center justify-between gap-4 flex-wrap">
 <div>
 <h2 class="text-xl font-bold">Cadastro de cursos</h2>
 <p class="text-sm text-slate-500">Registre o curso em uma janela r&#225;pida e edite quando precisar.</p>
 </div>
-<button type="button" class="px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-glow transition flex items-center gap-2" onclick="abrirCadastroCurso()"><i class="fa-solid fa-plus"></i> Cadastro</button>
+<button type="button" class="curso40-novo" onclick="abrirCadastroCurso()"><span class="curso40-btn-icon"><i class="fa-solid fa-plus"></i></span><span><b>Novo curso</b><small>Cadastrar turma</small></span></button>
 </div>
 </section>
-<section class="workspace-block" aria-label="Cursos e itens inseridos">
+<section class="workspace-block cursos40-listagem" aria-label="Cursos e itens inseridos">
 <div class="flex items-center justify-between flex-wrap gap-3"><h2 class="text-xl font-bold">Cursos cadastrados</h2>
-<button class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold flex items-center gap-2" onclick="exportarExcel('cursos')"><i class="fa-solid fa-file-excel"></i> Baixar cursos em Excel</button></div>
+<button class="curso40-excel" onclick="exportarExcel('cursos')"><i class="fa-solid fa-file-excel"></i><span>Exportar Excel</span></button></div>
 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl divide-y divide-slate-100 dark:divide-slate-800 overflow-hidden" id="lista-cursos"></div>
 </section>
 
@@ -1579,24 +1579,24 @@ function abrirDetalheCurso(cid){
  const itens=cursoItens.filter(i=>i.cid===cid);
  const info=(l,v)=>`<div><p class="text-[11px] uppercase text-slate-400 font-semibold">${l}</p><p class="text-sm font-medium">${v||'—'}</p></div>`;
  _keepDet=true;
- abrirModal(`<div class="flex items-start justify-between gap-4 mb-5 pb-4 border-b border-slate-100 dark:border-slate-800">
-   <div class="flex items-center gap-3"><div class="w-12 h-12 rounded-2xl bg-brand-600/10 text-brand-600 flex items-center justify-center text-xl"><i class="fa-solid ${c.icone||'fa-graduation-cap'}"></i></div>
-   <div><h3 class="text-xl font-bold">${esc(c.nome)}</h3><p class="text-xs text-slate-500">Código ${esc(c.codigo)}${c.encerrado?' · <b>Encerrado</b>':''}</p></div></div>
-   <button class="text-slate-400 hover:text-slate-700 text-xl" onclick="fecharModal()"><i class="fa-solid fa-xmark"></i></button></div>
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">${info('Período',periodoCurso(c))}${info('Turno',c.turno)}${info('Instrutor',esc(c.instrutor||''))}</div>
-  ${c.obs?`<p class="text-sm text-slate-500 mb-4">${esc(c.obs)}</p>`:''}
-  <div class="flex flex-wrap gap-2 mb-4">
-   ${c.encerrado?'':`<button class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold" onclick="abrirInsercao('${cid}')"><i class="fa-solid fa-plus"></i> Adicionar insumo</button>`}
-   <button class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-sm font-semibold" onclick="abrirCadastroCurso('${cid}')"><i class="fa-solid fa-pen"></i> Editar curso</button>
-   <button class="px-4 py-2 rounded-xl ${c.encerrado?'bg-slate-200 dark:bg-slate-800':'bg-red-600 hover:bg-red-700 text-white'} text-sm font-semibold" onclick="encerrarCurso('${cid}')"><i class="fa-solid fa-flag-checkered"></i> ${c.encerrado?'Reabrir curso':'Encerrar curso'}</button>
-   <button class="px-3 py-2 rounded-xl text-slate-400 hover:text-red-500 ml-auto" onclick="excluirCurso('${cid}')" title="Excluir"><i class="fa-solid fa-trash"></i></button></div>
-  <h4 class="font-semibold mb-2">Insumos do curso</h4>
-  <div class="overflow-x-auto border border-slate-200 dark:border-slate-800 rounded-xl"><table class="w-full text-sm">
+ abrirModal(`<section class="course-detail40"><header class="course-detail40-head flex items-start justify-between gap-4">
+  <div class="course-detail40-identity flex items-center gap-3"><div class="course-detail40-icon w-12 h-12 bg-brand-600/10 text-brand-600 flex items-center justify-center text-xl"><i class="fa-solid ${c.icone||'fa-graduation-cap'}"></i></div>
+  <div><p class="course-detail40-eyebrow">Detalhes do curso</p><h3 class="text-xl font-bold">${esc(c.nome)}</h3><p class="text-xs text-slate-500">Código ${esc(c.codigo)}${c.encerrado?' · <b>Encerrado</b>':''}</p></div></div>
+  <button class="course-detail40-close text-slate-400 hover:text-slate-700 text-xl" onclick="fecharModal()" aria-label="Fechar detalhes do curso"><i class="fa-solid fa-xmark"></i></button></header>
+ <div class="course-detail40-meta grid grid-cols-2 md:grid-cols-3 gap-4">${info('Período',periodoCurso(c))}${info('Turno',c.turno)}${info('Instrutor',esc(c.instrutor||''))}</div>
+ ${c.obs?`<p class="course-detail40-note text-sm text-slate-500">${esc(c.obs)}</p>`:''}
+ <div class="course-detail40-actions flex flex-wrap gap-2">
+  ${c.encerrado?'':`<button class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold" onclick="abrirInsercao('${cid}')"><i class="fa-solid fa-plus"></i> Adicionar insumo</button>`}
+  <button class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-sm font-semibold" onclick="abrirCadastroCurso('${cid}')"><i class="fa-solid fa-pen"></i> Editar curso</button>
+  <button class="px-4 py-2 rounded-xl ${c.encerrado?'bg-slate-200 dark:bg-slate-800':'bg-red-600 hover:bg-red-700 text-white'} text-sm font-semibold" onclick="encerrarCurso('${cid}')"><i class="fa-solid fa-flag-checkered"></i> ${c.encerrado?'Reabrir curso':'Encerrar curso'}</button>
+  <button class="course-detail40-delete px-3 py-2 rounded-xl text-slate-400 hover:text-red-500 ml-auto" onclick="excluirCurso('${cid}')" title="Excluir"><i class="fa-solid fa-trash"></i></button></div>
+ <div class="course-detail40-section-head"><div><p class="course-detail40-section-label">Controle de materiais</p><h4 class="font-semibold">Insumos do curso</h4></div><span>${itens.length} ${itens.length===1?'item vinculado':'itens vinculados'}</span></div>
+ <div class="course-detail40-table overflow-x-auto border border-slate-200 dark:border-slate-800 rounded-xl"><table class="w-full text-sm">
    <thead class="text-xs uppercase text-slate-400 border-b border-slate-200 dark:border-slate-800"><tr><th class="text-left px-3 py-2">Item</th><th class="text-left px-3 py-2">Validade</th><th class="text-right px-3 py-2">Enviado</th><th class="text-right px-3 py-2">Devolvido</th><th class="text-right px-3 py-2">No curso</th><th class="px-3 py-2"></th></tr></thead>
    <tbody>${itens.map(i=>{const k=`'${cid}','${i.codigo}','${i.validade}'`,no=Number(i.enviada)-Number(i.devolvida||0);
     return `<tr class="border-b border-slate-100 dark:border-slate-800"><td class="px-3 py-2"><p class="font-medium">${esc(i.nome)}</p><p class="text-[11px] font-mono text-slate-400">${i.codigo}</p></td><td class="px-3 py-2">${dt(i.validade)}</td><td class="px-3 py-2 text-right">${i.enviada} ${i.unidade||''}</td><td class="px-3 py-2 text-right">${Number(i.devolvida||0)}</td><td class="px-3 py-2 text-right font-semibold">${no}</td>
     <td class="px-3 py-2 text-right whitespace-nowrap">${c.encerrado?'':`<button class="px-2.5 py-1 rounded-lg bg-brand-600/10 text-brand-600 text-xs font-semibold" onclick="insumoIndividual(${k},'add')" title="Adicionar mais do estoque"><i class="fa-solid fa-plus"></i></button>`}
-     <button class="px-2.5 py-1 rounded-lg bg-emerald-600/10 text-emerald-600 text-xs font-semibold ${no>0?'':'opacity-40 pointer-events-none'}" onclick="insumoIndividual(${k},'ret')" title="Retornar ao estoque"><i class="fa-solid fa-rotate-left"></i> Retornar</button></td></tr>`;}).join('')||'<tr><td colspan="6" class="px-3 py-6 text-center text-slate-400">Nenhum insumo vinculado a este curso.</td></tr>'}</tbody></table></div>`,true);
+     <button class="px-2.5 py-1 rounded-lg bg-emerald-600/10 text-emerald-600 text-xs font-semibold ${no>0?'':'opacity-40 pointer-events-none'}" onclick="insumoIndividual(${k},'ret')" title="Retornar ao estoque"><i class="fa-solid fa-rotate-left"></i> Retornar</button></td></tr>`;}).join('')||'<tr><td colspan="6" class="px-3 py-6 text-center text-slate-400"><div class="course-detail40-empty"><i class="fa-solid fa-box-open"></i><b>Nenhum insumo vinculado</b><span>Use “Adicionar insumo” para enviar materiais a este curso.</span></div></td></tr>'}</tbody></table></div></section>`,true);
  _keepDet=false;_det=cid;
 }
 function insumoIndividual(cid,codigo,validade,modo){
@@ -2302,7 +2302,7 @@ atualizarAlertasGerais();
 <style>
 .req-view-toggle{display:inline-flex;border:1px solid var(--c-line);border-radius:10px;padding:3px;background:var(--c-surface)}
 .req-view-toggle button{width:38px;height:34px;border:0;border-radius:7px;background:transparent;color:var(--c-muted);cursor:pointer}
-.req-view-toggle button.active{background:var(--c-lime);color:#111315}
+.req-view-toggle button.active{background:var(--c-lime);color:#fff}
 .req-list.grid-mode{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .req-summary{width:100%;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer;padding:20px;display:flex;justify-content:space-between;align-items:center;gap:16px}
 .req-details{border-top:1px solid var(--c-line);padding:20px}
@@ -2600,15 +2600,14 @@ atualizarAlertasGerais();
     }
     el.className='c25-grid';
     el.innerHTML=cursos.map(c=>{const n=cursoItens.filter(i=>i.cid===c.cid).length;
-      return `<div class="c25-card ${c.encerrado?'opacity-60':''}" onclick="abrirDetalheCurso('${c.cid}')">
-        <div class="flex items-center justify-between mb-3">
-          <div class="w-11 h-11 rounded-xl bg-brand-600/10 text-brand-600 flex items-center justify-center text-lg"><i class="fa-solid ${c.icone||'fa-graduation-cap'}"></i></div>
-          ${c.encerrado?'<span class="text-[10px] uppercase px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700">Encerrado</span>':''}</div>
-        <p class="font-bold truncate">${E(c.nome)}</p>
-        <p class="text-xs text-slate-500 mt-1">${E(c.codigo||'')}</p>
-        <p class="text-xs text-slate-500 mt-2"><i class="fa-regular fa-calendar"></i> ${typeof periodoCurso==='function'?periodoCurso(c):''}</p>
-        <p class="text-xs text-slate-500"><i class="fa-regular fa-clock"></i> ${E(c.turno||'Turno não informado')} · ${n} insumo(s)</p>
-        <p class="text-xs font-semibold text-brand-600 mt-3">Abrir curso <i class="fa-solid fa-arrow-right"></i></p></div>`;
+      return `<article class="c25-card ${c.encerrado?'opacity-60':''}" onclick="abrirDetalheCurso('${c.cid}')">
+        <div class="curso40-card-top"><div class="curso40-card-icon"><i class="fa-solid ${c.icone||'fa-graduation-cap'}"></i></div>
+        ${c.encerrado?'<span class="curso40-status">Finalizado</span>':'<span class="curso40-status ativo"><i class="fa-solid fa-circle"></i> Em andamento</span>'}</div>
+        <div class="curso40-card-title"><p>${E(c.nome)}</p><span>${E(c.codigo||'Sem código')}</span></div>
+        <div class="curso40-card-meta"><span><i class="fa-regular fa-calendar"></i><b>Período</b>${typeof periodoCurso==='function'?periodoCurso(c):''}</span>
+        <span><i class="fa-regular fa-clock"></i><b>Turno</b>${E(c.turno||'Não informado')}</span>
+        <span><i class="fa-solid fa-box-open"></i><b>Insumos</b>${n} cadastrado(s)</span></div>
+        <button type="button" class="curso40-abrir" tabindex="-1">Ver detalhes <i class="fa-solid fa-arrow-right"></i></button></article>`;
     }).join('')||'<p class="p-6 text-slate-400">Nenhum curso cadastrado ainda.</p>';
   };
 
@@ -2866,7 +2865,7 @@ atualizarAlertasGerais();
         cons+=d; qtdItens++; }
     });
     /* zera os próprios itens dentro do curso */
-    for(let k=cursoItens.length-1;k>=0;k--) if(cursoItens[k].cid===cid) cursoItens.splice(k,1);
+    /* v38: itens NÃO são mais apagados — histórico preservado para relatório */
     if(typeof aulas!=='undefined')aulas.unshift({cid,curso:c.nome,data:hojeISO26(),quando:new Date().toISOString(),tipo:modo==='curso'?'Encerramento de curso':'Encerramento de aula',retornado:0,consumido:cons,itens:qtdItens});
     if(modo==='curso'){ c.encerrado=true; c.encerradoEm=new Date().toISOString(); }
     salvarDados(); fecharModal();
@@ -3636,8 +3635,7 @@ if(excluirOrig)window.excluirCurso=function(cid){const r=excluirOrig.apply(this,
    const ret=tabela(['Data','Tipo','Itens','Retornado','Consumido'],aulasCurso.map(a=>[D(a.data||a.quando),E(a.tipo),N(a.itens),N(a.retornado),N(a.consumido)]));
    const descartes=tabela(['Data','Item','Qtd.','Motivo','Responsável'],descPeriodo.map(d=>[D(d.quando),E(d.nome)+'<br><small>'+E(d.codigo||'')+'</small>',N(d.qtd)+' '+E(d.unidade||''),E(d.motivo||'—'),E(d.responsavel||'—')]));
    const reqs=tabela(['Requisição','Status','Data necessária','Itens','Solicitado'],reqCurso.map(r=>[E(r.num),E(r.status),D(r.dataNecessaria),N((r.itens||[]).length),N((r.itens||[]).reduce((s,i)=>s+Number(i.requisitar||0),0))]));
-   const html='<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Relatório do curso — '+E(c.nome)+'</title><style>'+css+'</style>
-</head><body>'+(cfg.timbrado?'<div class="fundo"><img src="'+cfg.timbrado+'"></div>':'')+'<main class="pg"><div class="head"><div><h1>Relatório do curso</h1><p>'+E(cfg.unidade||'Senac Aldeota')+' · acompanhamento de insumos</p></div><div class="meta"><b>'+agora.toLocaleDateString('pt-BR')+'</b>emitido às '+agora.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'</div></div><section class="info"><div><small>Curso</small><b>'+E(c.nome)+'</b></div><div><small>Código</small><b>'+E(c.codigo||'—')+'</b></div><div><small>Instrutor</small><b>'+E(c.instrutor||'—')+'</b></div><div><small>Período</small><b>'+D(inicio)+' a '+D(fim)+'</b></div></section><section class="kpis"><div class="k"><span>Enviado ao curso</span><strong>'+N(total('enviado'))+'</strong></div><div class="k ret"><span>Retornado</span><strong>'+N(total('retornado'))+'</strong></div><div class="k cons"><span>Consumido</span><strong>'+N(total('consumido'))+'</strong></div><div class="k desc"><span>Descartado no período</span><strong>'+N(descPeriodo.reduce((s,d)=>s+Number(d.qtd||0),0))+'</strong></div></section><h2>Resumo dos itens utilizados</h2>'+resumo+'<h2>Aulas, retornos e consumo</h2>'+ret+'<h2>Histórico de movimentações do curso</h2>'+eventos+'<h2>Requisições vinculadas ao curso</h2>'+reqs+'<h2>Descartes registrados durante o período do curso</h2>'+descartes+'<p class="note">Os descartes desta seção abrangem todos os registros feitos entre o início e o término do curso; o sistema anterior não vinculava o descarte diretamente a um curso.</p><div class="sign">'+resp+'<br><small>'+E(cfg.unidade||'Senac Aldeota')+'</small></div></main><div class="tb">Relatório pronto para impressão em PDF.<button onclick="print()">Imprimir / Salvar PDF</button><button class="close" onclick="close()">Fechar</button></div></body></html>';
+   const html='<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Relatório do curso — '+E(c.nome)+'</title><style>'+css+'</style></head><body>'+(cfg.timbrado?'<div class="fundo"><img src="'+cfg.timbrado+'"></div>':'')+'<main class="pg"><div class="head"><div><h1>Relatório do curso</h1><p>'+E(cfg.unidade||'Senac Aldeota')+' · acompanhamento de insumos</p></div><div class="meta"><b>'+agora.toLocaleDateString('pt-BR')+'</b>emitido às '+agora.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'</div></div><section class="info"><div><small>Curso</small><b>'+E(c.nome)+'</b></div><div><small>Código</small><b>'+E(c.codigo||'—')+'</b></div><div><small>Instrutor</small><b>'+E(c.instrutor||'—')+'</b></div><div><small>Período</small><b>'+D(inicio)+' a '+D(fim)+'</b></div></section><section class="kpis"><div class="k"><span>Enviado ao curso</span><strong>'+N(total('enviado'))+'</strong></div><div class="k ret"><span>Retornado</span><strong>'+N(total('retornado'))+'</strong></div><div class="k cons"><span>Consumido</span><strong>'+N(total('consumido'))+'</strong></div><div class="k desc"><span>Descartado no período</span><strong>'+N(descPeriodo.reduce((s,d)=>s+Number(d.qtd||0),0))+'</strong></div></section><h2>Resumo dos itens utilizados</h2>'+resumo+'<h2>Aulas, retornos e consumo</h2>'+ret+'<h2>Histórico de movimentações do curso</h2>'+eventos+'<h2>Requisições vinculadas ao curso</h2>'+reqs+'<h2>Descartes registrados durante o período do curso</h2>'+descartes+'<p class="note">Os descartes desta seção abrangem todos os registros feitos entre o início e o término do curso; o sistema anterior não vinculava o descarte diretamente a um curso.</p><div class="sign">'+resp+'<br><small>'+E(cfg.unidade||'Senac Aldeota')+'</small></div></main><div class="tb">Relatório pronto para impressão em PDF.<button onclick="print()">Imprimir / Salvar PDF</button><button class="close" onclick="close()">Fechar</button></div></body></html>';
    const w=window.open('','_blank');if(!w){if(window.sysAlerta)sysAlerta('Permita a abertura de pop-ups para visualizar o relatório.','Relatório do curso');return;}w.document.open();w.document.write(html);w.document.close();const img=w.document.querySelector('.fundo img');const go=()=>setTimeout(()=>{w.focus();w.print();},220);if(img&&!img.complete){img.onload=go;img.onerror=go}else go();
  };
  const detalhe35=window.abrirDetalheCurso;
@@ -3698,10 +3696,10 @@ if(excluirOrig)window.excluirCurso=function(cid){const r=excluirOrig.apply(this,
     <td class="px-3 py-2 text-right whitespace-nowrap">${c.encerrado?'':`<button type="button" class="px-2.5 py-1 rounded-lg bg-emerald-600/10 text-emerald-600 text-xs font-semibold" onclick="cvAcao(${k},'ret')"><i class="fa-solid fa-rotate-left"></i> Retornar</button>
      <button type="button" class="px-2.5 py-1 rounded-lg bg-red-500/10 text-red-500 text-xs font-semibold" onclick="cvAcao(${k},'desc')"><i class="fa-solid fa-trash-can"></i> Descartar</button>
      <button type="button" class="px-2.5 py-1 rounded-lg bg-slate-500/10 text-slate-500 text-xs font-semibold" onclick="cvAcao(${k},'cons')"><i class="fa-solid fa-utensils"></i> Consumido</button>`}</td></tr>`;}).join('');
-  return `<div class="cv-monitor mt-5"><div class="flex items-center justify-between gap-2 mb-2"><h4 class="font-semibold"><i class="fa-solid fa-hourglass-half"></i> Monitoramento de validades</h4>
-   <span class="text-xs ${alerta?'text-red-500 font-bold':'text-slate-500'}">${alerta?alerta+' insumo(s) vencido(s) ou vencendo em até 15 dias':'Nenhum insumo em alerta'}</span></div>
-   <div class="overflow-x-auto border border-slate-200 dark:border-slate-800 rounded-xl"><table class="w-full text-sm"><thead class="text-xs uppercase text-slate-400 border-b border-slate-200 dark:border-slate-800"><tr><th class="text-left px-3 py-2">Item</th><th class="text-left px-3 py-2">Validade</th><th class="text-left px-3 py-2">Situação</th><th class="text-right px-3 py-2">No curso</th><th class="px-3 py-2 text-right">Ações</th></tr></thead>
-   <tbody>${rows||'<tr><td colspan="5" class="px-3 py-6 text-center text-slate-400">Nenhum insumo em uso no curso.</td></tr>'}</tbody></table></div></div>`;
+  return `<div class="cv-monitor"><div class="course-detail40-section-head flex items-center justify-between gap-2"><div><p class="course-detail40-section-label">Acompanhamento</p><h4 class="font-semibold"><i class="fa-solid fa-hourglass-half"></i> Monitoramento de validades</h4></div>
+   <span class="course-detail40-alert text-xs ${alerta?'text-red-500 font-bold':'text-slate-500'}">${alerta?alerta+' insumo(s) vencido(s) ou vencendo em até 15 dias':'Nenhum insumo em alerta'}</span></div>
+   <div class="course-detail40-table overflow-x-auto border border-slate-200 dark:border-slate-800 rounded-xl"><table class="w-full text-sm"><thead class="text-xs uppercase text-slate-400 border-b border-slate-200 dark:border-slate-800"><tr><th class="text-left px-3 py-2">Item</th><th class="text-left px-3 py-2">Validade</th><th class="text-left px-3 py-2">Situação</th><th class="text-right px-3 py-2">No curso</th><th class="px-3 py-2 text-right">Ações</th></tr></thead>
+   <tbody>${rows||'<tr><td colspan="5" class="px-3 py-6 text-center text-slate-400"><div class="course-detail40-empty"><i class="fa-solid fa-hourglass-half"></i><b>Nenhum insumo em uso</b><span>Os itens ativos aparecerão aqui com a situação da validade.</span></div></td></tr>'}</tbody></table></div></div>`;
  }
  function dadosRelatorio(cid){
   const itens=cursoItens.filter(i=>i.cid===cid);
@@ -3858,6 +3856,373 @@ if(excluirOrig)window.excluirCurso=function(cid){const r=excluirOrig.apply(this,
 })();
 </script>
 
+<script id="sirius-v38-arquivo">
+/* v39 — encerramento sem perda de histórico, finalizados de Aula / UC / Curso e relatório PDF */
+(function(){
+ const E=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const N=n=>Number(n||0).toLocaleString('pt-BR',{maximumFractionDigits:3});
+ const D=v=>{if(!v)return '—';const s=String(v).slice(0,10).split('-');return s.length===3?s[2]+'/'+s[1]+'/'+s[0]:String(v);};
+ const DH=v=>v?new Date(v).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
+ const HOJE=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+ const IC='w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm';
+ const noCurso=i=>Math.max(0,Number(i.enviada||0)-Number(i.devolvida||0));
+ const num=v=>Number(String(v==null?'':v).replace(',','.'))||0;
+ const lstAulas=()=>{if(typeof aulas==='undefined'){window.aulas=window.aulas||[];return window.aulas;}return aulas;};
+ const lstDesc=()=>(typeof descartes!=='undefined'&&descartes)?descartes:(window.descartes=window.descartes||[]);
+ const arquivados=cid=>lstAulas().filter(a=>a.arq38&&(!cid||a.cid===cid));
+ const TIPOS={aula:'Aula',uc:'Unidade Curricular (UC)',curso:'Curso'};
+
+ function classe(t){t=String(t||'');
+  if(/envio/i.test(t))return 'enviado';
+  if(/descarte/i.test(t))return 'descartado';
+  if(/retorno|→ ?estoque/i.test(t))return 'retornado';
+  if(/consum/i.test(t))return 'consumido';
+  return null;}
+ function unidadeDe(cod,val){const ci=cursoItens.find(i=>i.codigo===cod&&(!val||i.validade===val));if(ci&&ci.unidade)return ci.unidade;
+  const e=(typeof estoque!=='undefined'?estoque:[]).find(i=>i.id===cod);return e&&e.unidade||'';}
+
+ /* Monta o retrato do período a partir do histórico de movimentações (nada é apagado) */
+ function retrato(c,desde,ate){
+  const movs=(typeof movimentos!=='undefined'?movimentos:[]).filter(m=>m.curso===c.nome&&(!desde||m.quando>desde)&&m.quando<=ate);
+  const mapa={},lanc=[];
+  movs.forEach(m=>{const k=classe(m.tipo);if(!k)return;
+   const ch=[m.codigo,m.validade,m.nome].join('|');
+   const x=mapa[ch]||(mapa[ch]={nome:m.nome,codigo:m.codigo,validade:m.validade,unidade:unidadeDe(m.codigo,m.validade),enviado:0,consumido:0,descartado:0,retornado:0});
+   x[k]+=Number(m.qtd||0);
+   lanc.push({quando:m.quando,tipo:k,mov:m.tipo,nome:m.nome,codigo:m.codigo,validade:m.validade,qtd:Number(m.qtd||0),unidade:x.unidade});});
+  const desc=lstDesc().filter(d=>(d.cid===c.cid||d.curso===c.nome)&&(!desde||d.quando>desde)&&d.quando<=ate).map(d=>({quando:d.quando,nome:d.nome,codigo:d.codigo,qtd:Number(d.qtd||0),unidade:d.unidade||'',motivo:d.motivo||'',responsavel:d.responsavel||''}));
+  return {itens:Object.values(mapa).sort((a,b)=>String(a.nome).localeCompare(String(b.nome),'pt-BR')),lanc:lanc.sort((a,b)=>String(a.quando).localeCompare(String(b.quando))),desc};
+ }
+ function inicioPeriodo(cid,tipo){
+  const l=arquivados(cid).filter(a=>tipo==='aula'?true:tipo==='uc'?(a.nivel==='uc'||a.nivel==='curso'):a.nivel==='curso');
+  return l.length?l.map(a=>a.quando).sort().pop():'';
+ }
+
+ /* ---------- janela de encerramento ---------- */
+ window.abrirEncerramento=function(cid,modo){
+  const c=cursos.find(x=>x.cid===cid);if(!c)return;
+  const itens=cursoItens.filter(i=>i.cid===cid&&noCurso(i)>0);
+  const nivel=modo==='curso'?'curso':(modo==='uc'?'uc':'aula');
+  _det=null;
+  abrirModal(`<h3 class="text-lg font-bold mb-1">Encerrar atividade</h3>
+   <p class="text-sm text-slate-500 mb-4">${E(c.nome)} · informe o que <b>retorna</b> ao estoque e o que foi <b>descartado</b>. O restante é registrado como <b>consumido</b>. Tudo fica registrado com data e quantidades na tela de Finalizados.</p>
+   <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+    <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-1">O que está encerrando</label>
+     <select id="enc38-nivel" class="${IC}" onchange="document.getElementById('enc38-ucbox').style.display=this.value==='uc'?'':'none'">
+      ${Object.entries(TIPOS).map(([k,t])=>`<option value="${k}" ${k===nivel?'selected':''}>${t}</option>`).join('')}</select></div>
+    <div id="enc38-ucbox" style="${nivel==='uc'?'':'display:none'}"><label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Nome da UC</label><input id="enc38-uc" class="${IC}" placeholder="Ex.: UC3 — Panificação"/></div>
+    <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-1">Data</label><input id="enc38-data" type="date" class="${IC}" value="${HOJE()}"/></div>
+   </div>
+   ${itens.length?`<div class="flex flex-wrap gap-2 mb-3">
+     <button type="button" class="px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-xs font-semibold" onclick="document.querySelectorAll('.enc38-ret').forEach(i=>{i.value=i.dataset.max;});document.querySelectorAll('.enc38-desc').forEach(i=>i.value=0)">Retornar tudo</button>
+     <button type="button" class="px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-xs font-semibold" onclick="document.querySelectorAll('.enc38-ret,.enc38-desc').forEach(i=>i.value=0)">Tudo consumido</button></div>
+   <div class="space-y-2 max-h-[40vh] overflow-auto pr-1">${itens.map((i,k)=>`<div class="border border-slate-200 dark:border-slate-800 rounded-xl p-3" data-enc38="${k}" data-cod="${E(i.codigo)}" data-val="${E(i.validade)}">
+     <div class="flex justify-between gap-2 mb-2"><div><p class="font-semibold text-sm">${E(i.nome)}</p><p class="text-[11px] text-slate-500">cód. ${E(i.codigo)} · validade ${D(i.validade)}</p></div>
+     <span class="text-sm font-extrabold whitespace-nowrap">${N(noCurso(i))} ${E(i.unidade||'')}</span></div>
+     <div class="grid grid-cols-2 gap-2"><label class="text-[11px] text-slate-500">Retorna ao estoque<input class="${IC} enc38-ret" data-max="${noCurso(i)}" type="number" min="0" step="any" value="0"/></label>
+     <label class="text-[11px] text-slate-500">Descartado<input class="${IC} enc38-desc" type="number" min="0" step="any" value="0"/></label></div></div>`).join('')}</div>`
+   :'<p class="text-sm text-slate-500">Não há insumos em uso agora. O encerramento será registrado com o que já foi movimentado no período.</p>'}
+   <div class="flex justify-end gap-3 mt-6"><button type="button" class="px-5 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 font-semibold" onclick="fecharModal()">Cancelar</button>
+   <button type="button" class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold" onclick="confirmarEncerramento('${cid}')"><i class="fa-solid fa-flag-checkered"></i> Encerrar e finalizar</button></div>`,true);
+ };
+
+ window.confirmarEncerramento=function(cid){
+  const c=cursos.find(x=>x.cid===cid);if(!c)return;
+  const nivel=(document.getElementById('enc38-nivel')||{}).value||'aula';
+  const uc=((document.getElementById('enc38-uc')||{}).value||'').trim();
+  if(nivel==='uc'&&!uc){alert('Informe o nome da Unidade Curricular.');return;}
+  const ops=[];
+  for(const box of document.querySelectorAll('#modal-box [data-enc38]')){
+   const i=cursoItens.find(x=>x.cid===cid&&x.codigo===box.dataset.cod&&x.validade===box.dataset.val);if(!i)continue;
+   const disp=noCurso(i),r=num(box.querySelector('.enc38-ret').value),d=num(box.querySelector('.enc38-desc').value);
+   if(r<0||d<0||r+d>disp+1e-9){alert('Quantidades inválidas para '+i.nome+': retorno + descarte não pode passar de '+N(disp)+'.');return;}
+   ops.push({i,r,d,cons:+(disp-r-d).toFixed(6)});
+  }
+  const desde=inicioPeriodo(cid,nivel);
+  const resp=(window.config&&config.nome)||'';
+  const rot=nivel==='uc'?'encerramento da UC '+uc:(nivel==='curso'?'encerramento do curso':'aula do dia');
+  ops.forEach(({i,r,d,cons})=>{
+   if(r>0){const alvo=estoque.find(e=>e.id===i.codigo&&e.validade===i.validade);
+    if(alvo)alvo.qtd=Number(alvo.qtd)+r;else estoque.unshift({id:i.codigo,nome:i.nome,categoria:i.categoria,qtd:r,unidade:i.unidade,entrada:i.entrada||HOJE(),validade:i.validade});
+    i.devolvida=Number(i.devolvida||0)+r;registrarMov('Curso → Estoque (retorno) — '+rot,i,r,c.nome);}
+   if(d>0){lstDesc().unshift({quando:new Date().toISOString(),codigo:i.codigo,nome:i.nome,categoria:i.categoria,qtd:d,unidade:i.unidade||'',validade:i.validade,motivo:'Descarte no '+rot,responsavel:resp,obs:'Curso '+c.nome,cid,curso:c.nome});
+    i.devolvida=Number(i.devolvida||0)+d;i.descartado=Number(i.descartado||0)+d;registrarMov('Descarte no curso — '+rot,i,d,c.nome);}
+   if(cons>0){i.devolvida=Number(i.devolvida||0)+cons;i.consumido=Number(i.consumido||0)+cons;registrarMov('Consumo — '+rot,i,cons,c.nome);}
+  });
+  const agora=new Date().toISOString();
+  const r=retrato(c,desde,agora);
+  const tot=k=>r.itens.reduce((s,x)=>s+x[k],0);
+  const data=(document.getElementById('enc38-data')||{}).value||HOJE();
+  lstAulas().unshift({id:'ARQ'+Date.now(),arq38:true,nivel,uc,cid,curso:c.nome,codigoCurso:c.codigo||'',instrutor:c.instrutor||'',
+   data,quando:agora,desde,tipo:'Encerramento de '+TIPOS[nivel]+(uc?' — '+uc:''),
+   retornado:tot('retornado'),consumido:tot('consumido'),descartado:tot('descartado'),enviado:tot('enviado'),
+   itens:r.itens.length,detalhe:r.itens,lancamentos:r.lanc,descartesReg:r.desc,responsavel:resp});
+  if(nivel==='curso'){c.encerrado=true;c.encerradoEm=agora;}
+  salvarDados();fecharModal();
+  try{renderCursos();renderEstoque();if(window.renderDescarte)renderDescarte();if(window.renderPainel)renderPainel();}catch(e){}
+  const id=lstAulas()[0].id;
+  alert(TIPOS[nivel]+' finalizado(a).\nConsumido: '+N(tot('consumido'))+' · Descartado: '+N(tot('descartado'))+' · Retornado: '+N(tot('retornado'))+'\n\nO relatório está disponível na tela Finalizados.');
+  abrirDetalheCurso(cid);
+ };
+ window.encerrarAula=cid=>abrirEncerramento(cid,'aula');
+ window.encerrarUC=cid=>abrirEncerramento(cid,'uc');
+
+ /* ---------- relatório PDF de um registro arquivado ---------- */
+ function tabela(cols,rows,alinha){return '<table><thead><tr>'+cols.map((c,k)=>'<th'+(alinha&&alinha[k]?' class="r"':'')+'>'+E(c)+'</th>').join('')+'</tr></thead><tbody>'+(rows.length?rows.map(r=>'<tr>'+r.map((v,k)=>'<td'+(alinha&&alinha[k]?' class="r"':'')+'>'+v+'</td>').join('')+'</tr>').join(''):'<tr><td colspan="'+cols.length+'" class="empty">Nada registrado.</td></tr>')+'</tbody></table>';}
+ window.arqPDF=function(id){
+  const a=lstAulas().find(x=>x.id===id);if(!a)return;
+  const cfg=window.config||{},agora=new Date();
+  const it=a.detalhe||[];const tot=k=>it.reduce((s,x)=>s+Number(x[k]||0),0);
+  const grupo=k=>it.filter(x=>x[k]>0).map(x=>[E(x.nome)+'<br><small>'+E(x.codigo||'')+'</small>',D(x.validade),N(x[k])+' '+E(x.unidade||'')]);
+  const datas=k=>(a.lancamentos||[]).filter(l=>l.tipo===k).map(l=>[DH(l.quando),E(l.nome),N(l.qtd)+' '+E(l.unidade||''),E(l.mov)]);
+  const resp=E(a.responsavel||cfg.nome||'Responsável pelo estoque')+(cfg.cargo?' — '+E(cfg.cargo):'');
+  const css='@page{size:A4;margin:0}*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}html,body{margin:0;background:#fff;color:#172033;font:9pt/1.42 Manrope,Arial,sans-serif}.fundo{position:fixed;inset:0;width:210mm;height:297mm;z-index:0}.fundo img{width:100%;height:100%}.pg{position:relative;z-index:1;width:210mm;min-height:297mm;padding:38mm 17mm}.head{display:flex;justify-content:space-between;gap:8mm;align-items:flex-end;border-bottom:2px solid #004a8d;padding-bottom:3mm}.head h1{margin:0;color:#004a8d;font:800 15pt Sora,Arial}.head p{margin:1mm 0 0;color:#566}.meta{text-align:right;font-size:8pt}.meta b{display:block;color:#f7941d;font-size:10pt}.info,.kpis{display:grid;gap:2mm;margin-top:4mm;grid-template-columns:repeat(4,1fr)}.info div,.k{border:1px solid #d7dfe8;padding:2mm;border-radius:1.5mm;background:#fff}.info small,.k span{display:block;color:#667;font-size:6.5pt;text-transform:uppercase}.info b{font-size:8.5pt}.k{border-top:3px solid #004a8d}.k strong{font:800 14pt Sora,Arial;color:#004a8d}.k.cons{border-top-color:#f7941d}.k.cons strong{color:#b86400}.k.desc{border-top-color:#c62828}.k.desc strong{color:#c62828}.k.ret{border-top-color:#087e85}.k.ret strong{color:#087e85}h2{color:#004a8d;font:700 10pt Sora,Arial;margin:5mm 0 1.5mm;break-after:avoid}table{width:100%;border-collapse:collapse;font-size:7.6pt;background:#fff}thead{display:table-header-group}tr{break-inside:avoid}th{background:#004a8d;color:#fff;text-align:left;padding:1.5mm;font-size:6.8pt;text-transform:uppercase}td{padding:1.4mm;border-bottom:1px solid #e2e7ec;vertical-align:top}.r{text-align:right}tbody tr:nth-child(even) td{background:#f5f8fb}.empty{text-align:center;color:#778}small{color:#778}.sign{margin-top:14mm;width:78mm;border-top:1px solid #333;padding-top:1.5mm}.tb{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:center;gap:10px;padding:10px;background:#004a8d;color:#fff;font:600 13px Arial;align-items:center}.tb button{border:0;border-radius:6px;padding:8px 16px;background:#f7941d;color:#fff;font-weight:700;cursor:pointer}@media screen{body{background:#e5e9ef}.pg{margin:58px auto 20px;box-shadow:0 4px 24px #0003}.fundo{display:none}}@media print{.tb{display:none}}';
+  const corpo='<section class="info"><div><small>Curso</small><b>'+E(a.curso)+'</b></div><div><small>'+(a.nivel==='uc'?'Unidade Curricular':'Encerramento')+'</small><b>'+E(a.nivel==='uc'?a.uc:TIPOS[a.nivel])+'</b></div><div><small>Data do encerramento</small><b>'+D(a.data)+'</b></div><div><small>Período apurado</small><b>'+(a.desde?DH(a.desde):'Início')+' a '+DH(a.quando)+'</b></div></section>'+
+   '<section class="kpis"><div class="k"><span>Enviado ao curso</span><strong>'+N(tot('enviado'))+'</strong></div><div class="k cons"><span>Consumido</span><strong>'+N(tot('consumido'))+'</strong></div><div class="k desc"><span>Descartado</span><strong>'+N(tot('descartado'))+'</strong></div><div class="k ret"><span>Retornado ao estoque</span><strong>'+N(tot('retornado'))+'</strong></div></section>'+
+   '<h2>Resumo por item</h2>'+tabela(['Item / código','Validade','Enviado','Consumido','Descartado','Retornado'],it.map(x=>[E(x.nome)+'<br><small>'+E(x.codigo||'')+'</small>',D(x.validade),N(x.enviado),N(x.consumido),N(x.descartado),N(x.retornado)+' '+E(x.unidade||'')]),[0,0,1,1,1,1])+
+   '<h2>O que foi consumido</h2>'+tabela(['Item','Validade','Quantidade'],grupo('consumido'),[0,0,1])+
+   '<h2>O que foi descartado</h2>'+tabela(['Data','Item','Quantidade','Motivo','Responsável'],(a.descartesReg||[]).map(d=>[DH(d.quando),E(d.nome)+'<br><small>'+E(d.codigo||'')+'</small>',N(d.qtd)+' '+E(d.unidade),E(d.motivo),E(d.responsavel||'—')]),[0,0,1,0,0])+
+   '<h2>O que retornou ao estoque</h2>'+tabela(['Data','Item','Quantidade','Movimentação'],datas('retornado'),[0,0,1,0])+
+   '<h2>Histórico completo do período</h2>'+tabela(['Data','Item','Quantidade','Movimentação'],(a.lancamentos||[]).map(l=>[DH(l.quando),E(l.nome),N(l.qtd)+' '+E(l.unidade||''),E(l.mov)]),[0,0,1,0]);
+  const html='<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Relatório — '+E(a.tipo)+' — '+E(a.curso)+'</title><style>'+css+'</style></head><body>'+(cfg.timbrado?'<div class="fundo"><img src="'+cfg.timbrado+'"></div>':'')+
+   '<main class="pg"><div class="head"><div><h1>Relatório de '+E(TIPOS[a.nivel])+' finalizado(a)</h1><p>'+E(cfg.unidade||'Senac Aldeota')+' · consumo, descarte e retorno de insumos</p></div><div class="meta"><b>'+agora.toLocaleDateString('pt-BR')+'</b>emitido às '+agora.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'</div></div>'+corpo+
+   '<div class="sign">'+resp+'<br><small>'+E(cfg.unidade||'Senac Aldeota')+'</small></div></main><div class="tb">Relatório pronto. Escolha “Salvar como PDF” na impressão.<button onclick="print()">Imprimir / Salvar PDF</button><button style="background:#fff;color:#004a8d" onclick="close()">Fechar</button></div></body></html>';
+  const w=window.open('','_blank');if(!w){alert('Permita a abertura de pop-ups para gerar o relatório.');return;}
+  w.document.open();w.document.write(html);w.document.close();
+  const img=w.document.querySelector('.fundo img');const go=()=>setTimeout(()=>{w.focus();w.print();},250);if(img&&!img.complete){img.onload=go;img.onerror=go;}else go();
+ };
+ window.arqExcluir=function(id){const l=lstAulas(),a=l.find(x=>x.id===id);if(!a||!confirm('Excluir o registro finalizado "'+a.tipo+'" de '+D(a.data)+'? As movimentações do estoque continuam registradas.'))return;l.splice(l.indexOf(a),1);salvarDados();arqLista();};
+
+ /* ---------- lista de arquivados ---------- */
+ function linhasArq(l,comCurso){return l.map(a=>`<article class="fin39-card">
+   <div class="fin39-main"><div class="fin39-icon"><i class="fa-solid ${a.nivel==='curso'?'fa-graduation-cap':a.nivel==='uc'?'fa-layer-group':'fa-chalkboard-user'}"></i></div>
+   <div class="min-w-0"><div class="flex items-center gap-2 flex-wrap"><h4>${comCurso?E(a.curso):E(a.tipo)}</h4><span class="fin39-tag">${a.nivel==='uc'?'UC':TIPOS[a.nivel]}</span></div>
+   <p>${a.uc?E(a.uc)+' · ':''}Finalizado em ${D(a.data)}${a.instrutor?' · '+E(a.instrutor):''}</p></div></div>
+   <div class="fin39-metrics"><div><span>Consumido</span><b>${N(a.consumido)}</b></div><div><span>Descartado</span><b>${N(a.descartado)}</b></div><div><span>Retornado</span><b>${N(a.retornado)}</b></div></div>
+   <div class="fin39-actions"><button type="button" class="fin39-pdf" onclick="arqPDF('${a.id}')"><i class="fa-solid fa-file-pdf"></i> Relatório PDF</button>
+   <button type="button" class="fin39-delete" onclick="arqExcluir('${a.id}')" aria-label="Excluir finalizado" title="Excluir"><i class="fa-solid fa-trash"></i></button></div></article>`).join('');}
+ function tabelaArq(l,comCurso){return `<div class="fin39-list">${linhasArq(l,comCurso)||'<div class="fin39-empty"><i class="fa-regular fa-circle-check"></i><b>Nenhuma finalização registrada</b><span>As turmas encerradas aparecerão aqui.</span></div>'}</div>`;}
+ window.arqLista=function(){
+  const l=arquivados(),cursosFim=l.filter(a=>a.nivel==='curso').length;
+  abrirModal(`<div class="fin39-head"><div><span class="fin39-eyebrow">Histórico de encerramentos</span><h3><i class="fa-solid fa-circle-check"></i> Finalizados</h3><p>Consulte aulas, UCs e cursos concluídos. Os relatórios ficam disponíveis somente nesta tela.</p></div>
+   <button type="button" class="fin39-close" onclick="fecharModal()" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button></div>
+   <div class="fin39-summary"><div><span>Registros finalizados</span><strong>${l.length}</strong></div><div><span>Cursos concluídos</span><strong>${cursosFim}</strong></div><div><span>Última finalização</span><strong>${l.length?D(l[0].data):'—'}</strong></div></div>
+   ${tabelaArq(l,true)}`,true);
+ };
+
+ /* botões no detalhe do curso e na tela de cursos */
+ const detAnt=window.abrirDetalheCurso;
+ window.abrirDetalheCurso=function(cid){
+  const r=detAnt.apply(this,arguments);const c=cursos.find(x=>x.cid===cid);const box=document.getElementById('modal-box');if(!c||!box)return r;
+  box.querySelectorAll('button').forEach(b=>{const t=(b.textContent||'').trim();
+   if(/Encerrar aula/i.test(t)){b.innerHTML='<i class="fa-solid fa-clock-rotate-left"></i> Encerrar aula';b.onclick=null;b.setAttribute('onclick',"encerrarAula('"+cid+"')");}
+   if(/^Encerrar curso/i.test(t))b.setAttribute('onclick',"abrirEncerramento('"+cid+"','curso')");});
+  const actions=box.querySelector('.flex.flex-wrap.gap-2');
+  if(actions){const rel=actions.querySelector('.course-report-btn');if(rel)rel.remove();}
+  if(actions&&!c.encerrado&&!actions.querySelector('.uc38')){const b=document.createElement('button');b.type='button';b.className='uc38 px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold';b.innerHTML='<i class="fa-solid fa-layer-group"></i> Encerrar UC';b.setAttribute('onclick',"encerrarUC('"+cid+"')");actions.appendChild(b);}
+  return r;
+ };
+ const rcAnt=window.renderCursos;
+ window.renderCursos=function(){const r=rcAnt.apply(this,arguments);
+  const head=document.querySelector('#tab-cursos .flex.items-center.justify-between');
+  if(head&&!document.getElementById('btn-arq38')){const b=document.createElement('button');b.id='btn-arq38';b.type='button';b.className='px-3 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-sm font-semibold flex items-center gap-2';b.innerHTML='<i class="fa-solid fa-circle-check"></i> Finalizados';b.onclick=arqLista;const t=head.querySelector('.v25-toggle');head.insertBefore(b,t||null);}
+  return r;};
+
+ /* Recupera relatórios de cursos já encerrados antes da v38 (itens tinham sido apagados, mas o histórico de movimentações existe) */
+ cursos.filter(c=>c.encerrado&&!arquivados(c.cid).some(a=>a.nivel==='curso')).forEach(c=>{
+  const r=retrato(c,'',c.encerradoEm||new Date().toISOString());if(!r.itens.length)return;const tot=k=>r.itens.reduce((s,x)=>s+x[k],0);
+  lstAulas().push({id:'ARQ'+Date.now()+Math.random().toString(36).slice(2,6),arq38:true,nivel:'curso',uc:'',cid:c.cid,curso:c.nome,data:String(c.encerradoEm||HOJE()).slice(0,10),quando:c.encerradoEm||new Date().toISOString(),desde:'',tipo:'Encerramento de Curso (recuperado)',retornado:tot('retornado'),consumido:tot('consumido'),descartado:tot('descartado'),enviado:tot('enviado'),itens:r.itens.length,detalhe:r.itens,lancamentos:r.lanc,descartesReg:r.desc,responsavel:''});
+ });
+ try{salvarDados();renderCursos();}catch(e){}
+})();
+</script>
+
+
+<style id="sirius-v40-cursos-layout">
+/* v40 — aparência restrita à tela de cadastro/listagem de cursos */
+.cursos40{--curso40-deep:#073f34;--curso40-mid:#0d5949;--curso40-lime:#8ccb24;--curso40-soft:#f4f7f3;--curso40-card:#fff;--curso40-line:#dce6df;--curso40-muted:#66756f}
+.cursos40-cadastro>div{position:relative;overflow:hidden;padding:25px 28px!important;border:1px solid var(--curso40-line)!important;border-radius:8px!important;background:var(--curso40-card)!important;box-shadow:0 8px 24px rgba(7,63,52,.07)!important}
+.cursos40-cadastro>div:before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:var(--curso40-lime)}
+.cursos40-cadastro h2{font-size:22px!important;color:var(--curso40-deep);letter-spacing:0!important}.cursos40-cadastro p{margin-top:4px;color:var(--curso40-muted)!important}
+.curso40-novo{display:flex;align-items:center;gap:11px;min-width:170px;padding:9px 15px 9px 9px;border:0;border-radius:8px;background:var(--curso40-deep);color:#fff;box-shadow:0 8px 18px rgba(7,63,52,.18);transition:transform .18s,background .18s,box-shadow .18s;text-align:left}
+.curso40-novo:hover{background:var(--curso40-mid);transform:translateY(-1px);box-shadow:0 11px 22px rgba(7,63,52,.24)}.curso40-btn-icon{display:grid;place-items:center;width:36px;height:36px;border-radius:6px;background:rgba(255,255,255,.13);color:var(--curso40-lime);font-size:14px}.curso40-novo b,.curso40-novo small{display:block}.curso40-novo b{font-size:13px}.curso40-novo small{margin-top:1px;color:#cfe0da;font-size:9px;text-transform:uppercase}
+.cursos40-listagem{padding-top:2px;border-top:1px solid var(--curso40-line)}.cursos40-listagem>.flex{padding:18px 0 13px}.cursos40-listagem h2{color:var(--curso40-deep);font-size:19px!important}.curso40-excel{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px;border:1px solid color-mix(in oklab,var(--curso40-lime) 70%,var(--curso40-deep));border-radius:7px;background:var(--curso40-lime);color:#17310a;font-size:12px;font-weight:800;box-shadow:0 5px 14px rgba(140,203,36,.18);transition:filter .18s,transform .18s}.curso40-excel:hover{filter:brightness(.94);transform:translateY(-1px)}
+.cursos40 .v25-toggle{order:10;margin-left:0!important;border:1px solid var(--curso40-line);border-radius:8px;padding:3px;background:var(--curso40-card);box-shadow:0 3px 10px rgba(7,63,52,.05)}.cursos40 .v25-toggle button{width:34px;height:32px;border-radius:5px;color:var(--curso40-deep);opacity:.65}.cursos40 .v25-toggle button:hover{opacity:1;background:var(--curso40-soft)}.cursos40 .v25-toggle button.active{background:var(--curso40-deep);color:#fff;opacity:1}
+.cursos40 #btn-arq38{order:9!important;margin-left:auto!important;height:40px;padding:0 14px!important;border:1px solid var(--curso40-line)!important;border-radius:7px!important;background:var(--curso40-card)!important;color:var(--curso40-deep)!important;box-shadow:0 3px 10px rgba(7,63,52,.05);font-size:12px!important}.cursos40 #btn-arq38:hover{border-color:var(--curso40-deep)!important;background:var(--curso40-soft)!important}
+.cursos40 .c25-grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}.cursos40 .c25-card{position:relative;display:flex;min-height:276px;flex-direction:column;padding:18px;border:1px solid var(--curso40-line);border-radius:8px;background:var(--curso40-card);box-shadow:0 5px 18px rgba(7,63,52,.06);transition:border-color .18s,transform .18s,box-shadow .18s}.cursos40 .c25-card:before{content:"";position:absolute;top:0;left:18px;right:18px;height:3px;border-radius:0 0 4px 4px;background:var(--curso40-lime);opacity:.9}.cursos40 .c25-card:hover{border-color:color-mix(in oklab,var(--curso40-lime) 70%,var(--curso40-line));transform:translateY(-3px);box-shadow:0 12px 26px rgba(7,63,52,.12)}
+.curso40-card-top{display:flex;align-items:center;justify-content:space-between;margin:5px 0 16px}.curso40-card-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:8px;background:var(--curso40-soft);color:var(--curso40-deep);font-size:16px}.curso40-status{padding:5px 8px;border-radius:5px;background:#eef1ef;color:var(--curso40-muted);font-size:9px;font-weight:800;text-transform:uppercase}.curso40-status.ativo{background:color-mix(in oklab,var(--curso40-lime) 15%,white);color:var(--curso40-deep)}.curso40-status.ativo i{margin-right:4px;color:var(--curso40-lime);font-size:6px;vertical-align:middle}.curso40-card-title p{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#17221e;font-size:15px;font-weight:800}.curso40-card-title span{display:block;margin-top:3px;color:var(--curso40-muted);font-size:10px;text-transform:uppercase}
+.curso40-card-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}.curso40-card-meta span{position:relative;padding-left:23px;color:var(--curso40-muted);font-size:10px;line-height:1.35}.curso40-card-meta span:first-child{grid-column:1/-1}.curso40-card-meta i{position:absolute;left:0;top:2px;color:var(--curso40-mid)}.curso40-card-meta b{display:block;color:#34443e;font-size:9px;text-transform:uppercase}.curso40-abrir{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:auto;padding:10px 12px;border:1px solid var(--curso40-line);border-radius:7px;background:var(--curso40-soft);color:var(--curso40-deep);font-size:11px;font-weight:800}.cursos40 .c25-card:hover .curso40-abrir{border-color:var(--curso40-deep);background:var(--curso40-deep);color:#fff}
+.cursos40 #lista-cursos:not(.c25-grid){border-radius:8px!important;border-color:var(--curso40-line)!important;box-shadow:0 5px 18px rgba(7,63,52,.05)}.cursos40 #lista-cursos:not(.c25-grid)>div{border-left:3px solid transparent}.cursos40 #lista-cursos:not(.c25-grid)>div:hover{border-left-color:var(--curso40-lime);background:var(--curso40-soft)!important}.cursos40 #lista-cursos:not(.c25-grid)>div>button{border-radius:6px!important}
+@media(max-width:700px){.cursos40-cadastro>div{align-items:flex-start!important;padding:20px!important}.curso40-novo{width:100%;justify-content:center}.cursos40-listagem>.flex{align-items:flex-start!important}.curso40-excel{order:8}.cursos40 #btn-arq38{margin-left:0!important}.cursos40 .v25-toggle{margin-left:auto!important}.cursos40 .c25-grid{grid-template-columns:1fr}.curso40-card-meta{grid-template-columns:1fr}.curso40-card-meta span:first-child{grid-column:auto}}
+</style>
+
+<style id="sirius-v41-detalhe-curso">
+/* v41 — novo layout aplicado exclusivamente à janela de detalhes do curso */
+#modal-box:has(.course-detail40){width:min(1080px,calc(100vw - 32px))!important;max-width:min(1080px,calc(100vw - 32px))!important;padding:0!important;border-radius:12px!important;overflow:auto!important;background:var(--c-surface)!important;box-shadow:0 28px 80px rgba(0,0,0,.28)!important}
+.course-detail40{min-width:0}.course-detail40-head{position:sticky;top:0;z-index:3;margin:0;padding:24px 28px 21px;border-bottom:1px solid var(--c-line);background:color-mix(in oklab,var(--c-surface) 94%,transparent);backdrop-filter:blur(14px)}
+.course-detail40-identity{min-width:0}.course-detail40-identity>div:last-child{min-width:0}.course-detail40-icon{width:52px!important;height:52px!important;flex:0 0 52px;border:1px solid color-mix(in oklab,var(--c-lime) 28%,var(--c-line));border-radius:9px!important;background:var(--c-lime-soft)!important;color:var(--c-lime)!important}.course-detail40-eyebrow,.course-detail40-section-label{margin-bottom:3px;color:var(--c-muted);font:700 9px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.11em}.course-detail40 h3{overflow-wrap:anywhere;color:var(--c-text);font-size:22px!important;line-height:1.18}.course-detail40-close{display:grid;place-items:center;width:38px;height:38px;flex:0 0 38px;padding:0!important;border:1px solid var(--c-line);border-radius:8px!important;background:var(--c-panel)!important;color:var(--c-muted)!important}.course-detail40-close:hover{border-color:var(--c-muted);color:var(--c-text)!important}
+.course-detail40-meta{grid-template-columns:minmax(240px,1.7fr) minmax(120px,.65fr) minmax(180px,1fr)!important;gap:0!important;margin:0!important;border-bottom:1px solid var(--c-line);background:var(--c-panel)}.course-detail40-meta>div{min-height:72px;padding:16px 24px;border-right:1px solid var(--c-line)}.course-detail40-meta>div:last-child{border-right:0}.course-detail40-meta p:first-child{margin-bottom:5px;color:var(--c-muted)!important;font:700 9px 'JetBrains Mono',monospace!important;letter-spacing:.1em}.course-detail40-meta p:last-child{color:var(--c-text);font-size:13px!important;font-weight:700!important}.course-detail40-note{margin:18px 28px 0!important;padding:12px 14px;border-left:3px solid var(--c-lime);border-radius:0 7px 7px 0;background:var(--c-lime-soft);color:var(--c-muted)!important}
+.course-detail40-actions{align-items:center;margin:20px 28px 26px!important;padding-bottom:24px;border-bottom:1px solid var(--c-line)}.course-detail40-actions button{min-height:40px;border-radius:7px!important}.course-detail40-actions button:first-child{background:var(--c-side)!important;color:var(--c-lime)!important}.course-detail40-actions .uc38{order:4!important}.course-detail40-delete{width:40px;justify-content:center;margin-left:auto!important;border:1px solid var(--c-line)!important;background:transparent!important}
+.course-detail40-section-head,.cv-monitor>.course-detail40-section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin:0 28px 10px!important}.course-detail40-section-head h4{color:var(--c-text);font-size:16px}.course-detail40-section-head>span{color:var(--c-muted);font-size:11px}.course-detail40-table{margin:0 28px;border-color:var(--c-line)!important;border-radius:8px!important;background:var(--c-surface)!important}.course-detail40-table table{min-width:680px}.course-detail40-table thead{background:var(--c-panel-2)!important}.course-detail40-table th{height:38px;padding:0 14px!important}.course-detail40-table td{padding:12px 14px!important}.course-detail40-table tbody tr:last-child{border-bottom:0!important}.course-detail40-table tbody tr:hover{background:var(--c-lime-soft)!important}
+.course-detail40-empty{display:flex;min-height:92px;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--c-muted)}.course-detail40-empty i{margin-bottom:3px;color:var(--c-lime);font-size:19px}.course-detail40-empty b{color:var(--c-text);font-size:13px}.course-detail40-empty span{font-size:11px}.cv-monitor{margin:28px 0!important;padding:25px 0 28px;border-top:1px solid var(--c-line);background:color-mix(in oklab,var(--c-panel) 42%,var(--c-surface))}.cv-monitor .course-detail40-table{background:var(--c-surface)!important}.course-detail40-alert{display:inline-flex;align-items:center;min-height:28px;padding:5px 9px;border:1px solid var(--c-line);border-radius:6px;background:var(--c-surface)}
+#modal-box:has(.course-detail40) .text-xs.text-slate-500.mb-4{margin:0 28px 20px!important;padding:11px 13px;border:1px solid var(--c-line);border-radius:7px;background:var(--c-panel);font-size:11px!important}.course-detail40+.cv-relatorio{margin:24px 28px!important}
+@media(max-width:760px){#modal-box:has(.course-detail40){width:calc(100vw - 20px)!important;max-width:calc(100vw - 20px)!important;max-height:calc(100dvh - 24px)!important}.course-detail40-head{padding:18px 16px 16px}.course-detail40-icon{width:44px!important;height:44px!important;flex-basis:44px}.course-detail40 h3{font-size:18px!important}.course-detail40-meta{grid-template-columns:1fr 1fr!important}.course-detail40-meta>div{min-height:66px;padding:13px 16px}.course-detail40-meta>div:first-child{grid-column:1/-1;border-right:0;border-bottom:1px solid var(--c-line)}.course-detail40-note{margin:14px 16px 0!important}.course-detail40-actions{display:grid!important;grid-template-columns:1fr 1fr;margin:16px!important;padding-bottom:18px}.course-detail40-actions button{width:100%;margin:0!important}.course-detail40-actions .course-detail40-delete{grid-column:2;width:40px!important;justify-self:end}.course-detail40-section-head,.cv-monitor>.course-detail40-section-head{align-items:flex-start;margin:0 16px 9px!important}.course-detail40-section-head>span{max-width:48%;text-align:right}.course-detail40-table{margin:0 16px}.cv-monitor{margin:22px 0 0!important;padding:21px 0 22px}.course-detail40-empty{min-height:86px}.course-detail40-empty span{max-width:280px}.course-detail40+.cv-relatorio{margin:20px 16px!important}}
+@media(max-width:430px){.course-detail40-actions{grid-template-columns:1fr}.course-detail40-actions .course-detail40-delete{grid-column:1;justify-self:end}.course-detail40-meta{grid-template-columns:1fr!important}.course-detail40-meta>div{grid-column:1!important;border-right:0;border-bottom:1px solid var(--c-line)}.course-detail40-meta>div:last-child{border-bottom:0}.course-detail40-section-head{flex-direction:column;align-items:flex-start!important;gap:7px}.course-detail40-section-head>span{max-width:none;text-align:left}.course-detail40-alert{align-self:flex-start}}
+</style>
+<style id="sirius-v39-finalizados">
+#modal-box:has(.fin39-head){max-width:min(1040px,calc(100vw - 28px))!important;padding:0!important;overflow:hidden!important}
+.fin39-head{display:flex;justify-content:space-between;gap:24px;padding:26px 28px 22px;background:linear-gradient(120deg,var(--c-side),color-mix(in oklab,var(--c-side) 78%,var(--c-lime)));color:#f7faf8}
+.fin39-head h3{font:800 25px/1.15 'Sora',Arial,sans-serif;margin:4px 0 7px}.fin39-head h3 i{color:var(--c-lime);margin-right:7px}.fin39-head p{max-width:650px;color:#d6e0dc;font-size:13px}.fin39-eyebrow{font-size:10px;text-transform:uppercase;font-weight:800;color:var(--c-lime)}
+.fin39-close{width:38px;height:38px;flex:0 0 38px;border-radius:8px;background:#ffffff18;color:#fff}.fin39-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--c-line);border-bottom:1px solid var(--c-line)}.fin39-summary>div{padding:15px 22px;background:var(--c-surface)}.fin39-summary span{display:block;color:var(--c-muted);font-size:10px;text-transform:uppercase;font-weight:700}.fin39-summary strong{display:block;margin-top:3px;font:800 20px 'Sora',Arial,sans-serif}
+.fin39-list{display:grid;gap:10px;padding:20px 22px 24px;max-height:58vh;overflow:auto}.fin39-card{display:grid;grid-template-columns:minmax(240px,1.5fr) minmax(270px,1fr) auto;gap:18px;align-items:center;border:1px solid var(--c-line);border-left:4px solid var(--c-lime);border-radius:8px;padding:14px 16px;background:var(--c-surface);box-shadow:0 2px 8px rgba(0,0,0,.04)}.fin39-main{display:flex;align-items:center;gap:12px;min-width:0}.fin39-icon{display:grid;place-items:center;width:40px;height:40px;flex:0 0 40px;border-radius:8px;background:color-mix(in oklab,var(--c-lime) 15%,var(--c-surface));color:var(--c-lime)}.fin39-main h4{font-weight:800;font-size:14px}.fin39-main p{margin-top:3px;color:var(--c-muted);font-size:11px}.fin39-tag{padding:3px 7px;border-radius:4px;background:color-mix(in oklab,var(--c-side) 8%,var(--c-surface));font-size:9px;font-weight:800;text-transform:uppercase}.fin39-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.fin39-metrics div{padding:7px 9px;border-left:1px solid var(--c-line)}.fin39-metrics span{display:block;color:var(--c-muted);font-size:9px;text-transform:uppercase}.fin39-metrics b{font-size:14px}.fin39-actions{display:flex;align-items:center;gap:6px}.fin39-pdf{padding:9px 11px;border-radius:7px;background:#b91c1c;color:#fff;font-size:11px;font-weight:800;white-space:nowrap}.fin39-delete{width:34px;height:34px;border-radius:7px;background:color-mix(in oklab,var(--c-muted) 10%,transparent);color:var(--c-muted)}.fin39-empty{display:flex;min-height:210px;flex-direction:column;align-items:center;justify-content:center;color:var(--c-muted);gap:7px}.fin39-empty i{font-size:30px;color:var(--c-lime)}.fin39-empty b{color:var(--c-text)}.fin39-empty span{font-size:12px}
+@media(max-width:760px){.fin39-head{padding:20px}.fin39-summary{grid-template-columns:1fr}.fin39-summary>div{padding:10px 18px}.fin39-card{grid-template-columns:1fr;gap:12px}.fin39-metrics{border-top:1px solid var(--c-line);padding-top:10px}.fin39-actions{justify-content:flex-end}.fin39-pdf{flex:1}.fin39-list{padding:14px;max-height:62vh}}
+</style>
+<script>
+/* v43 — Hierarquia Curso › UC › Aula + relatórios por nível */
+(function(){
+ const TIPO_LBL={curso:'Curso inteiro',uc:'Unidade Curricular (UC)',aula:'Aula'};
+ const E=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+ const tipoDe=c=>c&&c.tipo||'curso';
+ const byId=id=>cursos.find(c=>c.cid===id);
+ const raizDe=c=>{let x=c,g=0;while(x&&x.parent&&g++<10)x=byId(x.parent);return x||c;};
+ const filhos=cid=>cursos.filter(c=>c.parent===cid);
+ const descendentes=cid=>{const out=[cid];for(let i=0;i<out.length;i++)filhos(out[i]).forEach(f=>{if(!out.includes(f.cid))out.push(f.cid);});return out;};
+ const caminho=c=>{const p=[];let x=c,g=0;while(x&&g++<10){p.unshift(x.nome);x=x.parent?byId(x.parent):null;}return p.join(' › ');};
+ window.hierCaminho=caminho;
+ const optsPai=(tipo,sel,self)=>{
+  const l=cursos.filter(c=>c.cid!==self&&(tipo==='uc'?tipoDe(c)==='curso':(tipoDe(c)==='curso'||tipoDe(c)==='uc')));
+  return '<option value="">Selecione…</option>'+l.map(c=>`<option value="${c.cid}" ${sel===c.cid?'selected':''}>${tipoDe(c)==='uc'?'UC · ':'Curso · '}${E(caminho(c))}${c.codigo?' — '+E(c.codigo):''}</option>`).join('');
+ };
+
+ const abrirAnt=window.abrirCadastroCurso;
+ window.abrirCadastroCurso=function(cid,tipoInicial,paiInicial){
+  const r=abrirAnt.apply(this,[cid]);
+  const ed=cid?byId(cid):null, form=document.querySelector('#modal-box form'); if(!form)return r;
+  const IC=(document.getElementById('cur-nome')||{}).className||'';
+  const tipo=ed?tipoDe(ed):(tipoInicial||'curso'), pai=ed?ed.parent||'':(paiInicial||'');
+  const temFilhos=ed&&filhos(ed.cid).length;
+  form.insertAdjacentHTML('afterbegin',`<div class="md:col-span-2 hier43">
+   <label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Tipo de cadastro</label>
+   <div class="grid grid-cols-3 gap-2" id="h43-tipos">${Object.entries(TIPO_LBL).map(([k,t])=>`<label class="flex items-center gap-2 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm cursor-pointer"><input type="radio" name="h43-tipo" value="${k}" ${k===tipo?'checked':''} ${temFilhos&&k!=='curso'&&tipoDe(ed)==='curso'?'disabled':''}/> ${t}</label>`).join('')}</div></div>
+   <div class="md:col-span-2" id="h43-paibox"><label class="block text-xs font-semibold uppercase text-slate-500 mb-2" id="h43-pailbl">Vinculado a</label>
+   <select class="${IC}" id="h43-pai"></select><p class="text-xs text-slate-500 mt-1" id="h43-dica"></p></div>`);
+  const upd=()=>{const t=form.querySelector('input[name=h43-tipo]:checked').value,box=document.getElementById('h43-paibox'),s=document.getElementById('h43-pai');
+   const lblNome=form.querySelector('#cur-nome').closest('div').querySelector('label'),lblCod=form.querySelector('#cur-codigo').closest('div').querySelector('label');
+   lblNome.textContent=t==='curso'?'Nome do curso':t==='uc'?'Nome da UC':'Nome / tema da aula';
+   lblCod.textContent=t==='curso'?'Código do curso':t==='uc'?'Código da UC':'Código da aula';
+   if(t==='curso'){box.style.display='none';s.required=false;return;}
+   box.style.display='';s.required=true;const v=s.value||pai;s.innerHTML=optsPai(t,v,ed&&ed.cid);
+   document.getElementById('h43-pailbl').textContent=t==='uc'?'Curso ao qual a UC pertence':'Curso ou UC ao qual a aula pertence';
+   document.getElementById('h43-dica').textContent=t==='uc'?'A UC precisa pertencer a um curso cadastrado.':'Escolha a UC, ou o curso diretamente quando ele não tiver UCs.';
+   if(s.options.length<=1)document.getElementById('h43-dica').innerHTML='<b class="text-red-500">Cadastre primeiro um curso'+(t==='aula'?' (ou UC)':'')+'.</b>';
+   if(s.value){const p=byId(s.value),rt=raizDe(p);['cur-instrutor','cur-turno'].forEach(id=>{const el=document.getElementById(id),k=id.slice(4);if(el&&!el.value&&rt&&rt[k])el.value=rt[k];});}
+  };
+  form.querySelectorAll('input[name=h43-tipo]').forEach(x=>x.onchange=upd);
+  document.getElementById('h43-pai').onchange=upd; upd();
+  return r;
+ };
+
+ const salvarAnt=window.salvarCurso;
+ window.salvarCurso=function(e,cid){
+  const tEl=document.querySelector('input[name=h43-tipo]:checked');const tipo=tEl?tEl.value:'curso';
+  const pai=tipo==='curso'?'':(document.getElementById('h43-pai')||{}).value||'';
+  if(tipo!=='curso'&&!pai){e.preventDefault();alert(tipo==='uc'?'Selecione o curso ao qual esta UC pertence.':'Selecione o curso ou a UC desta aula.');return;}
+  if(cid&&pai&&descendentes(cid).includes(pai)){e.preventDefault();alert('Vínculo inválido: não é possível vincular a um item que pertence a este cadastro.');return;}
+  const antes=new Set(cursos.map(c=>c.cid));
+  const r=salvarAnt.apply(this,arguments);
+  const alvo=cid?byId(cid):cursos.find(c=>!antes.has(c.cid));
+  if(alvo){alvo.tipo=tipo;alvo.parent=pai||null;salvarDados();try{renderCursos();}catch(_){}}
+  return r;
+ };
+
+ const exclAnt=window.excluirCurso;
+ window.excluirCurso=function(cid){if(filhos(cid).length){alert('Este cadastro possui UCs/aulas vinculadas. Exclua ou mova esses vínculos antes.');return;}return exclAnt.apply(this,arguments);};
+
+ /* badges e ordenação hierárquica na listagem */
+ const renderAnt=window.renderCursos;
+ window.renderCursos=function(){
+  const orig=cursos.slice();
+  const ord=[];const add=c=>{if(ord.includes(c))return;ord.push(c);filhos(c.cid).forEach(add);};
+  orig.filter(c=>!c.parent||!byId(c.parent)).forEach(add);orig.forEach(c=>{if(!ord.includes(c))ord.push(c);});
+  cursos.splice(0,cursos.length,...ord);
+  let r;try{r=renderAnt.apply(this,arguments);}finally{cursos.splice(0,cursos.length,...orig);}
+  document.querySelectorAll('#lista-cursos [onclick*="abrirDetalheCurso"]').forEach(el=>{
+   const m=(el.getAttribute('onclick')||'').match(/abrirDetalheCurso\('([^']+)'/);if(!m)return;const c=byId(m[1]);if(!c||el.querySelector('.h43-badge'))return;
+   const t=tipoDe(c),cor=t==='curso'?'#315c48':t==='uc'?'#b7791f':'#2563eb';
+   const pai=c.parent?byId(c.parent):null;
+   const html=`<div class="h43-badge" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;font-weight:700;margin:4px 0"><span style="background:${cor};color:#fff;border-radius:999px;padding:2px 8px">${t==='curso'?'CURSO':t==='uc'?'UC':'AULA'}</span>${pai?`<span style="opacity:.7">de ${E(caminho(pai))}</span>`:(t==='curso'?`<span style="opacity:.7">${filhos(c.cid).filter(f=>tipoDe(f)==='uc').length} UC(s) · ${descendentes(c.cid).filter(id=>tipoDe(byId(id))==='aula').length} aula(s)</span>`:'')}</div>`;
+   const tt=el.querySelector('.curso40-card-title');if(tt)tt.insertAdjacentHTML('beforebegin',html);else el.insertAdjacentHTML('afterbegin',html);
+   if(t!=='curso')el.style.marginLeft=window.innerWidth>700?'':'';
+  });
+  /* botão de relatório por nível */
+  const exp=document.querySelector('#tab-cursos .curso40-excel');
+  if(exp&&!document.getElementById('h43-relbtn')){exp.insertAdjacentHTML('beforebegin','<button id="h43-relbtn" type="button" class="curso40-excel" onclick="abrirRelatorioNivel()"><i class="fa-solid fa-sitemap"></i><span>Relatório por curso / UC / aula</span></button>');exp.parentElement.style.gap='10px';}
+  return r;
+ };
+
+ /* botões no detalhe: adicionar UC / aula vinculada + relatório */
+ const detAnt=window.abrirDetalheCurso;
+ window.abrirDetalheCurso=function(cid){
+  const r=detAnt.apply(this,arguments);const c=byId(cid),box=document.getElementById('modal-box');if(!c||!box)return r;
+  const t=tipoDe(c);
+  const bar=document.createElement('div');bar.className='h43-bar';bar.style.cssText='display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 14px;padding:10px 12px;border:1px dashed var(--c-line,#ccc);border-radius:12px;font-size:13px';
+  bar.innerHTML=`<span style="font-weight:700">${TIPO_LBL[t]}</span>${c.parent?`<span style="opacity:.7">· ${E(caminho(c))}</span>`:''}
+   <span style="flex:1"></span>
+   ${t==='curso'?`<button type="button" class="px-3 py-1.5 rounded-lg bg-amber-600 text-white text-xs font-semibold" onclick="abrirCadastroCurso('', 'uc','${cid}')"><i class="fa-solid fa-plus"></i> Nova UC</button>`:''}
+   ${t!=='aula'?`<button type="button" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-semibold" onclick="abrirCadastroCurso('', 'aula','${cid}')"><i class="fa-solid fa-plus"></i> Nova aula</button>`:''}
+   <button type="button" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-semibold" onclick="abrirRelatorioNivel('${cid}')"><i class="fa-solid fa-file-excel"></i> Relatório</button>`;
+  const sub=filhos(cid);
+  if(sub.length)bar.insertAdjacentHTML('beforeend',`<div style="flex-basis:100%;display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">${sub.map(s=>`<button type="button" style="border:1px solid var(--c-line,#ccc);border-radius:999px;padding:3px 10px;font-size:12px" onclick="abrirDetalheCurso('${s.cid}')">${tipoDe(s)==='uc'?'UC':'Aula'}: ${E(s.nome)}</button>`).join('')}</div>`);
+  const head=box.firstElementChild;if(head)head.insertAdjacentElement('afterend',bar);else box.prepend(bar);
+  return r;
+ };
+
+ /* relatório por nível */
+ window.abrirRelatorioNivel=function(cidSel){
+  if(!cursos.length){alert('Nenhum curso cadastrado.');return;}
+  const sel=cidSel?byId(cidSel):null;const t0=sel?tipoDe(sel):'curso';
+  const IC='w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm';
+  abrirModal(`<h3 class="text-lg font-bold mb-1">Relatório de uso</h3><p class="text-sm text-slate-500 mb-5">Curso inteiro soma tudo (curso + UCs + aulas). UC soma a UC e suas aulas. Aula mostra só a aula.</p>
+   <div class="space-y-4"><div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Nível do relatório</label>
+   <select id="h43-rn" class="${IC}">${Object.entries(TIPO_LBL).map(([k,t])=>`<option value="${k}" ${k===t0?'selected':''}>${t}</option>`).join('')}</select></div>
+   <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Selecione</label><select id="h43-ra" class="${IC}"></select></div></div>
+   <div class="flex justify-end gap-3 mt-6"><button type="button" class="px-5 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 font-semibold" onclick="fecharModal()">Cancelar</button>
+   <button type="button" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold" onclick="exportarRelatorioNivel()"><i class="fa-solid fa-file-excel"></i> Baixar Excel</button></div>`);
+  const n=document.getElementById('h43-rn'),a=document.getElementById('h43-ra');
+  const upd=()=>{const l=cursos.filter(c=>tipoDe(c)===n.value);a.innerHTML=l.length?l.map(c=>`<option value="${c.cid}" ${cidSel===c.cid?'selected':''}>${E(caminho(c))}${c.codigo?' — '+E(c.codigo):''}</option>`).join(''):'<option value="">Nenhum cadastro deste tipo</option>';};
+  n.onchange=upd;upd();
+ };
+ window.exportarRelatorioNivel=function(){
+  const nivel=document.getElementById('h43-rn').value,cid=document.getElementById('h43-ra').value;const c=byId(cid);if(!c){alert('Selecione um cadastro.');return;}
+  const ids=nivel==='aula'?[cid]:descendentes(cid);
+  const num=v=>Number(v||0);
+  const itens=cursoItens.filter(i=>ids.includes(i.cid));
+  const det=itens.map(i=>{const o=byId(i.cid)||{};const env=num(i.enviada),dev=num(i.devolvida),cons=num(i.consumido),desc=num(i.descartado);
+   return {'Origem':TIPO_LBL[tipoDe(o)]||'','Vinculado a':caminho(o),Produto:i.nome,Código:i.codigo,Validade:typeof dt==='function'?dt(i.validade):i.validade,Unidade:i.unidade||'',Enviado:env,'Utilizado (enviado − devolvido)':env-dev,Consumido:cons,Descartado:desc,'Retornado ao estoque':Math.max(0,dev-cons-desc),'Saldo em uso':Math.max(0,env-dev)};});
+  const ag={};det.forEach(d=>{const k=d.Código+'|'+d.Produto;const x=ag[k]||(ag[k]={Produto:d.Produto,Código:d.Código,Unidade:d.Unidade,Enviado:0,'Utilizado (enviado − devolvido)':0,Consumido:0,Descartado:0,'Retornado ao estoque':0,'Saldo em uso':0});
+   ['Enviado','Utilizado (enviado − devolvido)','Consumido','Descartado','Retornado ao estoque','Saldo em uso'].forEach(f=>x[f]+=d[f]);});
+  const porCad=ids.map(id=>{const o=byId(id),l=det.filter(d=>d['Vinculado a']===caminho(o));return {Tipo:TIPO_LBL[tipoDe(o)],Cadastro:caminho(o),Código:o.codigo||'',Instrutor:o.instrutor||'',Itens:l.length,Enviado:l.reduce((s,d)=>s+d.Enviado,0),Utilizado:l.reduce((s,d)=>s+d['Utilizado (enviado − devolvido)'],0)};});
+  const rt=raizDe(c);
+  const resumo=[{Campo:'Nível do relatório',Valor:TIPO_LBL[nivel]},{Campo:'Cadastro',Valor:caminho(c)},{Campo:'Curso',Valor:rt?rt.nome:''},{Campo:'Abrangência',Valor:nivel==='curso'?'Curso + todas as UCs e aulas':nivel==='uc'?'UC + aulas da UC':'Somente a aula'},{Campo:'Cadastros incluídos',Valor:ids.length},{Campo:'Gerado em',Valor:new Date().toLocaleString('pt-BR')}];
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(resumo),'Resumo');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(Object.values(ag).length?Object.values(ag):[{Produto:'Nenhum insumo registrado'}]),'Total por produto');
+  if(nivel!=='aula')XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(porCad),'Por UC e aula');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(det.length?det:[{Produto:'Nenhum insumo registrado'}]),'Detalhado');
+  XLSX.writeFile(wb,'relatorio_'+nivel+'_'+String(c.codigo||c.nome).replace(/[^\w-]+/g,'_')+'_'+new Date().toISOString().slice(0,10)+'.xlsx');
+  fecharModal();
+ };
+
+ /* exportação geral de cursos inclui tipo e vínculo */
+ const expAnt=window.exportarExcel;
+ if(expAnt)window.exportarExcel=function(tipo){
+  if(tipo!=='cursos')return expAnt.apply(this,arguments);
+  const bk=cursos.map(c=>c.nome);cursos.forEach(c=>{c.nome=(tipoDe(c)==='curso'?'':(tipoDe(c)==='uc'?'[UC] ':'[Aula] '))+caminho(c);});
+  try{return expAnt.apply(this,arguments);}finally{cursos.forEach((c,i)=>c.nome=bk[i]);}
+ };
+ try{renderCursos();}catch(_){}
+})();
+</script>
 </body>
 </html>
 <style id="sirius-mobile-nav-fix">
@@ -3879,5 +4244,170 @@ body:has(#modal-wrap:not(.hidden)) .app-footer,body.modal-aberto .app-footer{dis
  #modal-wrap{padding:10px!important;align-items:flex-start!important;padding-top:max(14px,env(safe-area-inset-top))!important}
  #modal-wrap>div{max-height:calc(100dvh - 28px)!important}
 }
+</style>
+<style>
+/* S.I.R.I.U.S. — correções de tema (claro/escuro) embutidas */
+/* Course workspace inherits the console's light/dark palette. */
+.cursos40 {
+  --curso40-deep: var(--c-text);
+  --curso40-mid: var(--c-text);
+  --curso40-lime: var(--c-lime);
+  --curso40-soft: var(--c-panel);
+  --curso40-card: var(--c-surface);
+  --curso40-line: var(--c-line);
+  --curso40-muted: var(--c-muted);
+  --curso40-action: var(--c-side);
+  --curso40-action-text: var(--c-lime-bright);
+  --curso40-highlight-text: #111315;
+}
+html.dark .cursos40 {
+  --curso40-action: var(--c-lime);
+  --curso40-action-text: #111315;
+}
+.cursos40-cadastro>div {
+  padding: 18px 22px!important;
+  background: var(--c-panel)!important;
+  border-color: var(--c-line)!important;
+  box-shadow: var(--c-shadow)!important;
+}
+.cursos40-cadastro h2,.cursos40-listagem h2,
+.curso40-card-title p,.curso40-card-meta b { color: var(--c-text)!important; }
+.cursos40-cadastro p,.curso40-card-title span,.curso40-card-meta span { color: var(--c-muted)!important; }
+.curso40-novo,.cursos40 .v25-toggle button.active {
+  background: var(--curso40-action)!important;
+  color: var(--curso40-action-text)!important;
+}
+.curso40-novo:hover,.cursos40 .v25-toggle button.active:hover { filter: brightness(1.1); }
+.curso40-btn-icon { color: var(--curso40-action-text)!important; background: color-mix(in oklab,var(--curso40-action-text) 13%,transparent)!important; }
+.curso40-novo small { color: var(--curso40-action-text)!important; opacity: .8; }
+.cursos40-listagem { border-color: var(--c-line)!important; }
+.curso40-excel { background: var(--c-lime)!important; color: var(--curso40-highlight-text)!important; border-color: var(--c-lime)!important; }
+.cursos40 .v25-toggle,.cursos40 #btn-arq38 { background: var(--c-surface)!important; border-color: var(--c-line)!important; color: var(--c-text)!important; }
+.cursos40 .v25-toggle button { color: var(--c-text)!important; }
+.cursos40 .v25-toggle button.active { color: var(--curso40-action-text)!important; }
+.cursos40 .v25-toggle button:hover,.cursos40 #btn-arq38:hover { background: var(--c-panel)!important; }
+.cursos40 .c25-card,.cursos40 #lista-cursos:not(.c25-grid) {
+  background: var(--c-surface)!important;
+  border-color: var(--c-line)!important;
+  color: var(--c-text)!important;
+  box-shadow: var(--c-shadow)!important;
+}
+.cursos40 .c25-card { min-height: 250px; }
+.cursos40 .c25-card:hover { border-color: var(--c-lime)!important; box-shadow: var(--c-shadow-hover)!important; }
+.curso40-card-icon { background: var(--c-lime-soft)!important; color: var(--c-lime)!important; }
+.curso40-status { background: var(--c-panel)!important; color: var(--c-muted)!important; }
+.curso40-status.ativo { background: var(--c-lime-soft)!important; color: var(--c-text)!important; }
+.curso40-status.ativo i,.curso40-card-meta i { color: var(--c-lime)!important; }
+.curso40-abrir { background: var(--c-panel)!important; border-color: var(--c-line)!important; color: var(--c-text)!important; }
+.cursos40 .c25-card:hover .curso40-abrir { background: var(--c-lime)!important; color: var(--curso40-highlight-text)!important; border-color: var(--c-lime)!important; }
+.cursos40 #lista-cursos:not(.c25-grid)>div { color: var(--c-text)!important; border-color: var(--c-line)!important; }
+.cursos40 #lista-cursos:not(.c25-grid)>div:hover { background: var(--c-lime-soft)!important; }
+.cursos40 #lista-cursos:not(.c25-grid) .text-slate-500,
+.cursos40 #lista-cursos:not(.c25-grid) .text-slate-400 { color: var(--c-muted)!important; }
+
+/* Keep course details compact, readable, and consistent with the console. */
+#modal-box:has(.course-detail40) {
+  width: min(800px,calc(100vw - 32px))!important;
+  max-width: min(800px,calc(100vw - 32px))!important;
+  max-height: min(86dvh,850px)!important;
+  background: var(--c-surface)!important;
+  border: 1px solid var(--c-line)!important;
+  color: var(--c-text)!important;
+}
+.course-detail40-head { padding: 16px 20px!important; background: var(--c-surface)!important; }
+.course-detail40-icon { width: 40px!important; height: 40px!important; flex-basis: 40px!important; font-size: 16px!important; color: var(--c-lime)!important; }
+.course-detail40 h3 { font-size: 18px!important; }
+.course-detail40-identity .text-slate-500 { color: var(--c-muted)!important; }
+.course-detail40-meta { background: var(--c-panel)!important; grid-template-columns: minmax(180px,1.5fr) minmax(100px,.7fr) minmax(140px,1fr)!important; }
+.course-detail40-meta>div { min-height: 56px!important; padding: 10px 18px!important; }
+.course-detail40-meta p:first-child { margin-bottom: 3px!important; }
+.course-detail40-note { margin: 12px 20px 0!important; padding: 9px 12px!important; color: var(--c-text)!important; }
+.course-detail40-actions { margin: 14px 20px 16px!important; padding-bottom: 16px!important; gap: 7px!important; }
+.course-detail40-actions button { min-height: 34px!important; padding: 6px 10px!important; font-size: 11px!important; color: var(--c-text); }
+.course-detail40-actions button:first-child { background: var(--c-lime)!important; color: #111315!important; }
+.course-detail40-actions button:nth-child(2) { background: var(--c-panel)!important; color: var(--c-text)!important; }
+.course-detail40-actions button:nth-child(3) { background: var(--c-alert)!important; color: #fff!important; }
+.course-detail40-actions .uc38 { background: var(--c-warning)!important; color: #111315!important; }
+.course-detail40-actions .course-detail40-delete { color: var(--c-muted)!important; background: var(--c-surface)!important; }
+.course-detail40-section-head,.cv-monitor>.course-detail40-section-head { margin: 0 20px 8px!important; }
+.course-detail40-section-head h4 { font-size: 14px!important; }
+.course-detail40-table { margin: 0 20px!important; background: var(--c-surface)!important; }
+.course-detail40-table table { min-width: 620px!important; }
+.course-detail40-table th { height: 32px!important; padding: 0 10px!important; }
+.course-detail40-table td { padding: 8px 10px!important; }
+.course-detail40-empty { min-height: 66px!important; }
+.course-detail40-empty i { color: var(--c-lime)!important; }
+.cv-monitor { margin: 18px 0 0!important; padding: 16px 0 18px!important; background: var(--c-panel)!important; }
+.cv-monitor .course-detail40-table { background: var(--c-surface)!important; }
+#modal-box:has(.course-detail40) .text-xs.text-slate-500.mb-4 { margin: 0 20px 12px!important; background: var(--c-panel)!important; color: var(--c-muted)!important; }
+.course-detail40+.cv-relatorio { margin: 16px 20px!important; }
+@media(max-width:760px) {
+  #modal-box:has(.course-detail40) { width: calc(100vw - 20px)!important; max-width: calc(100vw - 20px)!important; max-height: calc(100dvh - 24px)!important; }
+  .course-detail40-head { padding: 14px 16px!important; }
+  .course-detail40-meta { grid-template-columns: 1fr 1fr!important; }
+  .course-detail40-meta>div { padding: 10px 14px!important; }
+  .course-detail40-note { margin: 12px 16px 0!important; }
+  .course-detail40-actions { margin: 12px 16px!important; padding-bottom: 12px!important; }
+  .course-detail40-section-head,.cv-monitor>.course-detail40-section-head { margin: 0 16px 8px!important; }
+  .course-detail40-table { margin: 0 16px!important; }
+  #modal-box:has(.course-detail40) .text-xs.text-slate-500.mb-4 { margin: 0 16px 12px!important; }
+  .course-detail40+.cv-relatorio { margin: 16px!important; }
+}
+@media(max-width:430px) {
+  .course-detail40-meta { grid-template-columns: 1fr!important; }
+  .course-detail40-meta>div { min-height: 0!important; }
+  .cursos40-cadastro>div { padding: 16px!important; }
+}
+/* Action colors follow the command rather than DOM order; later scripts insert buttons. */
+.course-detail40-actions button[onclick^="abrirCadastroCurso"] { background: var(--c-panel)!important; color: var(--c-text)!important; }
+.course-detail40-actions button[onclick^="encerrarCurso"] { background: var(--c-alert)!important; color: #fff!important; }
+.course-detail40-actions button[onclick^="encerrarAula"] { background: var(--c-panel)!important; color: var(--c-text)!important; }
+@media(max-width:430px) {
+  .course-detail40-meta { grid-template-columns: 1fr 1fr!important; }
+  .course-detail40-meta>div:first-child { grid-column: 1/-1!important; }
+  .course-detail40-meta>div:not(:first-child) { grid-column: auto!important; }
+  .course-detail40-actions { grid-template-columns: 1fr 1fr!important; }
+  .course-detail40-actions .course-detail40-delete { grid-column: auto!important; }
+  .course-detail40-actions .uc38 { grid-column: auto!important; }
+}
+
+</style>
+
+<style id="sirius-colored-buttons-white-content">
+/* Botões coloridos: texto e ícones sempre brancos nos temas claro e escuro. */
+button.bg-brand-600,
+button.bg-emerald-600,
+button.bg-red-600,
+button.bg-amber-500,
+button.bg-orange-500,
+button.bg-green-600,
+button.bg-slate-700,
+#tab-dashboard .dashboard-actions button[onclick="gerarPDF('vencimentos')"],
+.curso40-novo,
+.curso40-excel,
+.course-detail40-actions button:first-child,
+.course-detail40-actions button[onclick^="encerrarCurso"],
+.course-detail40-actions .uc38,
+.cursos40 .c25-card:hover .curso40-abrir {
+  color: #fff!important;
+}
+button.bg-brand-600 i,
+button.bg-emerald-600 i,
+button.bg-red-600 i,
+button.bg-amber-500 i,
+button.bg-orange-500 i,
+button.bg-green-600 i,
+button.bg-slate-700 i,
+#tab-dashboard .dashboard-actions button[onclick="gerarPDF('vencimentos')"] i,
+.curso40-novo i,
+.curso40-novo .curso40-btn-icon,
+.curso40-excel i,
+.course-detail40-actions button:first-child i,
+.course-detail40-actions button[onclick^="encerrarCurso"] i,
+.course-detail40-actions .uc38 i,
+.cursos40 .c25-card:hover .curso40-abrir i {
+  color: #fff!important;
+}
+.curso40-novo small { color: #fff!important; }
 </style>
 <script>(function(){const m=document.getElementById('modal-wrap');if(!m)return;const f=()=>document.body.classList.toggle('modal-aberto',!m.classList.contains('hidden'));new MutationObserver(f).observe(m,{attributes:true,attributeFilter:['class']});f();})();</script>
