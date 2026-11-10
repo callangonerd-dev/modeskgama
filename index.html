@@ -6501,5 +6501,39 @@ function st(){up();new MutationObserver(function(){up()}).observe(document.body,
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',st);else st();})();
 </script>
 <style id="mo-v79">.console-sidebar .mo-bot,.console-sidebar button.side-link[onclick="abrirSirius()"]{display:none!important}</style>
+
+<style id="force-white-btn-text">
+button.btn-force-white, button.btn-force-white *, a.btn-force-white, a.btn-force-white *,
+[role="button"].btn-force-white, [role="button"].btn-force-white *{color:#fff !important;fill:currentColor;}
+button.btn-force-white svg, a.btn-force-white svg{stroke:#fff !important;}
+</style>
+<script>
+(function(){
+  function parse(c){var m=c&&c.match(/rgba?\(([^)]+)\)/);if(!m)return null;var p=m[1].split(/[ ,\/]+/).filter(Boolean).map(parseFloat);return {r:p[0],g:p[1],b:p[2],a:p.length>3?p[3]:1};}
+  function bgOf(el){
+    var cs=getComputedStyle(el);var c=parse(cs.backgroundColor);
+    if(c&&c.a>0.35)return c;
+    var bi=cs.backgroundImage;if(bi&&bi!=='none'){var m=bi.match(/rgba?\([^)]+\)/);if(m){var g=parse(m[0]);if(g&&g.a>0.35)return g;}}
+    return null;
+  }
+  function lum(c){return (0.299*c.r+0.587*c.g+0.114*c.b)/255;}
+  function check(el){
+    el.classList.remove('btn-force-white');
+    var c=bgOf(el);
+    if(c&&lum(c)<0.8&&!(Math.max(c.r,c.g,c.b)-Math.min(c.r,c.g,c.b)<20&&lum(c)>0.7)){
+      // colored or dark background: but skip neutral light greys
+      var sat=Math.max(c.r,c.g,c.b)-Math.min(c.r,c.g,c.b);
+      if(sat>40||lum(c)<0.45) el.classList.add('btn-force-white');
+    }
+  }
+  var pending=false;
+  function run(){pending=false;document.querySelectorAll('button,a[class*="bg-"],[role="button"],.au57-btn,.side-link,.sysdlg-ok').forEach(check);}
+  function sched(){if(!pending){pending=true;requestAnimationFrame(run);}}
+  document.addEventListener('DOMContentLoaded',run);window.addEventListener('load',run);
+  new MutationObserver(sched).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class','style','data-theme']});
+  ['mouseover','mouseout','focusin','focusout','click'].forEach(function(e){document.addEventListener(e,sched,true);});
+  setInterval(run,1500);
+})();
+</script>
 </body>
 </html>
