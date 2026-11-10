@@ -655,7 +655,7 @@ html:not(.dark) #tab-dashboard .dash-table tbody tr:hover{background:rgba(134,18
   border-left-color: var(--item-color) !important;
 }
 </style>
-</head>
+<style>.m-kicon{box-shadow:none!important;background:color-mix(in srgb,var(--c) 10%,transparent)!important;border:1px solid color-mix(in srgb,var(--c) 22%,transparent)!important;}.m-kicon i{font-size:1.05rem!important;color:var(--c)!important;filter:none!important;text-shadow:none!important}</style></head>
 <body class="console-shell bg-[#f3f5f8] dark:bg-[#0f1218] text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
 <aside aria-label="Navegação principal" class="console-sidebar" id="app-sidebar">
 <button aria-label="Expandir ou recolher menu" class="console-logo" onclick="toggleSidebar()" title="Expandir ou recolher menu"><i class="fa-solid fa-utensils"></i></button>
@@ -6033,7 +6033,7 @@ s.innerHTML='<div class="m-top"><div class="m-card m-hero"><div><h2 id="m67-g">O
 '<div class="m-card m-act"><div class="m-acthead"><h2>Dashboard da cozinha</h2><p>Consumo, custo e validade dos insumos em tempo real.</p></div><div class="m-actbtns">'+
 [['Relatório BI (PDF)','fa-chart-pie',"gerarPDF('bi')",'red'],['Estoque (PDF)','fa-boxes-stacked',"gerarPDF('estoque')",'blue'],['Vencimentos (PDF)','fa-calendar-xmark',"gerarPDF('vencimentos')",'orange'],['Planilha BI (Excel)','fa-file-excel',"exportarExcel('bi')",'green']].map(function(b){return '<button type="button" data-v="'+b[3]+'" onclick="'+b[2]+'"><i class="fa-solid '+b[1]+'"></i><span>'+b[0]+'</span></button>'}).join('')+'</div></div>'+
 '<div class="m-kpis">'+
-[['Unidades em estoque','m67-k1','fa-cube','#16a34a'],['Em uso nos cursos','m67-k2','fa-utensils','#06b6d4'],['Produtos cadastrados','m67-k3','fa-box','#f59e0b']].map(function(k,i){return '<div class="m-card m-kpi" style="--c:'+k[3]+'"><div class="m-kicon"><i class="fa-solid '+k[2]+'"></i></div><div><p>'+k[0]+'</p><h3 id="'+k[1]+'">0</h3></div>'+spark(i)+'</div>'}).join('')+
+[['Unidades em estoque','m67-k1','fa-boxes-stacked','#16a34a'],['Em uso nos cursos','m67-k2','fa-kitchen-set','#06b6d4'],['Produtos cadastrados','m67-k3','fa-clipboard-list','#f59e0b']].map(function(k,i){return '<div class="m-card m-kpi" style="--c:'+k[3]+'"><div class="m-kicon"><i class="fa-solid '+k[2]+'"></i></div><div><p>'+k[0]+'</p><h3 id="'+k[1]+'">0</h3></div>'+spark(i)+'</div>'}).join('')+
 '<div class="m-card m-kpi"><div class="m-ringwrap"><div class="m-ring" id="m67-ring" style="--p:0"></div><b id="m67-ringv">0%</b></div><div><p>Saúde do estoque</p><h3 id="m67-k4">0%</h3></div></div></div>'+
 '<div class="m-row"><div class="m-card m-panel"><h3><i class="fa-solid fa-chart-column"></i>Insumos por categoria</h3><div class="m-cv"><canvas id="m67-cat"></canvas></div></div>'+
 '<div class="m-card m-panel"><h3><i class="fa-solid fa-shield-halved"></i>Status de validade</h3><span class="m-more" title="Exportar BI em PDF" onclick="gerarPDF(\'bi\')"><i class="fa-solid fa-ellipsis"></i></span><div class="m-valid"><div class="m-donut"><canvas id="m67-st"></canvas><b id="m67-c">0%</b></div><ul id="m67-leg"></ul></div><div class="m-note" id="m67-note"></div></div></div>'+
