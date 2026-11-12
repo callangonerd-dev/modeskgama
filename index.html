@@ -789,6 +789,7 @@ html:not(.dark) #tab-dashboard .dash-table tbody tr:hover{background:rgba(134,18
 <form class="grid grid-cols-1 md:grid-cols-4 gap-4" onsubmit="addAgenda(event)">
 <input class="bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm md:col-span-2" id="ag-titulo" placeholder="Título da atividade" required=""/>
 <input class="bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm" id="ag-data" required="" type="date"/>
+<select class="bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm" id="ag-categoria" title="Categoria"><option>Tarefa</option><option>Evento</option><option>Nota</option></select>
 <select class="bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm" id="ag-prioridade"><option>Normal</option><option>Urgente</option></select>
 <input class="bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-sm md:col-span-3" id="ag-obs" placeholder="Observações"/>
 <button class="px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl">Adicionar</button>
@@ -810,7 +811,9 @@ html:not(.dark) #tab-dashboard .dash-table tbody tr:hover{background:rgba(134,18
 </div>
 </div>
 <div class="cal-legend">
-<span><i class="dot dot-ag"></i> Lembrete / atividade</span>
+<span><i class="dot dot-tf"></i> Tarefa</span>
+<span><i class="dot dot-ev"></i> Evento</span>
+<span><i class="dot dot-nt"></i> Nota</span>
 <span><i class="dot dot-ur"></i> Lembrete urgente</span>
 <span><i class="dot dot-vc"></i> Vencimento de insumo</span>
 <span><i class="dot dot-fe"></i> Feriado / fim de semana</span>
@@ -1028,8 +1031,8 @@ function renderPainel(){
  }).join('')||'<tr><td colspan="7" class="px-4 py-8 text-center">Nenhum item vencido ou próximo do vencimento.</td></tr>';
 }
 function addAgenda(e){e.preventDefault();
- agenda.push({id:'AG'+Date.now(),titulo:agTitulo.value,data:agData.value,prioridade:agPrioridade.value,obs:agObs.value});
- salvarDados();e.target.reset();document.getElementById('ag-data').valueAsDate=new Date();renderAgenda();}
+ agenda.push({id:'AG'+Date.now(),titulo:agTitulo.value,data:agData.value,categoria:(document.getElementById('ag-categoria')||{}).value||'Tarefa',prioridade:agPrioridade.value,obs:agObs.value});
+ salvarDados();e.target.reset();document.getElementById('ag-data').valueAsDate=new Date();renderAgenda();try{renderCalendario();}catch(_){}}
 const agTitulo=document.getElementById('ag-titulo'),agData=document.getElementById('ag-data'),agPrioridade=document.getElementById('ag-prioridade'),agObs=document.getElementById('ag-obs');
 function excluirAgenda(i){agenda.splice(i,1);salvarDados();renderAgenda();}
 function renderAgenda(){
@@ -1098,7 +1101,7 @@ function exportarExcel(tipo){
  const wb=XLSX.utils.book_new();
  if(tipo==='estoque'){XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(linhasEstoque(listaFiltrada().map(x=>x.it))),'Estoque');baixar(wb,'estoque_senac');}
  else if(tipo==='painel'){XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(linhasEstoque(itensCriticos())),'Vencimentos');baixar(wb,'vencimentos_senac');}
- else if(tipo==='agenda'){XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(agenda.map(a=>({Título:a.titulo,Data:dt(a.data),Prioridade:a.prioridade,Observações:a.obs||''}))),'Agenda');baixar(wb,'agenda_senac');}
+ else if(tipo==='agenda'){XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(agenda.map(a=>({Título:a.titulo,Data:dt(a.data),Categoria:a.categoria||'Tarefa',Prioridade:a.prioridade,Observações:a.obs||''}))),'Agenda');baixar(wb,'agenda_senac');}
  else if(tipo==='cursos'){
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(cursos.map(c=>({Curso:c.nome,Código:c.codigo,Instrutor:c.instrutor||'',Início:dt(c.inicio),Término:dt(c.fim),Observações:c.obs||''}))),'Cursos');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(cursoItens.map(i=>{const c=cursos.find(x=>x.cid===i.cid)||{};return {Curso:c.nome||'',Item:i.nome,Código:i.codigo,Validade:dt(i.validade),'Qtd enviada':i.enviada,'Qtd utilizada':Number(i.enviada)-Number(i.devolvida||0),'Qtd devolvida':Number(i.devolvida||0)};})),'Itens nos cursos');
@@ -1112,7 +1115,7 @@ function exportarTudoExcel(){
  const ag=agregado(),wb=XLSX.utils.book_new();
  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(linhasEstoque(estoque)),'Estoque');
  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(linhasEstoque(itensCriticos())),'Vencimentos');
- XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(agenda.map(a=>({Título:a.titulo,Data:dt(a.data),Prioridade:a.prioridade,Observações:a.obs||''}))),'Agenda');
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(agenda.map(a=>({Título:a.titulo,Data:dt(a.data),Categoria:a.categoria||'Tarefa',Prioridade:a.prioridade,Observações:a.obs||''}))),'Agenda');
  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(Object.keys(ag).map(c=>({Categoria:c,Itens:ag[c].itens,Quantidade:ag[c].qtd,Vencidos:ag[c].venc,'Próximos 15d':ag[c].prox}))),'Resumo BI');
  baixar(wb,'modesk_core_completo');
 }
@@ -1239,10 +1242,13 @@ function mudarMes(n){calRef=new Date(calRef.getFullYear(),calRef.getMonth()+n,1)
 function irHoje(){calRef=new Date();calSel=iso(new Date());renderCalendario();}
 function eventosDoDia(k){
   const evs=[];
-  agenda.forEach(a=>{if(a.data===k)evs.push({tipo:a.prioridade==='Urgente'?'urgente':'agenda',titulo:a.titulo,obs:a.obs||''});});
+  agenda.forEach(a=>{if(a.data===k)evs.push({tipo:a.prioridade==='Urgente'?'urgente':'agenda',cat:a.categoria||'Tarefa',titulo:a.titulo,obs:a.obs||''});});
   estoque.forEach(i=>{if(i.validade===k)evs.push({tipo:'vencimento',titulo:'Vence: '+i.nome,obs:fmtQ(i.qtd)+' '+(i.unidade||'')+' · cód. '+i.id});});
   return evs;
 }
+const CAT_DOT={Tarefa:'tf',Evento:'ev',Nota:'nt'};
+const CAT_COR={Tarefa:'var(--c-lime)',Evento:'#3b82f6',Nota:'#a16207'};
+function catTag(c){c=c||'Tarefa';const k=CAT_COR[c]||CAT_COR.Tarefa;return '<span class="tag cat-tag" style="background:color-mix(in oklab,'+k+' 16%,transparent);color:'+k+'">'+c.toUpperCase()+'</span>';}
 function renderCalendario(){
   const grid=document.getElementById('cal-grid');if(!grid)return;
   document.getElementById('cal-label').textContent=MESES[calRef.getMonth()]+' '+calRef.getFullYear();
@@ -1253,7 +1259,7 @@ function renderCalendario(){
   for(let d=1;d<=dias;d++){
     const data=new Date(y,m,d), k=iso(data), evs=eventosDoDia(k);
     const descanso=ehFimDeSemana(data)||ehFeriado(data);
-    const dots=[...new Set(evs.map(e=>e.tipo))].map(t=>'<i class="dot-'+(t==='agenda'?'ag':t==='urgente'?'ur':'vc')+'"></i>').join('')+(descanso?'<i class="dot-fe"></i>':'');
+    const dots=[...new Set(evs.map(e=>e.tipo==='vencimento'?'vc':e.tipo==='urgente'?'ur':CAT_DOT[e.cat]||'tf'))].map(t=>'<i class="dot-'+t+'"></i>').join('')+(descanso?'<i class="dot-fe"></i>':'');
     const mini=evs.slice(0,2).map(e=>e.titulo).join(' · ');
     out+='<button type="button" class="cal-day'+(descanso?' fim':'')+(k===hoje?' hoje':'')+(k===calSel?' sel':'')+(evs.some(e=>e.tipo==='urgente')?' has-urgent':'')+'" onclick="selecionarDia(\''+k+'\')"><span class="cal-num">'+d+'</span><span class="cal-dots">'+dots+'</span><span class="cal-mini">'+mini+'</span></button>';
   }
@@ -1269,7 +1275,7 @@ function detalheDia(k){
   if(ehFeriado(d))extra=' <span class="tag" style="background:color-mix(in oklab,var(--c-info) 16%,transparent);color:var(--c-info)">FERIADO</span>';
   else if(ehFimDeSemana(d))extra=' <span class="tag" style="background:color-mix(in oklab,var(--c-info) 16%,transparent);color:var(--c-info)">FIM DE SEMANA</span>';
   box.innerHTML='<h4>'+d.toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long'})+extra+'</h4>'+
-   (evs.length?'<ul>'+evs.map(e=>'<li><span class="tag" style="'+cores[e.tipo]+'">'+(e.tipo==='vencimento'?'VENCIMENTO':e.tipo==='urgente'?'URGENTE':'LEMBRETE')+'</span><span><strong>'+e.titulo+'</strong>'+(e.obs?'<br><span style="color:var(--c-muted);font-size:12px">'+e.obs+'</span>':'')+'</span></li>').join('')+'</ul>'
+   (evs.length?'<ul>'+evs.map(e=>'<li>'+(e.tipo==='vencimento'?'<span class="tag" style="'+cores.vencimento+'">VENCIMENTO</span>':catTag(e.cat)+(e.tipo==='urgente'?'<span class="tag" style="'+cores.urgente+'">URGENTE</span>':''))+'<span><strong>'+e.titulo+'</strong>'+(e.obs?'<br><span style="color:var(--c-muted);font-size:12px">'+e.obs+'</span>':'')+'</span></li>').join('')+'</ul>'
    :'<p style="color:var(--c-muted)">Nenhum lembrete ou vencimento neste dia. Use o S.I.R.I.U.S. ou o formulário abaixo para adicionar.</p>');
 }
 
@@ -3786,7 +3792,7 @@ if(excluirOrig)window.excluirCurso=function(cid){const r=excluirOrig.apply(this,
   const lista=agenda.slice().sort((a,b)=>(!!a.concluida-!!b.concluida)||String(a.data).localeCompare(String(b.data)));
   el.innerHTML=lista.map(a=>{const urg=a.prioridade==='Urgente'&&!a.concluida;
    return `<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex justify-between items-center gap-4 flex-wrap ${urg?'agenda-urgent':''}" style="${a.concluida?'opacity:.6':''}">
-    <div class="min-w-0"><p class="font-semibold" style="${a.concluida?'text-decoration:line-through':''}">${E(a.titulo)} <span class="text-[10px] px-2 py-0.5 rounded-lg font-bold ${a.prioridade==='Urgente'?'bg-red-500/10 text-red-500':'bg-slate-500/10 text-slate-400'}">${E(a.prioridade)}</span>
+    <div class="min-w-0"><p class="font-semibold" style="${a.concluida?'text-decoration:line-through':''}">${E(a.titulo)} <span class="pri-badge ${a.categoria==='Evento'?'cat-evento':a.categoria==='Nota'?'cat-nota':'cat-tarefa'}">${E(a.categoria||'Tarefa')}</span> <span class="pri-badge ${a.prioridade==='Urgente'?'pri-urgente':'pri-normal'}">${E(a.prioridade||'Normal')}</span>
      ${a.concluida?'<span class="text-[10px] px-2 py-0.5 rounded-lg font-bold bg-emerald-500/10 text-emerald-500">CONCLUÍDA</span>':''}${a.reagendadaDe?'<span class="text-[10px] px-2 py-0.5 rounded-lg font-bold bg-amber-500/10 text-amber-500">REAGENDADA</span>':''}</p>
     <p class="text-xs text-slate-500 mt-1">${D(a.data)}${a.hora?' às '+E(a.hora):''} · ${E(a.obs||'—')}${a.reagendadaDe?' · antes: '+D(a.reagendadaDe):''}</p></div>
     <div class="flex gap-2 flex-wrap">
@@ -3813,12 +3819,13 @@ if(excluirOrig)window.excluirCurso=function(cid){const r=excluirOrig.apply(this,
   abrirModal(`<h3 class="text-lg font-bold mb-5">Editar agendamento</h3><div class="grid grid-cols-2 gap-4">
    <div class="col-span-2"><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Título</label><input class="${IC}" id="age-tit" value="${E(a.titulo)}"/></div>
    <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Data</label><input class="${IC}" id="age-data" type="date" value="${E(a.data)}"/></div>
+   <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Categoria</label><select class="${IC}" id="age-cat">${['Tarefa','Evento','Nota'].map(p=>`<option ${(a.categoria||'Tarefa')===p?'selected':''}>${p}</option>`).join('')}</select></div>
    <div><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Prioridade</label><select class="${IC}" id="age-pri">${['Normal','Urgente'].map(p=>`<option ${a.prioridade===p?'selected':''}>${p}</option>`).join('')}</select></div>
    <div class="col-span-2"><label class="block text-xs font-semibold uppercase text-slate-500 mb-2">Observações</label><input class="${IC}" id="age-obs" value="${E(a.obs||'')}"/></div></div>
    <div class="flex justify-end gap-3 mt-6"><button type="button" class="px-5 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 font-semibold" onclick="fecharModal()">Cancelar</button>
    <button type="button" class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold" onclick="agConfEd('${id}')"><i class="fa-solid fa-floppy-disk"></i> Salvar</button></div>`);};
  window.agConfEd=function(id){const a=agPor(id);if(!a)return;const t=document.getElementById('age-tit').value.trim();if(!t){alert('Informe o título.');return;}
-  a.titulo=t;a.data=document.getElementById('age-data').value||a.data;a.prioridade=document.getElementById('age-pri').value;a.obs=document.getElementById('age-obs').value.trim();fecharModal();agSalvar();};
+  a.titulo=t;a.data=document.getElementById('age-data').value||a.data;a.prioridade=document.getElementById('age-pri').value;a.categoria=document.getElementById('age-cat').value;a.obs=document.getElementById('age-obs').value.trim();fecharModal();agSalvar();};
  const evAnt=window.eventosDoDia;
  if(typeof evAnt==='function')window.eventosDoDia=function(k){const ids=new Set(agenda.filter(a=>a.concluida&&a.data===k).map(a=>a.titulo));return evAnt(k).filter(e=>!(e.tipo!=='vencimento'&&ids.has(e.titulo)));};
  try{renderAgenda();renderCalendario();}catch(e){}
@@ -5464,7 +5471,7 @@ html body.console-shell
 main .bg-brand-600,html.dark body.console-shell 
 main .bg-brand-600,html body.console-shell main .bg-emerald-600,html.dark body.console-shell main .bg-emerald-600{background:linear-gradient(135deg,#22c55e,#15803d)!important;color:#fff!important}
 html body.console-shell #tabs,html.dark body.console-shell #tabs{border-radius:16px!important;box-shadow:var(--md-sh)!important;border:0!important}
-html body.console-shell *:not(i):not(.fa-solid):not(.fa-regular):not(.fa-brands){font-family:'Plus Jakarta Sans',sans-serif!important}
+html body.console-shell *:not(i):not(.fa-solid):not(.fa-regular):not(.fa-brands){color: #064425 !important;font-family:'Plus Jakarta Sans',sans-serif!important}
 </style>
 <style id="modesk-visual-2">
 html body.console-shell main #tab-dashboard section .overview-stats>div,html body.console-shell main #tab-dashboard section .dashboard-analytics>div,html body.console-shell main #tab-dashboard .dashboard-table,html body.console-shell main #tab-dashboard section.dashboard-toolbar{background:#fff!important;background-image:none!important}
@@ -6250,7 +6257,7 @@ html body #sabi-fab.has-alert .orb .jv-core,html body .orb-alert .jv-core{animat
 html body #tab-dashboard .overview-stats>div,html body #tab-dashboard .dashboard-stats>div,
 html body #tab-dashboard .dashboard-analytics>div,html body .dashboard-table,
 html body #tab-estoque .workspace-block>div,html body #tab-cursos .workspace-block>div,
-html body #tab-painel>div,html body #tab-agenda .agenda-entry,html body #tab-agenda .cal-wrap,
+html body #tab-painel>div,html body main div#tab-agenda.space-y-3 .agenda-entry,html body main div#tab-agenda.space-y-3 .cal-wrap,
 html body #lista-agenda>div,html body #tab-config>div,html body #tab-dashboard>.grid:nth-of-type(2)>div,
 html body .c25-card,html body .cal-day,html body #grid-painel>div{
  transition:border-color var(--mo-fast) ease,box-shadow var(--mo-fast) ease,background-color var(--mo-fast) ease!important;will-change:auto!important}
@@ -6258,7 +6265,7 @@ html body .c25-card,html body .cal-day,html body #grid-painel>div{
 html body #tab-dashboard .overview-stats>div:hover,html body #tab-dashboard .dashboard-stats>div:hover,
 html body #tab-dashboard .dashboard-analytics>div:hover,html body .dashboard-table:hover,
 html body #tab-estoque .workspace-block>div:hover,html body #tab-cursos .workspace-block>div:hover,
-html body #tab-painel>div:hover,html body #tab-agenda .agenda-entry:hover,html body #tab-agenda .cal-wrap:hover,
+html body #tab-painel>div:hover,html body main div#tab-agenda.space-y-3 .agenda-entry:hover,html body main div#tab-agenda.space-y-3 .cal-wrap:hover,
 html body #lista-agenda>div:hover,html body #tab-config>div:hover,
 html body #tab-dashboard>.grid:nth-of-type(2)>div:hover,html body #grid-painel>div:hover,
 html body main>div:first-of-type>div:hover,html body .kitchen-intro:hover,html body .m-date:hover,
@@ -7218,5 +7225,42 @@ function run(){try{hide();tag()}catch(x){}}
 setInterval(run,800);document.addEventListener('click',function(){setTimeout(run,300)},true);
 })();
 </script>
+<style id="agenda-categorias">
+.dot-tf{background:var(--c-lime)}.dot-ev{background:#3b82f6}.dot-nt{background:#a16207}
+.cal-dots i.dot-tf,.cal-dots i.dot-ev,.cal-dots i.dot-nt{display:inline-block;width:7px;height:7px;border-radius:50%}
+.cat-tag{margin-right:4px}
+html body #lista-agenda .pri-badge{display:inline-block;font-size:10px;font-weight:800;padding:2px 8px;border-radius:8px;letter-spacing:.04em;text-transform:uppercase;vertical-align:middle}
+html body #lista-agenda .pri-normal{background:rgba(71,85,105,.14)!important;color:#334155!important}
+html body #lista-agenda .pri-urgente{background:#dc2626!important;color:#fff!important}
+html body #lista-agenda .cat-tarefa{background:rgba(22,163,74,.14)!important;color:#15803d!important}
+html body #lista-agenda .cat-evento{background:rgba(59,130,246,.15)!important;color:#1d4ed8!important}
+html body #lista-agenda .cat-nota{background:rgba(161,98,7,.15)!important;color:#92400e!important}
+html.dark body #lista-agenda .pri-normal{background:rgba(148,163,184,.2)!important;color:#e2e8f0!important}
+html.dark body #lista-agenda .cat-tarefa{color:#86efac!important}html.dark body #lista-agenda .cat-evento{color:#93c5fd!important}html.dark body #lista-agenda .cat-nota{color:#fcd34d!important}
+#tab-agenda form #ag-categoria{flex:1 1 130px}
+html body #lista-agenda>div>div:first-child p.font-semibold{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;display:flex;flex-wrap:wrap;align-items:center;gap:5px}
+@media(min-width:701px){#tab-agenda .agenda-entry form{grid-template-columns:minmax(200px,2fr) minmax(140px,.8fr) minmax(115px,.65fr) minmax(115px,.65fr) auto!important}#tab-agenda #ag-obs{grid-column:1/5!important}#tab-agenda .agenda-entry button{grid-column:5!important}}
+html body select option,html body select optgroup{background:#ffffff!important;color:#1e293b!important}
+html.dark body select option{background:#1e293b!important;color:#f1f5f9!important}
+html body select option:checked{background:#dcfce7!important;color:#14532d!important}
+html body select{color-scheme:light!important}
+html body select option{background-color:#ffffff!important;color:#0f172a!important;font-weight:500}
+html body select option:hover,html body select option:focus{background-color:#dcfce7!important;color:#14532d!important}
+/* agenda compacta */
+html body main div#tab-agenda.space-y-3 .agenda-tools{padding:10px 14px!important;gap:8px!important;display:grid!important;grid-template-columns:minmax(0,1fr) auto!important}
+html body main div#tab-agenda.space-y-3 .agenda-entry{min-width:0!important;padding:8px 10px!important;display:flex!important;align-items:center;gap:8px}
+html body main div#tab-agenda.space-y-3 .agenda-entry form{display:flex!important;flex-wrap:wrap!important;align-items:center;gap:6px!important;flex:1;min-width:0}
+html body main div#tab-agenda.space-y-3 .agenda-entry form>*{height:32px!important;min-height:32px!important;font-size:12.5px!important;padding:0 10px!important;border-radius:8px!important;grid-column:auto!important;grid-row:auto!important;margin:0!important}
+html body main div#tab-agenda.space-y-3 form #ag-titulo{flex:2 1 140px!important;min-width:90px!important}
+html body main div#tab-agenda.space-y-3 form #ag-data{flex:0 0 124px!important;min-width:0!important}
+html body main div#tab-agenda.space-y-3 form #ag-categoria,html body main div#tab-agenda.space-y-3 form #ag-prioridade{flex:0 0 96px!important;min-width:0!important}
+html body main div#tab-agenda.space-y-3 form #ag-obs{flex:2 1 120px!important;min-width:80px!important}
+html body main div#tab-agenda.space-y-3 .agenda-entry form button{flex:0 0 auto!important;min-width:0!important;width:auto!important;padding:0 14px!important;white-space:nowrap}
+html body main div#tab-agenda.space-y-3 .agenda-export button{height:32px!important;min-width:0!important;padding:0 12px!important;font-size:12.5px!important}
+html body main div#tab-agenda.space-y-3 .cal-wrap{padding:12px!important}
+html body main div#tab-agenda.space-y-3 .cal-day{min-height:50px!important;padding:4px!important}
+html body #lista-agenda>div{padding:8px 11px!important}
+@media(max-width:900px){html body main div#tab-agenda.space-y-3 .agenda-entry form{flex-wrap:wrap!important}html body main div#tab-agenda.space-y-3 form #ag-titulo,html body main div#tab-agenda.space-y-3 form #ag-obs{flex:1 1 100%!important}}
+</style>
 </body>
 </html>
