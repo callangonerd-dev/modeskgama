@@ -5471,7 +5471,8 @@ html body.console-shell
 main .bg-brand-600,html.dark body.console-shell 
 main .bg-brand-600,html body.console-shell main .bg-emerald-600,html.dark body.console-shell main .bg-emerald-600{background:linear-gradient(135deg,#22c55e,#15803d)!important;color:#fff!important}
 html body.console-shell #tabs,html.dark body.console-shell #tabs{border-radius:16px!important;box-shadow:var(--md-sh)!important;border:0!important}
-html body.console-shell *:not(i):not(.fa-solid):not(.fa-regular):not(.fa-brands){color: #064425 !important;font-family:'Plus Jakarta Sans',sans-serif!important}
+html body.console-shell *:not(i):not(.fa-solid):not(.fa-regular):not(.fa-brands){font-family: 'Plus Jakarta Sans', sans-serif !important;
+    color: #064424 !important;}
 </style>
 <style id="modesk-visual-2">
 html body.console-shell main #tab-dashboard section .overview-stats>div,html body.console-shell main #tab-dashboard section .dashboard-analytics>div,html body.console-shell main #tab-dashboard .dashboard-table,html body.console-shell main #tab-dashboard section.dashboard-toolbar{background:#fff!important;background-image:none!important}
@@ -7262,5 +7263,113 @@ html body main div#tab-agenda.space-y-3 .cal-day{min-height:50px!important;paddi
 html body #lista-agenda>div{padding:8px 11px!important}
 @media(max-width:900px){html body main div#tab-agenda.space-y-3 .agenda-entry form{flex-wrap:wrap!important}html body main div#tab-agenda.space-y-3 form #ag-titulo,html body main div#tab-agenda.space-y-3 form #ag-obs{flex:1 1 100%!important}}
 </style>
+<style id="tutorial-itinerario-css">
+#tab-tutorial{grid-template-columns:1fr 1.35fr!important}
+.it-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.it-ctrl{display:flex;gap:6px}.it-ctrl button{width:38px;height:38px;border-radius:50%;border:1px solid var(--c-line);background:var(--c-surface);color:var(--c-text);cursor:pointer}
+.it-ctrl button.play{background:var(--mo-grad);color:#fff;border:0}
+.it-prog{height:6px;border-radius:9px;background:var(--c-lime-soft);margin:14px 0 6px;overflow:hidden}.it-prog i{display:block;height:100%;background:var(--mo-grad);transition:width .45s}
+.it-route{position:relative;margin-top:14px;padding-left:4px}
+.it-stop{position:relative;display:flex;gap:14px;padding:0 0 18px 0;cursor:pointer}
+.it-stop:before{content:"";position:absolute;left:21px;top:44px;bottom:0;border-left:3px dashed var(--c-line)}
+.it-stop:last-child:before{display:none}.it-stop.done:before{border-left:3px solid var(--mo-g1)}
+.it-pin{flex:none;z-index:1;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--c-surface);border:2px solid var(--c-line);color:var(--c-muted);font-size:16px;transition:.3s}
+.it-stop.done .it-pin{background:var(--c-lime-soft);border-color:var(--mo-g1);color:var(--mo-g1)}
+.it-stop.on .it-pin{background:var(--mo-grad);border-color:transparent;color:#fff;transform:scale(1.12);box-shadow:0 0 0 7px rgba(39,178,85,.18);animation:itPulse 1.6s infinite}
+@keyframes itPulse{50%{box-shadow:0 0 0 13px rgba(39,178,85,.06)}}
+.it-body{flex:1;padding:10px 14px;border-radius:16px;border:1px solid transparent;transition:.3s}
+.it-stop.on .it-body{background:var(--c-lime-soft);border-color:rgba(39,178,85,.35)}
+.it-body small{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--c-muted)}
+.it-body b{display:block;font-size:15px}
+.it-det{display:none;margin-top:10px;gap:8px}.it-stop.on .it-det{display:grid;animation:itIn .35s}
+@keyframes itIn{from{opacity:0;transform:translateY(-6px)}}
+.it-row{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.45}
+.it-row em{flex:none;font-style:normal;font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px;min-width:84px;text-align:center}
+.it-row .k1{background:rgba(39,120,230,.14);color:#2a74d6}.it-row .k2{background:rgba(237,165,43,.18);color:#b47410}.it-row .k3{background:rgba(39,178,85,.18);color:#1e8a43}
+.it-btn{display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border-radius:8px;background:var(--c-surface);border:1px solid var(--c-line);font-weight:700;font-size:12px}
+.it-end{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:18px;background:linear-gradient(100deg,rgba(39,178,85,.16),var(--c-surface));border:1px solid var(--c-line)}
+.it-end i{font-size:22px;color:var(--mo-g1)}
+</style>
+<script id="tutorial-itinerario-js">
+(function(){
+var $=function(s){return document.querySelector(s)},$$=function(s){return [].slice.call(document.querySelectorAll(s))};
+/* Cada etapa: [ícone, título, botão que se aperta, o que o sistema faz, resultado] */
+var F=[
+{t:'Estoque',tab:'estoque',lbl:'Estoque',s:[
+['fa-bars','Abrir o Estoque geral','Menu lateral › Estoque','Troca a tela e carrega a lista de todos os lotes salvos.','Você vê a tabela com status, validade e quantidade.'],
+['fa-plus','Iniciar um cadastro','Cadastrar novo item','Abre o formulário vazio com a data de hoje como entrada.','Campos prontos para preencher.'],
+['fa-keyboard','Preencher os dados','Código/lote, produto, categoria, qtd, unidade, validade','Valida campos obrigatórios e o formato das datas.','Campos inválidos ficam destacados.'],
+['fa-floppy-disk','Salvar o lote','Salvar','Grava o lote no navegador e calcula o status (ok, a vencer, vencido).','Mensagem de confirmação e o item aparece na lista.'],
+['fa-magnifying-glass','Localizar depois','Busca + filtros de status/produto','Filtra a tabela em tempo real.','Somente os lotes que combinam ficam visíveis.'],
+['fa-pen','Editar ou excluir','Lápis ou Lixeira','Abre o lote para edição ou pede confirmação na tela.','Lote atualizado ou removido do estoque.']]},
+{t:'Cursos',tab:'cursos',lbl:'Cursos',s:[
+['fa-graduation-cap','Abrir Cursos','Menu lateral › Cursos','Mostra cursos ativos em grade e a aba Finalizadas.','Visão de todas as turmas.'],
+['fa-plus','Criar a turma','Novo curso','Abre o formulário: nome, período, turno, carga horária.','Curso pronto para receber dados.'],
+['fa-floppy-disk','Confirmar','Salvar curso','Cria o cartão do curso na grade.','O curso aparece entre os ativos.'],
+['fa-box-open','Lançar insumos da aula','Abrir curso › Adicionar insumo','Associa o item do estoque ao turno e reserva a quantidade.','Consumo do curso registrado.'],
+['fa-flag-checkered','Encerrar a aula','Encerrar aula (dentro do curso)','Baixa os insumos usados do estoque e volta para o curso.','Estoque atualizado automaticamente.'],
+['fa-box-archive','Finalizar o curso','Encerrar curso','Move o curso para Finalizadas (pode ser reaberto).','Histórico preservado.']]},
+{t:'Vencimentos',tab:'painel',lbl:'Vencimentos',s:[
+['fa-clock-rotate-left','Abrir o painel','Menu lateral › Vencimentos','Cruza todas as validades com a data de hoje.','Lista de vencidos e dos que vencem em 15 dias.'],
+['fa-circle-exclamation','Ler os alertas','Cores de status','Vermelho = vencido; amarelo = vence em breve.','Você sabe o que priorizar.'],
+['fa-trash-can','Descartar um item','Botão Descartar (ao lado do status)','Pede confirmação, retira do estoque e grava no histórico.','O descarte aparece no histórico abaixo.'],
+['fa-file-excel','Exportar','Baixar Excel','Gera a planilha com os itens filtrados.','Arquivo .xlsx baixado para conferência.']]},
+{t:'Agenda',tab:'agenda',lbl:'Agenda',s:[
+['fa-calendar-days','Abrir a agenda','Menu lateral › Agenda','Desenha o calendário do mês com feriados e vencimentos.','Pontos coloridos em cada dia.'],
+['fa-pen-to-square','Escrever o lembrete','Título, data, prioridade, observação','Prepara o compromisso.','Formulário preenchido.'],
+['fa-plus','Adicionar','Adicionar','Salva o lembrete e marca o dia no calendário.','Lembrete na lista; urgentes ficam em vermelho.'],
+['fa-hand-pointer','Consultar um dia','Clique no dia','Abre o detalhe com lembretes e vencimentos daquela data.','Tudo do dia em um só lugar.'],
+['fa-check','Concluir','Ciente / Excluir','Esconde o aviso até amanhã ou remove o lembrete.','Agenda sempre limpa.']]},
+{t:'Relatórios',tab:'dashboard',lbl:'Dashboard',s:[
+['fa-chart-pie','Abrir o Dashboard','Menu lateral › Dashboard','Calcula totais, categorias e validades em tempo real.','Gráficos e indicadores atualizados.'],
+['fa-file-pdf','Gerar BI','BI em PDF (timbrado)','Monta o relatório com papel timbrado e assinatura do usuário.','Janela de impressão / salvar PDF.'],
+['fa-chalkboard-user','Relatório por curso','Cursos › Relatório por curso','Soma o consumo de insumos de cada turma.','Relatório pronto para imprimir.']]},
+{t:'Configurações',tab:'config',lbl:'Configurações',s:[
+['fa-gear','Abrir Configurações','Menu lateral › Configurações','Mostra usuário, unidade, timbrado e feriados.','Preferências do sistema.'],
+['fa-user','Definir o usuário','Nome do usuário › Salvar','Guarda o nome que assina relatórios e mensagens.','Nome aplicado em todo o sistema.'],
+['fa-download','Fazer backup','Salvar backup','Exporta todos os dados em um arquivo JSON.','Arquivo de segurança baixado.'],
+['fa-upload','Restaurar','Abrir arquivo','Lê o JSON e substitui os dados atuais.','Sistema volta ao estado do backup.'],
+['fa-moon','Tema','Botão da lua','Alterna entre modo claro e escuro.','Visual escolhido fica salvo.']]}
+];
+var cur=0,st=0,timer=null;
+function stop(){clearInterval(timer);timer=null;var p=$('#it-play');if(p)p.innerHTML='<i class="fa-solid fa-play"></i>'}
+function go(k){var f=F[cur];st=Math.max(0,Math.min(f.s.length-1,k));
+ $$('.it-stop').forEach(function(e,i){e.classList.toggle('on',i===st);e.classList.toggle('done',i<st)});
+ var b=$('#it-prog');if(b)b.style.width=((st+1)/f.s.length*100)+'%';var c=$('#it-count');if(c)c.textContent='Etapa '+(st+1)+' de '+f.s.length;
+ var on=$('.it-stop.on');if(on&&timer)on.scrollIntoView({block:'nearest',behavior:'smooth'})}
+function render(i){stop();cur=i;var f=F[i],p=$('#tu-panel');if(!p)return;
+ $$('.tu-node').forEach(function(n,k){n.classList.toggle('on',k===i)});
+ p.innerHTML='<div class="it-head"><div><h2>Itinerário — '+f.t+'</h2><p style="color:var(--c-muted);font-size:13px">Clique em cada parada ou use ▶ para ver o fluxo completo.</p></div><div class="it-ctrl"><button title="Anterior" onclick="itStep(-1)"><i class="fa-solid fa-chevron-left"></i></button><button id="it-play" class="play" title="Reproduzir" onclick="itPlay()"><i class="fa-solid fa-play"></i></button><button title="Próxima" onclick="itStep(1)"><i class="fa-solid fa-chevron-right"></i></button></div></div>'+
+ '<div class="it-prog"><i id="it-prog"></i></div><small id="it-count" style="color:var(--c-muted);font-weight:700"></small>'+
+ '<div class="it-route">'+f.s.map(function(s,k){return '<div class="it-stop" onclick="itGo('+k+')"><div class="it-pin"><i class="fa-solid '+s[0]+'"></i></div><div class="it-body"><small>Parada '+(k+1)+'</small><b>'+s[1]+'</b><div class="it-det"><div class="it-row"><em class="k1">Aperte</em><span class="it-btn"><i class="fa-solid fa-hand-pointer"></i>'+s[2]+'</span></div><div class="it-row"><em class="k2">O sistema</em><span>'+s[3]+'</span></div><div class="it-row"><em class="k3">Resultado</em><span>'+s[4]+'</span></div></div></div></div>'}).join('')+'</div>'+
+ '<div class="it-end"><i class="fa-solid fa-location-dot"></i><div style="flex:1"><b>Destino: '+f.lbl+'</b><br><small style="color:var(--c-muted)">Pratique o fluxo na tela real.</small></div><button class="tu-go" style="margin:0" onclick="switchTab(\''+f.tab+'\')"><i class="fa-solid fa-arrow-right"></i> Ir para '+f.lbl+'</button></div>';
+ go(0)}
+window.itGo=function(k){stop();go(k)};
+window.itStep=function(d){stop();go(st+d)};
+window.itPlay=function(){if(timer)return stop();if(st>=F[cur].s.length-1)go(0);$('#it-play').innerHTML='<i class="fa-solid fa-pause"></i>';
+ timer=setInterval(function(){if(st>=F[cur].s.length-1)return stop();go(st+1)},2600)};
+function init(){if(!$('#tu-panel'))return setTimeout(init,300);window.moTut=render;
+ var core=$('.tu-core small');if(core)core.textContent='Mapa de itinerários';
+ var intro=$('#tab-tutorial .tu-card>p');if(intro)intro.textContent='Escolha uma função no mapa: à direita aparece o itinerário com cada botão, o que o sistema faz e o resultado.';
+ render(0)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(init,400)});else setTimeout(init,400);
+})();
+</script>
+<style id="ajuste-v3-3">
+#tab-tutorial .tu-map{margin:18px 0 8px;height:480px;--nw:min(178px,44%)}
+#tab-tutorial .tu-node{width:var(--nw);padding:10px 12px}
+#tab-tutorial .tu-node[style*="left:13%"]{left:calc(var(--nw)/2 + 12px)!important}
+#tab-tutorial .tu-node[style*="left:87%"]{left:calc(100% - var(--nw)/2 - 12px)!important}
+#tab-tutorial .tu-node[style*="top:9%"]{top:calc(9% + 8px)!important}
+#tab-tutorial .tu-node[style*="top:91%"]{top:calc(91% - 8px)!important}
+#tab-tutorial .tu-core{width:150px;height:150px}
+@media(max-width:1000px){#tab-tutorial .tu-map{margin:10px 0;height:auto}#tab-tutorial .tu-node{width:auto}}
+#tab-agenda .agenda-tools{align-items:center!important}
+#tab-agenda .agenda-export{margin:0!important;padding:0!important;align-self:center!important;display:flex;align-items:center}
+#tab-agenda .agenda-export button,#tab-agenda .agenda-entry form button{height:44px!important;margin:0!important;transform:none!important}
+</style>
+<style id="ajuste-v3-4">html body main div#tab-tutorial div#tu-panel div.it-end div b,html body main div#tab-tutorial div#tu-panel div.it-end div small,html body main div#tab-tutorial div#tu-panel div.it-end div br+small,html body main div#tab-tutorial div#tu-panel div.it-end div{color:#fff!important;-webkit-text-fill-color:#fff!important}#tab-tutorial .it-end,#tab-tutorial .it-end b,#tab-tutorial .it-end small,#tab-tutorial .it-end>i,#tab-tutorial .it-end>i:before{color:#fff!important}#tab-tutorial .it-end small{opacity:.9}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"/>
+<style id="fonte-v3-5">html body.console-shell *:not(i):not(.fa-solid):not(.fa-regular):not(.fa-brands){font-family:'Plus Jakarta Sans',sans-serif!important}</style>
 </body>
 </html>
