@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 
 <html lang="pt-BR">
-<head><style>button[onclick="toggleTheme()"],button[aria-label="Alternar tema"],button:has(> #theme-icon),button:has(> #theme-icon-header),button:has(> .fa-moon),button:has(> .fa-sun){display:none!important}input,select{color-scheme:light!important}</style>
+<head><script>/* MODESK ISOLAMENTO — app: cozinha. Cada sistema guarda dados em seu próprio espaço; nada é compartilhado com os outros Modesks. */
+(function(){var NS="mdk:cozinha:",MK=NS+"__migrado",P=Storage.prototype,g=P.getItem,s=P.setItem,r=P.removeItem,k=P.key,L=Object.getOwnPropertyDescriptor(P,"length").get,RX=/^(modesk_|md_|md17_|v\d+_|sirius_)/;
+function own(st){var a=[],n=L.call(st);for(var i=0;i<n;i++){var x=k.call(st,i);if(x&&x.indexOf(NS)===0&&x!==MK)a.push(x.slice(NS.length));}return a;}
+try{[localStorage,sessionStorage].forEach(function(st){if(g.call(st,MK))return;var n=L.call(st),ks=[];for(var i=0;i<n;i++){var x=k.call(st,i);if(x&&x.indexOf("mdk:")!==0&&RX.test(x))ks.push(x);}ks.forEach(function(x){if(g.call(st,NS+x)===null)s.call(st,NS+x,g.call(st,x));});s.call(st,MK,"1");});}catch(e){}
+P.getItem=function(x){return g.call(this,NS+x);};P.setItem=function(x,v){return s.call(this,NS+x,v);};P.removeItem=function(x){return r.call(this,NS+x);};
+P.key=function(i){var a=own(this);return i<a.length?a[i]:null;};P.clear=function(){var t=this;own(t).forEach(function(x){r.call(t,NS+x);});};
+Object.defineProperty(P,"length",{configurable:true,get:function(){return own(this).length;}});
+if(window.indexedDB){var o=indexedDB.open.bind(indexedDB),d=indexedDB.deleteDatabase.bind(indexedDB);indexedDB.open=function(n,v){return v===undefined?o(NS+n):o(NS+n,v);};indexedDB.deleteDatabase=function(n){return d(NS+n);};}
+window.MODESK_APP="cozinha";})();</script><style>button[onclick="toggleTheme()"],button[aria-label="Alternar tema"],button:has(> #theme-icon),button:has(> #theme-icon-header),button:has(> .fa-moon),button:has(> .fa-sun){display:none!important}input,select{color-scheme:light!important}</style>
 <script id="modesk-req-compat">if(typeof window.reqAtrasoTexto!=="function"){window.reqAtrasoTexto=function(r){r=r||{};var d=function(s){return s?Math.ceil((new Date(s+"T00:00:00")-new Date(new Date().setHours(0,0,0,0)))/86400000):999};if(/Conferida|Cancelada|Recebida/.test(r.status||""))return {txt:"—",cls:"text-slate-400"};var e=d(r.dataEntrega);if(e<0)return {txt:"Atrasada há "+Math.abs(e)+"d",cls:"text-red-500 font-bold"};if(d(r.dataAlerta)<=0)return {txt:"Alerta ativo — entregar em "+e+"d",cls:"text-amber-600 font-bold"};return {txt:"No prazo ("+e+"d)",cls:"text-emerald-600"}};}</script>
 <script>(function(){try{localStorage.setItem('modesk_senac_tema','light')}catch(e){}var h=document.documentElement;h.classList.remove('dark');new MutationObserver(function(){if(h.classList.contains('dark'))h.classList.remove('dark')}).observe(h,{attributes:true,attributeFilter:['class']});})();</script><style id="mo-boot">html:not(.mo-ready){background:#eaf6ec}html.dark:not(.mo-ready){background:#06140c}html:not(.mo-ready) body{visibility:hidden!important}@keyframes mo-fade{from{opacity:0}to{opacity:1}}html.mo-ready body{animation:mo-fade .25s ease both}@media(prefers-reduced-motion:reduce){html.mo-ready body{animation:none}}</style><noscript><style>html:not(.mo-ready) body{visibility:visible!important}</style></noscript><script>setTimeout(function(){document.documentElement.classList.add('mo-ready')},4500)</script><script>if(!localStorage.getItem('modesk_senac_tema')){document.documentElement.classList.remove('dark');localStorage.setItem('modesk_senac_tema','light');}</script>
 <meta charset="utf-8"/>
@@ -657,7 +665,7 @@ html:not(.dark) #tab-dashboard .dash-table tbody tr:hover{background:rgba(134,18
   border-left-color: var(--item-color) !important;
 }
 </style>
-</head>
+<script defer src="/__l5e/events.b979ee024b15adfd.js" data-artifact-kind="live_preview" data-artifact-id="c2bddd38b30587fef78465fc0c031445b867f3b8" data-commit-sha="c2bddd38b30587fef78465fc0c031445b867f3b8" data-context-token="v1.eyJwcm9qZWN0X2lkIjoibG92cF8wMm54anhncWc0OW10OHc2NnZyY3g3emJydCIsImFydGlmYWN0X2tpbmQiOiJsaXZlX3ByZXZpZXciLCJhcnRpZmFjdF9pZCI6ImMyYmRkZDM4YjMwNTg3ZmVmNzg0NjVmYzBjMDMxNDQ1Yjg2N2YzYjgiLCJjb21taXRfc2hhIjoiYzJiZGRkMzhiMzA1ODdmZWY3ODQ2NWZjMGMwMzE0NDViODY3ZjNiOCIsImV4cCI6MTc5NTAyOTQ5NX0.47YtP23lfZjUhJeSjj1aaLvxfMSMY_vSMQq-irSTy6I" data-consent="1"></script><script defer src="/__l5e/events.b979ee024b15adfd.js" data-artifact-kind="live_preview" data-artifact-id="85b78f9bb802a592e3846166346c9f878812368c" data-commit-sha="85b78f9bb802a592e3846166346c9f878812368c" data-context-token="v1.eyJwcm9qZWN0X2lkIjoibG92cF82MzBoZnpreXc0OTFkOTdwOWdmamEwOGdkaiIsImFydGlmYWN0X2tpbmQiOiJsaXZlX3ByZXZpZXciLCJhcnRpZmFjdF9pZCI6Ijg1Yjc4ZjliYjgwMmE1OTJlMzg0NjE2NjM0NmM5Zjg3ODgxMjM2OGMiLCJjb21taXRfc2hhIjoiODViNzhmOWJiODAyYTU5MmUzODQ2MTY2MzQ2YzlmODc4ODEyMzY4YyIsImV4cCI6MTc5NTAzMjg4MH0.vBVyna3j3FbIvB1KW1WQI48F3MmpMWaHeWqrCtNs9fs" data-consent="1"></script></head>
 <body class="console-shell bg-[#f3f5f8] dark:bg-[#0f1218] text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
 <aside aria-label="Navegação principal" class="console-sidebar" id="app-sidebar">
 <button aria-label="Expandir ou recolher menu" class="console-logo" onclick="toggleSidebar()" title="Expandir ou recolher menu"><i class="fa-solid fa-utensils"></i></button>
@@ -3377,117 +3385,6 @@ window.gerarPDF=function(tipo){
   if(img&&!img.complete){img.onload=()=>setTimeout(go,100);img.onerror=go;}else setTimeout(go,150);
 };
 })();
-</script>
-<script id="sirius-v36-chaves">
-/* v36 — credenciais e endereços desmembrados em pedaços embaralhados.
-   Nada aqui fica legível em texto puro; __SRS.g() remonta na hora do acesso. */
-(function(){
-var P=[["Mw==",5003],["cmFn",3006],["ZWJh",3004],["Mi9maQ==",4015],["aXJlYmE=",7010],["dGljLmM=",7004],["d3d3",7002],["Nzc1Mw==",5001],["Zi5maXI=",3003],["LzEwLjE=",4013],["Zy1PZUc=",7],["LmNv",4008],["NDQ=",1004],["Mi4=",4014],["TUQ=",6],["MGExNA==",2009],["dC5qcw==",4020],["LmdzdGE=",7003],["b21wYXQ=",7015],["aWV3OQ==",2],["dGlj",4007],["c2Vqcw==",7007],["ODFm",1005],["bzBWeDY=",4],["LW0=",1001],["dXM=",1002],["X3JSUw==",9],["ZS4=",3007],["Zmk=",4010],["Ry1Z",6000],["Oi8=",4002],["aHR0cHM=",7000],["c2UtZg==",7011],["Ondl",2004],["Yjo=",2005],["bW8=",1000],["c2VzdG8=",3005],["Zg==",8003],["LmZpcg==",1006],["MTk=",5002],["NDBi",2006],["ZWFw",1009],["V25k",8],["L3c=",4003],["cC5jb20=",1010],["bW8tbXU=",8000],["dw==",10],["Y0JpLQ==",5],["Lmpz",7016],["MzE5Mw==",2003],["ZS1j",7014],["NDQ4MQ==",8002],["Z3M=",4005],["cmViYXM=",4011],["c2ljLQ==",8001],["cmViYXM=",4016],["dGE=",4006],["YWQxMTU=",2010],["cGE=",4019],["aXJlYmE=",7006],["OTczMTc=",2001],["ZWpz",4012],["MmEzYg==",2008],["bW8t",3000],["NzU=",2002],["TVFFQg==",6002],["Oi8v",7001],["Mzk3MzE=",5000],["Zjg=",2011],["OTc1Nw==",2007],["MToz",2000],["b20vZg==",7005],["bS8=",4009],["d3cu",4004],["emFTeUE=",1],["ZS1hcHA=",4017],["YXM=",1008],["aHQ=",4000],["QUk=",0],["dHBz",4001],["Mi4yL2Y=",7009],["aXJlc3Q=",7012],["b3I=",7013],["ZWI=",1007],["aWMt",1003],["LzEwLjE=",7008],["bXVzaWM=",3001],["LWNvbQ==",4018],["MEVCR0I=",6001],["LTQ0ODE=",3002],["YXBw",3008],["OWRSRA==",3]], M={"k":0,"ad":1,"aid":2,"sb":3,"u1":4,"sid":5,"mid":6,"u2":7,"pid":8}, cache={};
-function dec(b){return decodeURIComponent(escape(atob(b)));}
-function g(nome){
-  if(cache[nome]!=null)return cache[nome];
-  var s=M[nome];
-  if(s==null)return '';
-  var meus=[];
-  for(var i=0;i<P.length;i++){ var t=P[i][1]; if(Math.floor(t/1000)===s) meus.push([t%1000,P[i][0]]); }
-  meus.sort(function(a,b){return a[0]-b[0];});
-  var out='';
-  for(var j=0;j<meus.length;j++) out+=dec(meus[j][1]);
-  return (cache[nome]=out);
-}
-function cfg(){return {apiKey:g('k'),authDomain:g('ad'),projectId:g('pid'),storageBucket:g('sb'),messagingSenderId:g('sid'),appId:g('aid'),measurementId:g('mid')};}
-function script(src){return new Promise(function(ok,err){var s=document.createElement('script');s.src=src;s.async=false;s.onload=ok;s.onerror=err;document.head.appendChild(s);});}
-window.__SRS={g:g,cfg:cfg};
-/* monta os endereços, carrega a nuvem e só então liga a sincronização */
-function ligar(){
-  script(g('u1')).then(function(){return script(g('u2'));}).then(function(){
-    if(typeof window.__siriusBoot==='function')window.__siriusBoot();
-  }).catch(function(){
-    console.warn('Nuvem indisponível (sem internet?) — usando só dados locais.');
-  });
-}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ligar);else ligar();
-})();
-</script>
-<script id="sirius-firebase-sync-v20">
-/* v20/v36 — sincronização entre dispositivos; só roda depois que __SRS remonta as credenciais */
-window.__siriusBoot=function(){
-if(window.__siriusBootOk)return;window.__siriusBootOk=true;
-if(!window.firebase)return console.warn('Firebase não carregou (sem internet?) — usando só dados locais.');
-firebase.initializeApp(window.__SRS.cfg());
-const db=firebase.firestore();
-try{db.settings({experimentalAutoDetectLongPolling:true,merge:true});}catch(e){}
-try{db.enablePersistence({synchronizeTabs:true}).catch(()=>{});}catch(e){}
-const ref=db.collection('sirius').doc('cozinha-senac');
-const PFX='modesk_senac_', SKIP=['modesk_senac_tema'];
-const LS=window.localStorage, setOrig=LS.setItem.bind(LS), remOrig=LS.removeItem.bind(LS);
-const CLIENTE=sessionStorage.getItem('sirius_cli')||(Math.random().toString(36).slice(2));sessionStorage.setItem('sirius_cli',CLIENTE);
-const chaves=()=>Object.keys(LS).filter(k=>k.startsWith(PFX)&&!SKIP.includes(k));
-const campo=k=>k.replace(/[^\w]/g,'_');
-let versaoLocal=Number(LS.getItem('sirius_sync_v')||0), timer=null, aplicando=false, pendente=LS.getItem('sirius_sync_pend')==='1';
-
-const badge=document.createElement('div');
-badge.style.cssText='position:static;flex:none;opacity:.8;z-index:150;font:600 10px Manrope,Arial,sans-serif;padding:5px 10px;border-radius:999px;background:#0f172acc;color:#fff;pointer-events:none;transition:opacity .4s;white-space:nowrap';
-badge.id='sirius-sync-status';badge.setAttribute('role','status');
-let estado='conectando';
-const CORES={online:'#22c55e',conectando:'#f59e0b',offline:'#94a3b8',erro:'#ef4444'};
-const TXT={online:'Online · tempo real',conectando:'Conectando…',offline:'Offline · salvo no aparelho',erro:'Sem acesso à nuvem'};
-function status(e){estado=e;badge.innerHTML='<span style="display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:1px;background:'+CORES[e]+(e==='online'?';box-shadow:0 0 0 3px '+CORES[e]+'33':'')+'"></span>'+TXT[e];badge.style.background='#0f172a99';badge.title=TXT[e];}
-const aviso=(t,c)=>{badge.textContent=t;badge.style.background=c;badge.style.opacity='1';clearTimeout(badge._t);badge._t=setTimeout(()=>{status(estado);badge.style.opacity='.8';},2200);};
-status('conectando');
-window.addEventListener('offline',()=>status('offline'));
-function inserirBadge(){const acoes=document.querySelector('body>header>div:last-child');if(acoes)acoes.prepend(badge);else document.body.appendChild(badge);}document.addEventListener('DOMContentLoaded',inserirBadge);if(document.body)inserirBadge();
-
-function enviar(imediato){
-  pendente=true;setOrig('sirius_sync_pend','1');clearTimeout(timer);
-  timer=setTimeout(async()=>{
-    const dados={};chaves().forEach(k=>dados[campo(k)]={k,v:LS.getItem(k)});
-    if(!Object.keys(dados).length)return; /* nunca envia base vazia */
-    versaoLocal=Date.now();setOrig('sirius_sync_v',String(versaoLocal));
-    try{await ref.set({dados,versao:versaoLocal,cliente:CLIENTE});pendente=false;setOrig('sirius_sync_pend','0');aviso('☁ Sincronizado','#15803dcc');}
-    catch(e){console.error(e);aviso('⚠ Falha ao sincronizar','#b91c1ccc');setTimeout(()=>enviar(),5000);}
-  },imediato?0:800);
-}
-/* celular: envia na hora ao minimizar/trocar de app (senão o envio se perde) */
-const flush=()=>{if(pendente)enviar(true);};
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')flush();});
-window.addEventListener('pagehide',flush);
-window.addEventListener('online',()=>{status('conectando');if(pendente)enviar(true);});
-/* ao voltar para o app, confere a nuvem de novo */
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){if(pendente)enviar(true);else ref.get({source:'server'}).then(d=>{if(d.exists&&aplicar(d))recarregar();}).catch(()=>{});}});
-const T0=Date.now();let interagiu=false;['pointerdown','keydown','input','change','touchstart'].forEach(ev=>document.addEventListener(ev,()=>{interagiu=true;},true));
-const podeEnviar=()=>interagiu||Date.now()-T0>8000; /* gravações automáticas da inicialização não viram envio (evita pingue-pongue) */
-LS.setItem=function(k,v){const igual=LS.getItem(k)===String(v);setOrig(k,v);if(igual)return;if(!aplicando&&podeEnviar()&&String(k).startsWith(PFX)&&!SKIP.includes(k))enviar();};
-LS.removeItem=function(k){const tinha=LS.getItem(k)!==null;remOrig(k);if(tinha&&!aplicando&&podeEnviar()&&String(k).startsWith(PFX)&&!SKIP.includes(k))enviar();};
-
-function aplicar(doc){
-  const d=doc.data();if(!d||!d.dados||!Object.keys(d.dados).length)return false; /* nunca aplica base vazia */
-  if(d.cliente===CLIENTE||pendente||Number(d.versao)===versaoLocal)return false;let _lm=0;try{_lm=new Date(JSON.parse(LS.getItem('modesk_senac_meta')||'{}').atualizadoEm).getTime()||0}catch(_){}if(_lm>Number(d.versao||0)){enviar(true);return false;} /* não depende do relógio do aparelho */
-  const remotas0=Object.values(d.dados);const dif=remotas0.some(x=>x.v!=null&&LS.getItem(x.k)!==String(x.v))||chaves().some(k=>!remotas0.find(x=>x.k===k));
-  if(!dif){versaoLocal=d.versao;setOrig('sirius_sync_v',String(d.versao));return false;} /* conteúdo idêntico: não recarrega */
-  aplicando=true;
-  const remotas=Object.values(d.dados).map(x=>x.k);
-  
-  Object.values(d.dados).forEach(x=>{if(x.v!=null)setOrig(x.k,x.v);});
-  versaoLocal=d.versao;setOrig('sirius_sync_v',String(d.versao));
-  aplicando=false;return true;
-}
-let primeira=true;
-function recarregar(){const ult=Number(sessionStorage.getItem('sirius_rl')||0);const esp=Math.max(600,15000-(Date.now()-ult));clearTimeout(window.__rlT);window.__rlT=setTimeout(()=>{try{const J=(k)=>JSON.parse(localStorage.getItem(k)||'null')||[];cursos=J(LS_C);cursoItens=J(LS_CI);movimentos=J(LS_MV);estoque=J(LS_E);agenda=J(LS_A);try{window.descartes=J('modesk_senac_descartes');window.requisicoes=J('modesk_senac_requisicoes');window.aulas=J('modesk_senac_aulas');if(window.utSetLista&&localStorage.getItem('modesk_senac_utensilios'))window.utSetLista(J('modesk_senac_utensilios'));}catch(_){}const a=(document.querySelector('[id^="tab-"]:not(.hidden)')||{}).id;if(typeof atualizarStats==='function')atualizarStats();const _ae=document.activeElement,_ocup=(_ae&&/INPUT|TEXTAREA|SELECT/.test(_ae.tagName))||!(document.getElementById('modal-wrap')||{classList:{contains:()=>true}}).classList.contains('hidden')||document.querySelector('.ut2-form.on');if(a&&!_ocup&&typeof switchTab==='function')switchTab(a.replace('tab-',''));}catch(e){console.error(e);}},600);}
-ref.onSnapshot({includeMetadataChanges:true},doc=>{
-  status(doc.metadata.fromCache&&!navigator.onLine?'offline':doc.metadata.fromCache?'conectando':'online');
-  if(doc.metadata.hasPendingWrites)return;
-  if(!doc.exists){if(primeira&&!doc.metadata.fromCache){primeira=false;enviar();}return;}
-  if(primeira&&pendente&&!doc.metadata.fromCache){primeira=false;enviar(true);return;}
-  const mudou=aplicar(doc);
-  
-  primeira=false;
-  if(mudou){aviso('☁ Atualizado de outro dispositivo','#1d4ed8cc');
-    const ativo=document.activeElement;const digitando=ativo&&/INPUT|TEXTAREA|SELECT/.test(ativo.tagName)&&ativo.value;
-    if(digitando){const f=()=>{ativo.removeEventListener('blur',f);recarregar();};ativo.addEventListener('blur',f);}
-    else recarregar();}
-},e=>{console.error(e);status('erro');aviso('⚠ Sem acesso à nuvem (verifique as regras do Firestore)','#b91c1ccc');});
-};
 </script>
 <script id="sirius-v21-relatorios-cursos">
 /* v21 — relatórios abrem em nova aba prontos para imprimir/salvar; tela do curso só fecha no X */
@@ -7471,7 +7368,7 @@ html.dark body #tab-agenda select option:checked{background-color:#22a34a!import
   if(Array.isArray(d.utensilios))set(UTK,d.utensilios);
   Storage.prototype.setItem.call(LS,'modesk_senac_meta',JSON.stringify({atualizadoEm:new Date().toISOString()}));
   /* marca como pendente: na próxima abertura o backup restaurado é enviado para a nuvem e não é sobrescrito por ela */
-  Storage.prototype.setItem.call(LS,'sirius_sync_pend','1');
+  
  }
  function recarregarMemoria(){const g=k=>A(J(k));try{estoque=g(MAPA.estoque);agenda=g(MAPA.agenda);cursos=g(MAPA.cursos);cursoItens=g(MAPA.cursoItens);movimentos=g(MAPA.movimentos);}catch(e){console.error(e)}window.descartes=g(MAPA.descartes);window.requisicoes=g(MAPA.requisicoes);window.aulas=g(MAPA.aulas);try{window.__setCatsExtra&&__setCatsExtra(g(MAPA.categorias))}catch(e){}try{catsExtra=g(MAPA.categorias);catsExtra.forEach(c=>{if(!CATEGORIAS.includes(c))CATEGORIAS.push(c);});}catch(e){}try{descartes=window.descartes;requisicoes=window.requisicoes;aulas=window.aulas;}catch(e){}try{if(window.utSetLista)utSetLista(g(UTK));}catch(e){}try{atualizarStats()}catch(e){}try{switchTab('dashboard')}catch(e){}try{renderBI()}catch(e){}}
  window.aplicarBackup=function(d){gravarTudo(d);idbSet('ultimo',Object.assign({},d,{salvoEm:new Date().toISOString()}));};
@@ -7488,7 +7385,7 @@ html.dark body #tab-agenda select option:checked{background-color:#22a34a!import
    const msg='Carregar backup salvo em '+quando+'?\n'+A(d.estoque).length+' itens de estoque, '+A(d.cursos).length+' cursos, '+A(d.requisicoes).length+' requisições, '+A(d.descartes).length+' descartes, '+A(d.aulas).length+' aulas e '+A(d.utensilios).length+' utensílios.\nOs dados atuais deste computador serão substituídos.';
    Promise.resolve(window.sysConfirma?sysConfirma(msg,'Restaurar backup'):confirm(msg)).then(ok=>{if(!ok)return;
     try{aplicarBackup(d);}catch(e){console.error(e);avisar('Não foi possível gravar o backup: '+(e&&e.name==='QuotaExceededError'?'armazenamento do navegador cheio (use imagens menores).':e));window.__siriusRestaurando=false;return;}
-    recarregarMemoria();Storage.prototype.setItem.call(LS,'sirius_sync_pend','0');try{LS.setItem('modesk_senac_meta',JSON.stringify({atualizadoEm:new Date().toISOString()}))}catch(e){}espelhar();avisar('Backup carregado! Os dados já estão na tela, sem recarregar a página.');
+    recarregarMemoria();try{LS.setItem('modesk_senac_meta',JSON.stringify({atualizadoEm:new Date().toISOString()}))}catch(e){}espelhar();avisar('Backup carregado! Os dados já estão na tela, sem recarregar a página.');
    });
   };r.readAsText(f);
  };
@@ -8083,5 +7980,156 @@ function limpa(){try{document.querySelectorAll('#md17-rdc,[data-md17-go="rel:rdc
 document.querySelectorAll('#mdr2 .nav button,#tabs button,.side-link').forEach(function(b){if(/custo|financeir/i.test(b.textContent))b.style.display='none'});
 document.querySelectorAll('#mdr2 .kp>div,#mdr2 .k,#mdr2 .cb').forEach(function(e){var h=e.querySelector('h5,small,span,p');if(h&&RX.test(h.textContent))e.style.display='none'})}catch(e){}}
 setInterval(limpa,800);document.addEventListener('DOMContentLoaded',limpa)})();</script>
+<script id="modesk-listas-insumos">
+/* =========================================================
+   LISTAS DE INSUMOS — importação das planilhas (.xlsm/.xlsx)
+   ========================================================= */
+(function(){
+const LK='modesk_listas_insumos';
+let LISTAS=[];try{LISTAS=JSON.parse(localStorage.getItem(LK)||'[]')}catch(e){LISTAS=[]}
+let SEL=null,FAULA='todas',BUSCA='';
+const salvar=()=>{try{localStorage.setItem(LK,JSON.stringify(LISTAS))}catch(e){alert('Espaço do navegador cheio: exclua listas antigas.')}};
+const E=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const N=s=>String(s==null?'':s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/\s+/g,' ').trim();
+const num=v=>{if(typeof v==='number')return v;const t=String(v||'').replace(',','.').trim();const n=parseFloat(t);return isNaN(n)?0:n};
+const fmt=n=>(Math.round(n*1000)/1000).toLocaleString('pt-BR');
+
+function tipoDoc(nome,cursoTxt){const t=N(nome+' '+cursoTxt);
+  if(/GASTRONOMIA/.test(t))return 'Técnico em Gastronomia';
+  if(/CONFEIT/.test(t))return 'Confeitaria';
+  if(/PAO|PAES|PANIF/.test(t))return 'Panificação';
+  if(/SALADA|GRELHAD/.test(t))return 'Saladas e Grelhados';
+  return 'Cozinha';}
+
+function lerAba(ws,aba,arquivo){
+  const R=XLSX.utils.sheet_to_json(ws,{header:1,defval:'',raw:true,blankrows:true});
+  let h=-1;for(let i=0;i<Math.min(R.length,40);i++){if(N(R[i][0])==='MXM'){h=i;break}}
+  if(h<0)return null;
+  const H=R[h].map(N);
+  const meta={};const MAP={'PROFESSOR':'professor','CURSO':'curso','CODIGO':'codigo','TURNO':'turno','PERIODO':'periodo','N ALUNOS':'alunos','NO ALUNOS':'alunos','Nº ALUNOS':'alunos'};
+  for(let i=0;i<h;i++){const k=N(R[i][0]).replace(/[:º°]/g,'').replace(/\s+/g,' ').trim();const kk=k.replace(/^N /,'N ');
+    for(const m in MAP){if(N(m).replace(/º/g,'')===kk){let v='';for(let c=1;c<=3&&c<R[i].length;c++){let x=R[i][c];if(x instanceof Date)x=x.toLocaleDateString('pt-BR');x=String(x==null?'':x).trim();x=x.replace(/^[^:]{2,15}:\s*/,'').trim();if(x){v=x;break}}meta[MAP[m]]=v}}}
+  const fi=re=>H.findIndex(x=>re.test(x));
+  const cItem=fi(/^(ITEM|PRODUTO)/),cUn=fi(/^UNIDADE/),cPreg=fi(/^PREGAO/),cLim=fi(/^QUANTIDADE LIMITE/);
+  if(cItem<0)return null;
+  const H2=(R[h+1]||[]).map(N);const sub=H2.some(x=>/^AULA/.test(x));
+  let ini=H.findIndex(x=>/^AULA/.test(x));if(ini<0&&sub)ini=H2.findIndex(x=>/^AULA/.test(x));if(ini<0)return null;
+  const aulas=[];for(let j=ini;j<Math.max(H.length,H2.length);j++){const a=/^AULA/.test(H[j]||''),b=sub&&/^AULA/.test(H2[j]||'');if(!a&&!b)break;
+    const t=[R[h][j],sub?R[h+1][j]:''].map(x=>x instanceof Date?x.toLocaleDateString('pt-BR').slice(0,5):String(x||'').trim()).filter(Boolean);
+    aulas.push({col:j,nome:(sub?t.reverse():t).join(' ').replace(/\s+/g,' ')})}
+  const itens=[];let vazios=0;
+  for(let i=h+(sub?2:1);i<R.length;i++){const r=R[i];const nome=String(r[cItem]||'').trim();
+    if(!nome||/^#|^0$/.test(nome)){if(++vazios>15)break;continue}vazios=0;
+    if(/^(TOTAL|OBS)/i.test(nome))continue;
+    const q=aulas.map(a=>{const v=r[a.col];return v==='*'||v===''?0:num(v)});
+    const total=q.reduce((a,b)=>a+b,0);
+    itens.push({mxm:String(r[0]||'').trim(),pregao:cPreg>=0?String(r[cPreg]||'').trim():'',item:nome,un:cUn>=0?String(r[cUn]||'').trim():'',limite:cLim>=0?num(r[cLim]):'',q,total});}
+  if(!itens.length)return null;
+  return {id:'L'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),arquivo,aba,tipo:tipoDoc(arquivo,meta.curso||''),
+    professor:meta.professor||'',curso:meta.curso||'',codigo:meta.codigo||'',turno:meta.turno||'',periodo:meta.periodo||'',alunos:meta.alunos||'',
+    aulas:aulas.map(a=>a.nome),itens,importado:new Date().toISOString(),status:'Pendente',entregues:{}};}
+
+function lerPlanejamento(wb){const out=[];wb.SheetNames.forEach(n=>{if(!/PLANEJ|SEPARA/.test(N(n)))return;
+  const R=XLSX.utils.sheet_to_json(wb.Sheets[n],{header:1,defval:''});out.push({aba:n,linhas:R.filter(r=>r.some(c=>String(c).trim())).slice(0,60).map(r=>r.map(c=>String(c).trim()))})});return out;}
+
+async function importar(files){
+  if(typeof XLSX==='undefined'){alert('Leitor de planilhas não carregou. Verifique a internet.');return}
+  let novas=0,ign=[];
+  for(const f of files){
+    try{const wb=XLSX.read(await f.arrayBuffer(),{type:'array',cellDates:true});
+      const plan=lerPlanejamento(wb);let achou=0;
+      wb.SheetNames.forEach(n=>{if(N(n)==='DADOS')return;const L=lerAba(wb.Sheets[n],n,f.name);if(!L)return;
+        const dup=LISTAS.find(x=>x.arquivo===L.arquivo&&x.aba===L.aba);if(dup&&!confirm('A aba "'+n+'" de '+f.name+' já foi importada. Substituir?'))return;
+        if(dup)LISTAS=LISTAS.filter(x=>x!==dup);L.planejamento=plan;LISTAS.unshift(L);novas++;achou++;});
+      if(!achou)ign.push(f.name);
+    }catch(e){console.error(e);ign.push(f.name)}}
+  salvar();render();
+  alert(novas+' lista(s) reconhecida(s) e importada(s).'+(ign.length?'\nSem lista de insumos reconhecida: '+ign.join(', '):''));}
+
+function kpis(){const it=LISTAS.reduce((a,l)=>a+l.itens.length,0);const pend=LISTAS.filter(l=>l.status!=='Entregue').length;
+  const cursos=new Set(LISTAS.map(l=>l.codigo||l.curso)).size;
+  const k=(t,v,ic,c)=>`<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex items-center gap-3 shadow-sm"><div class="w-11 h-11 rounded-xl flex items-center justify-center ${c}"><i class="fa-solid ${ic}"></i></div><div><div class="text-2xl font-bold">${v}</div><div class="text-xs text-slate-500">${t}</div></div></div>`;
+  return `<div class="grid grid-cols-2 md:grid-cols-4 gap-3">${k('Listas importadas',LISTAS.length,'fa-file-excel','bg-emerald-100 text-emerald-700')}${k('Turmas',cursos,'fa-users','bg-sky-100 text-sky-700')}${k('Itens no total',it,'fa-basket-shopping','bg-amber-100 text-amber-700')}${k('Pendentes de entrega',pend,'fa-truck-ramp-box','bg-rose-100 text-rose-700')}</div>`;}
+
+function listaHTML(){if(!LISTAS.length)return `<div class="text-center text-slate-500 py-10"><i class="fa-regular fa-folder-open text-4xl mb-2"></i><p>Nenhuma lista importada ainda.</p></div>`;
+  const cor={Pendente:'bg-amber-100 text-amber-700','Em separação':'bg-sky-100 text-sky-700',Entregue:'bg-emerald-100 text-emerald-700'};
+  return `<div class="overflow-x-auto"><table class="w-full text-sm [&_td]:whitespace-nowrap"><thead><tr class="text-left text-slate-500 border-b"><th class="py-2 px-2">Curso / Aba</th><th class="px-2">Turma</th><th class="px-2">Professor</th><th class="px-2">Turno</th><th class="px-2">Período</th><th class="px-2">Aulas</th><th class="px-2">Itens</th><th class="px-2">Status</th><th class="px-2"></th></tr></thead><tbody>`+
+  LISTAS.map(l=>`<tr class="border-b hover:bg-slate-50 cursor-pointer ${SEL===l.id?'bg-emerald-50':''}" onclick="mdkLI.abrir('${l.id}')"><td class="py-2 px-2"><div class="font-semibold">${E(l.curso||l.tipo)}</div><div class="text-xs text-slate-400">${E(l.arquivo)} › ${E(l.aba)}</div></td><td class="px-2">${E(l.codigo)}</td><td class="px-2">${E(l.professor)}</td><td class="px-2">${E(l.turno)}</td><td class="px-2">${E(l.periodo)}</td><td class="px-2">${l.aulas.length}</td><td class="px-2">${l.itens.length}</td><td class="px-2"><span class="px-2 py-1 rounded-full text-xs font-semibold ${cor[l.status]||''}">${E(l.status)}</span></td><td class="px-2 text-right whitespace-nowrap"><button title="Excluir" class="text-rose-500 px-2" onclick="event.stopPropagation();mdkLI.excluir('${l.id}')"><i class="fa-solid fa-trash"></i></button></td></tr>`).join('')+`</tbody></table></div>`;}
+
+function detalheHTML(){const l=LISTAS.find(x=>x.id===SEL);if(!l)return '';
+  const ai=FAULA==='todas'?-1:+FAULA;const b=N(BUSCA);
+  const itens=l.itens.map((it,i)=>({...it,i})).filter(it=>(!b||N(it.item).includes(b)||it.mxm.includes(BUSCA))&&(ai<0||it.q[ai]>0));
+  const ent=l.entregues||{};const kE=i=>(ai<0?'t':ai)+':'+i;
+  const cab=l.aulas.map((a,j)=>`<th class="px-2 text-center ${ai===j?'bg-emerald-50':''}">${E(a)}</th>`).join('');
+  const ops=['<option value="todas">Todas as aulas</option>'].concat(l.aulas.map((a,j)=>`<option value="${j}" ${ai===j?'selected':''}>${E(a)}</option>`)).join('');
+  const feitos=itens.filter(it=>ent[kE(it.i)]).length;
+  const plan=(l.planejamento||[]).map(p=>`<details class="mt-3"><summary class="cursor-pointer font-semibold text-sm">${E(p.aba)}</summary><div class="overflow-x-auto"><table class="text-xs mt-2">${p.linhas.map(r=>'<tr>'+r.map(c=>`<td class="border px-2 py-1">${E(c)}</td>`).join('')+'</tr>').join('')}</table></div></details>`).join('');
+  return `<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-sm space-y-4">
+  <div class="flex flex-wrap justify-between gap-3 items-start"><div><div class="text-xs uppercase tracking-wide text-emerald-700 font-semibold">${E(l.tipo)}</div><h3 class="text-xl font-bold">${E(l.curso)} <span class="text-slate-400 font-normal">· ${E(l.codigo)}</span></h3>
+  <div class="text-sm text-slate-500">${E(l.professor)} · ${E(l.turno)} · ${E(l.periodo)} · ${E(l.alunos)} alunos</div></div>
+  <div class="flex flex-wrap gap-2"><select class="border rounded-lg px-2 py-1 text-sm" onchange="mdkLI.status('${l.id}',this.value)">${['Pendente','Em separação','Entregue'].map(s=>`<option ${l.status===s?'selected':''}>${s}</option>`).join('')}</select>
+  <button class="px-3 py-2 rounded-lg bg-slate-100 text-sm font-semibold" onclick="mdkLI.csv()"><i class="fa-solid fa-file-csv"></i> Exportar</button>
+  <button class="px-3 py-2 rounded-lg bg-emerald-600 text-white text-sm font-semibold" onclick="mdkLI.imprimir()"><i class="fa-solid fa-print"></i> Imprimir separação</button></div></div>
+  <div class="flex flex-wrap gap-2 items-center"><select class="border rounded-lg px-2 py-2 text-sm" onchange="mdkLI.aula(this.value)">${ops}</select>
+  <input class="border rounded-lg px-3 py-2 text-sm flex-1 min-w-[200px]" placeholder="Buscar item ou código MXM…" value="${E(BUSCA)}" oninput="mdkLI.busca(this.value)">
+  <span class="text-sm text-slate-500">Separados: <b>${feitos}/${itens.length}</b></span></div>
+  <div class="w-full bg-slate-100 rounded-full h-2"><div class="bg-emerald-500 h-2 rounded-full" style="width:${itens.length?feitos/itens.length*100:0}%"></div></div>
+  <div class="overflow-auto max-h-[60vh]"><table class="w-full text-sm"><thead class="sticky top-0 bg-white"><tr class="text-left text-slate-500 border-b"><th class="px-2 py-2">✓</th><th class="px-2">MXM</th><th class="px-2">Item</th><th class="px-2">Unid.</th>${ai<0?cab:`<th class="px-2 text-center bg-emerald-50">${E(l.aulas[ai])}</th>`}<th class="px-2 text-center">Total</th></tr></thead><tbody>
+  ${itens.map(it=>`<tr class="border-b ${ent[kE(it.i)]?'opacity-50 line-through':''}"><td class="px-2"><input type="checkbox" ${ent[kE(it.i)]?'checked':''} onchange="mdkLI.marcar('${kE(it.i)}',this.checked)"></td><td class="px-2 text-slate-400">${E(it.mxm)}</td><td class="px-2 font-medium">${E(it.item)}</td><td class="px-2">${E(it.un)}</td>${ai<0?it.q.map(v=>`<td class="px-2 text-center">${v?fmt(v):'<span class="text-slate-300">—</span>'}</td>`).join(''):`<td class="px-2 text-center font-bold">${fmt(it.q[ai])}</td>`}<td class="px-2 text-center font-bold">${fmt(it.total)}</td></tr>`).join('')}
+  </tbody></table></div>${plan}</div>`;}
+
+function consolidadoHTML(){if(LISTAS.length<2)return '';const m={};
+  LISTAS.filter(l=>l.status!=='Entregue').forEach(l=>l.itens.forEach(it=>{const k=N(it.item)+'|'+N(it.un);(m[k]=m[k]||{item:it.item,un:it.un,total:0,turmas:new Set()}).total+=it.total;m[k].turmas.add(l.codigo||l.curso)}));
+  const arr=Object.values(m).filter(x=>x.total>0).sort((a,b)=>b.total-a.total).slice(0,30);
+  return `<details class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-sm"><summary class="cursor-pointer font-bold"><i class="fa-solid fa-layer-group text-emerald-600"></i> Consolidado das listas pendentes (top 30)</summary><table class="w-full text-sm mt-3"><thead><tr class="text-left text-slate-500 border-b"><th class="py-1">Item</th><th>Unid.</th><th>Total</th><th>Turmas</th></tr></thead><tbody>${arr.map(x=>`<tr class="border-b"><td class="py-1">${E(x.item)}</td><td>${E(x.un)}</td><td class="font-bold">${fmt(x.total)}</td><td>${x.turmas.size}</td></tr>`).join('')}</tbody></table></details>`;}
+
+function render(){const el=document.getElementById('tab-insumos');if(!el)return;
+  el.innerHTML=`<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-xl shadow-sm flex flex-wrap items-center justify-between gap-4"><div><h2 class="text-2xl font-bold flex items-center gap-2"><i class="fa-solid fa-file-import text-emerald-600"></i> Listas de Insumos</h2><p class="text-sm text-slate-500">Envie as planilhas de relação de insumos (.xlsm / .xlsx). O sistema reconhece professor, curso, turma, turno, período, aulas e quantidades.</p></div>
+  <label class="px-4 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold cursor-pointer flex items-center gap-2"><i class="fa-solid fa-upload"></i> Enviar planilhas<input id="mdk-li-file" type="file" multiple accept=".xlsm,.xlsx,.xls" class="hidden" onchange="mdkLI.importar(this.files);this.value=''"></label></div>
+  <div id="mdk-li-drop" class="border-2 border-dashed border-emerald-300 rounded-xl p-6 text-center text-slate-500 bg-emerald-50/40"><i class="fa-solid fa-cloud-arrow-up text-3xl text-emerald-500"></i><p class="mt-1">Ou arraste os arquivos aqui</p></div>
+  ${kpis()}
+  <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-sm">${listaHTML()}</div>
+  ${detalheHTML()}${consolidadoHTML()}`;
+  const d=document.getElementById('mdk-li-drop');
+  d.ondragover=e=>{e.preventDefault();d.classList.add('bg-emerald-100')};d.ondragleave=()=>d.classList.remove('bg-emerald-100');
+  d.ondrop=e=>{e.preventDefault();d.classList.remove('bg-emerald-100');importar([...e.dataTransfer.files])};}
+
+window.mdkLI={importar:f=>importar([...f]),render,
+  abrir:id=>{SEL=SEL===id?null:id;FAULA='todas';BUSCA='';render()},
+  excluir:id=>{if(!confirm('Excluir esta lista?'))return;LISTAS=LISTAS.filter(l=>l.id!==id);if(SEL===id)SEL=null;salvar();render()},
+  status:(id,s)=>{const l=LISTAS.find(x=>x.id===id);l.status=s;salvar();render()},
+  aula:v=>{FAULA=v;render()},
+  busca:v=>{BUSCA=v;const p=document.activeElement&&document.activeElement.selectionStart;render();const i=document.querySelector('#tab-insumos input[placeholder^="Buscar"]');if(i){i.focus();try{i.setSelectionRange(p,p)}catch(e){}}},
+  marcar:(k,v)=>{const l=LISTAS.find(x=>x.id===SEL);l.entregues=l.entregues||{};if(v)l.entregues[k]=1;else delete l.entregues[k];salvar();render()},
+  csv:()=>{const l=LISTAS.find(x=>x.id===SEL);const rows=[['MXM','Pregão','Item','Unidade',...l.aulas,'Total']].concat(l.itens.map(i=>[i.mxm,i.pregao,i.item,i.un,...i.q,i.total]));
+    const ws=XLSX.utils.aoa_to_sheet(rows),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Insumos');XLSX.writeFile(wb,'Insumos_'+(l.codigo||'lista')+'.xlsx')},
+  imprimir:()=>{const l=LISTAS.find(x=>x.id===SEL);const ai=FAULA==='todas'?-1:+FAULA;
+    const its=l.itens.filter(i=>ai<0?i.total>0:i.q[ai]>0);
+    const w=window.open('','_blank');w.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Separação — ${E(l.codigo)}</title><style>body{font-family:Arial;margin:24px;font-size:12px}h1{font-size:18px;margin:0}table{width:100%;border-collapse:collapse;margin-top:12px}td,th{border:1px solid #999;padding:4px 6px}th{background:#e8f5ec}.s{margin-top:40px;display:flex;justify-content:space-around}.s div{border-top:1px solid #000;width:40%;text-align:center;padding-top:4px}</style></head><body>
+    <h1>Lista de separação de insumos — ${E(l.curso)}</h1><p>Turma ${E(l.codigo)} · Prof. ${E(l.professor)} · ${E(l.turno)} · ${E(l.periodo)} · ${E(l.alunos)} alunos<br><b>${ai<0?'Todas as aulas':E(l.aulas[ai])}</b></p>
+    <table><tr><th>✓</th><th>MXM</th><th>Item</th><th>Unid.</th><th>Qtd.</th></tr>${its.map(i=>`<tr><td></td><td>${E(i.mxm)}</td><td>${E(i.item)}</td><td>${E(i.un)}</td><td><b>${fmt(ai<0?i.total:i.q[ai])}</b></td></tr>`).join('')}</table>
+    <div class="s"><div>Responsável pela entrega</div><div>Professor(a)</div></div><script>onload=()=>setTimeout(print,300)<\/script></body></html>`);w.document.close()}};
+
+function instalar(){
+  if(document.getElementById('tab-insumos'))return;
+  const main=document.querySelector('main');if(!main)return;
+  const d=document.createElement('div');d.id='tab-insumos';d.className='hidden space-y-6';main.appendChild(d);
+  try{if(typeof TABS!=='undefined')TABS.push(['insumos','fa-file-import','Listas de Insumos'])}catch(e){}
+  const tabs=document.getElementById('tabs');
+  if(tabs&&!document.getElementById('btn-tab-insumos'))tabs.insertAdjacentHTML('beforeend','<button id="btn-tab-insumos" onclick="switchTab(\'insumos\')" class="pb-3 font-medium text-slate-500 flex items-center gap-2 whitespace-nowrap"><i class="fa-solid fa-file-import"></i> Listas de Insumos</button>');
+  const nav=document.querySelector('.console-nav');
+  if(nav){const b=document.createElement('button');b.className='side-link';b.dataset.side='insumos';b.title='Listas de Insumos';b.onclick=()=>switchTab('insumos');b.innerHTML='<i class="fa-solid fa-file-import"></i><span>Listas de Insumos</span>';nav.appendChild(b)}
+  const prev=window.switchTab;
+  window.switchTab=function(t){
+    if(t!=='insumos'){document.getElementById('tab-insumos').classList.add('hidden');return prev.apply(this,arguments)}
+    try{prev.call(this,t)}catch(e){}
+    document.querySelectorAll('main > [id^="tab-"]').forEach(x=>x.classList.toggle('hidden',x.id!=='tab-insumos'));
+    document.querySelectorAll('[data-side]').forEach(x=>x.classList.toggle('active',x.dataset.side==='insumos'));
+    render();};
+  try{switchTab=window.switchTab}catch(e){}
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',instalar);else instalar();
+})();
+</script>
 </body>
 </html>
