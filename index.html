@@ -951,7 +951,7 @@ function toggleTheme(){return;document.documentElement.classList.toggle('dark');
 function toggleSidebar(){document.body.classList.toggle('sidebar-open');}
 
 function salvarDados(){localStorage.setItem(LS_E,JSON.stringify(estoque));localStorage.setItem(LS_A,JSON.stringify(agenda));localStorage.setItem(LS_C,JSON.stringify(cursos));localStorage.setItem(LS_CI,JSON.stringify(cursoItens));localStorage.setItem(LS_MV,JSON.stringify(movimentos));carimbo();atualizarStats();mostrarAvisoVencimentos();}
-function status(v){const h=new Date();h.setHours(0,0,0,0);const _v=String(v||'').trim();const _dv=/^\d{4}-\d{2}-\d{2}$/.test(_v)?new Date(_v+'T00:00:00'):null;
+function status(v){const h=new Date();h.setHours(0,0,0,0);const _v=String(v||'').trim();if(_v==='N/A')return{key:'OK',texto:'SEM VALIDADE',classe:'bg-slate-500/10 text-slate-500 border border-slate-500/20',dias:99999};const _dv=/^\d{4}-\d{2}-\d{2}$/.test(_v)?new Date(_v+'T00:00:00'):null;
  if(!_dv||isNaN(_dv))return{key:'PROXIMO',texto:'SEM VALIDADE',classe:'bg-amber-500/10 text-amber-500 border border-amber-500/20',dias:-0.5};
  const d=Math.round((_dv-h)/86400000);
  if(d<0)return{key:'VENCIDO',texto:'VENCIDO',classe:'bg-red-500/10 text-red-500 border border-red-500/20',dias:d};
@@ -7548,7 +7548,7 @@ const base=window.parseRDM;
 const up=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase();
 function detectar(txt){
   const T=up(txt);
-  if(/RDM\s*-\s*REQUISICAO\s+DE\s+ALMOXARIFADO/.test(T))return{doc:'rdm',cat:'RDM'};
+  if(/RDM\s*[-\u2013\u2014:]?\s*REQUISICAO|REQUISICAO\s+DE\s+ALMOXARIFADO/.test(T))return{doc:'rdm',cat:'RDM'};
   if(/PEDIDO\s+DE\s+COMPRA/.test(T))return{doc:'pedido',cat:'COMP01'};
   if(/REQUISICAO\s+DE\s+PAGAMENTO/.test(T))return{doc:'pagamento',cat:'COMP02'};
   const t=T.match(/\b(EST)[_ ]?0?([124])\b/);
@@ -8512,5 +8512,151 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 window.mdkLB4={render,state:()=>S};
 })();</script>
 
+<script id="sirius-v117-entrada-requisicao">
+/* v117 — Nova requisição = entrada no estoque: Item | Un | Qtd recebida | Validade | Categoria (automática e editável) */
+(function(){
+const SEMVAL=['Bebidas alcoólicas destiladas','Embalagens','Material de escritório'];
+try{['Bebidas alcoólicas destiladas','Material de escritório'].forEach(c=>{if(!CATEGORIAS.includes(c))CATEGORIAS.push(c)});CATEGORIAS.sort((a,b)=>a.localeCompare(b,'pt-BR'));}catch(e){}
+const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+const REGRAS=[
+ ['Bebidas alcoólicas destiladas',/\b(cachaca|vodka|vodca|whisky|uisque|rum|gin|tequila|conhaque|licor|aguardente|pisco|grappa|brandy|steinhaeger|absinto|cointreau|campari|vermute)\b/],
+ ['Material de escritório',/\b(caneta|lapis|papel a4|papel sulfite|sulfite|grampo|grampeador|clipe|pasta|envelope|borracha|marca.?texto|pincel atomico|post.?it|etiqueta|fita adesiva|durex|tesoura|cola branca|caderno|bloco|toner|cartucho|calculadora|regua|corretivo|pilha)\b/],
+ ['Embalagens',/\b(embalagem|pote|marmitex|quentinha|saco|sacola|copo descartavel|descartave|filme pvc|papel filme|papel aluminio|aluminio|tampa|bandeja|forminha|caixa|guardanapo|canudo|talher descart|vasilha|isopor|papel manteiga|touca|luva)\b/],
+ ['Limpeza',/\b(detergente|sabao|desinfetante|agua sanitaria|alcool 70|alcool gel|esponja|pano|vassoura|rodo|multiuso|desengordurante|cloro|saco de lixo)\b/],
+ ['Laticínios',/\b(leite|queijo|manteiga|creme de leite|nata|iogurte|requeijao|mussarela|parmesao|ricota|cream cheese|chantilly|leite condensado|margarina)\b/],
+ ['Farinhas e grãos',/\b(farinha|trigo|arroz|feijao|milho|aveia|fuba|amido|polvilho|tapioca|graos|lentilha|grao de bico|macarrao|massa|quinoa|flocao|semola)\b/],
+ ['Carnes e pescados',/\b(carne|frango|peixe|camarao|bacon|linguica|presunto|file|patinho|alcatra|costela|lombo|salmao|tilapia|atum|sardinha|calabresa|peru|ovo|ovos)\b/],
+ ['Hortifruti',/\b(tomate|cebola|alho|batata|cenoura|alface|banana|maca|limao|laranja|morango|abacaxi|manga|pimentao|abobora|couve|cheiro.?verde|coentro|cebolinha|salsa|hortela|mamao|uva|maracuja|fruta|legume|verdura)\b/],
+ ['Temperos',/\b(sal|pimenta|oregano|cominho|colorau|paprica|canela|cravo|noz.?moscada|louro|tempero|caldo|curry|acafrao|vinagre|azeite|oleo|molho|mostarda|ketchup|maionese|shoyu)\b/],
+ ['Confeitaria',/\b(acucar|chocolate|cacau|fermento|gelatina|essencia|baunilha|confeito|granulado|glucose|leite em po|coco|castanha|nozes|amendoim|mel|corante|fondant|cobertura)\b/],
+ ['Bebidas',/\b(refrigerante|suco|agua mineral|agua|cafe|cha|cerveja|vinho|espumante|energetico|xarope|refresco)\b/],
+];
+window.autoCategoria117=function(nome){
+  const n=norm(nome); if(!n.trim())return '';
+  try{const lote=estoque.find(i=>norm(i.nome)===n);if(lote&&lote.categoria)return lote.categoria;}catch(e){}
+  for(const [c,re] of REGRAS){if(re.test(n))return c;} return '';
+};
+window.semValidade116=function(nome,cat){
+  if(cat&&SEMVAL.some(c=>norm(c)===norm(cat)))return true;
+  if(!cat){const a=autoCategoria117(nome);return SEMVAL.includes(a);} return false;
+};
+const opts=sel=>'<option value="">— categoria —</option>'+CATEGORIAS.map(c=>`<option ${c===sel?'selected':''}>${esc(c)}</option>`).join('');
+window.addLinhaReq=function(dados){
+  const d=dados||{nome:'',unidade:'',requisitar:1};
+  const qtd=d.requisitar||d.necessario||1;
+  const box=document.getElementById('rq-linhas'); if(!box)return;
+  const row=document.createElement('div'); row.className='grid grid-cols-12 gap-2 items-center rq-linha';
+  const cat0=d.categoria||autoCategoria117(d.nome);
+  row.innerHTML=`<input class="${inputCls} col-span-4 rq-nome" list="bib-itens" placeholder="Produto" value="${esc(d.nome)}"/>
+   <input class="${inputCls} col-span-1 rq-un" placeholder="Un" value="${esc(d.unidade||'')}"/>
+   <input class="${inputCls} col-span-2 rq-qtd" type="number" min="0.001" step="any" inputmode="decimal" title="Quantidade que chegou" value="${esc(qtd)}"/>
+   <input class="${inputCls} col-span-2 rq-val" type="date" title="Data de vencimento" value="${esc(d.validadeRec||d.validade||'')}"/>
+   <select class="${inputCls} col-span-2 rq-cat" title="Categoria (automática, pode alterar)">${opts(cat0)}</select>
+   <input type="hidden" class="rq-nec" value="${esc(qtd)}"/><input type="hidden" class="rq-req" value="${esc(qtd)}"/><input type="hidden" class="rq-est" value="0"/>
+   <button type="button" class="col-span-1 text-slate-400 hover:text-red-500" title="Remover linha"><i class="fa-solid fa-xmark"></i></button>`;
+  const $=s=>row.querySelector(s), nome=$('.rq-nome'),q=$('.rq-qtd'),val=$('.rq-val'),cat=$('.rq-cat'),un=$('.rq-un');
+  if(d.categoria)cat.dataset.manual='1';
+  const sync=()=>{$('.rq-nec').value=q.value;$('.rq-req').value=q.value;};
+  const valid=()=>{const sv=semValidade116(nome.value,cat.value);val.disabled=sv;
+    if(sv){val.value='';val.type='text';val.value='Sem validade';val.classList.add('opacity-60');}
+    else if(val.type!=='date'){val.type='date';val.value='';val.classList.remove('opacity-60');}};
+  nome.oninput=()=>{ if(!cat.dataset.manual){const a=autoCategoria117(nome.value);cat.value=a;}
+    try{const lote=estoque.find(i=>i.nome.toLowerCase()===nome.value.toLowerCase());if(lote&&!un.value)un.value=lote.unidade||'';}catch(e){}
+    valid(); };
+  cat.onchange=()=>{cat.dataset.manual='1';valid();};
+  q.oninput=sync;
+  row.querySelector('button').onclick=()=>{ if(document.querySelectorAll('.rq-linha').length>1)row.remove(); };
+  box.appendChild(row); valid();
+};
+function ajustarCabecalho(){
+  const mb=document.getElementById('modal-box')||document;
+  mb.querySelectorAll('.grid.grid-cols-12').forEach(g=>{ if(/Necess/.test(g.textContent)&&/Requisit/.test(g.textContent)&&!g.querySelector('input'))
+    g.innerHTML='<div class="col-span-4">Item</div><div class="col-span-1">Un</div><div class="col-span-2">Qtd recebida</div><div class="col-span-2">Validade</div><div class="col-span-2">Categoria</div>'; });
+  mb.querySelectorAll('p').forEach(p=>{if(/desconta o que já existe no estoque/.test(p.textContent))p.textContent='Dê entrada dos itens que chegaram: confira a quantidade e a data de vencimento. A categoria é sugerida automaticamente pelo nome e pode ser alterada. Bebidas alcoólicas destiladas, embalagens e material de escritório não precisam de validade.';});
+}
+const abrirAnt=window.abrirRequisicao;
+window.abrirRequisicao=function(){const r=abrirAnt.apply(this,arguments);ajustarCabecalho();setTimeout(ajustarCabecalho,60);return r;};
+new MutationObserver(()=>{if(document.getElementById('rq-linhas'))ajustarCabecalho();}).observe(document.body,{childList:true,subtree:true});
+const salvarAnt=window.salvarRequisicao;
+window.salvarRequisicao=function(orig){
+  const linhas=[...document.querySelectorAll('.rq-linha')].filter(r=>r.querySelector('.rq-nome').value.trim());
+  for(const r of linhas){const n=r.querySelector('.rq-nome').value.trim(),c=r.querySelector('.rq-cat').value,v=r.querySelector('.rq-val');
+    if(!semValidade116(n,c)&&!v.value){alert('Informe a data de vencimento de "'+n+'".');v.focus();return;}
+    if(!(Number(r.querySelector('.rq-qtd').value)>0)){alert('Informe a quantidade que chegou de "'+n+'".');return;}}
+  const extra=linhas.map(r=>{const n=r.querySelector('.rq-nome').value.trim(),c=r.querySelector('.rq-cat').value;const sv=semValidade116(n,c);
+    return {categoria:c,semValidade:sv,validadeRec:sv?'':r.querySelector('.rq-val').value};});
+  const numEl=document.getElementById('rq-num');const num=numEl?numEl.value.trim():'';
+  const ret=salvarAnt.apply(this,arguments);
+  const req=(window.requisicoes||[]).find(x=>x.num===(num||orig));
+  if(req&&req.itens){req.itens.forEach((it,k)=>{if(extra[k])Object.assign(it,extra[k]);});try{salvarDados();}catch(e){}try{renderRequisicoes();}catch(e){}}
+  return ret;
+};
+})();
+</script>
+
+<script id="sirius-v118-num-req-e-bebidas">
+/* v118 — reconhecimento robusto do Nº da requisição/RDM e bebidas alcoólicas sem validade */
+(function(){
+const up=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase();
+const nrm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+/* ---------- 1. Número da requisição / RDM ---------- */
+document.addEventListener('change',e=>{if(e.target&&e.target.id==='rq-auto-file'&&e.target.files[0])window.__rqArquivoNome=e.target.files[0].name;},true);
+const N='(?<![\\d\\/.,-])(\\d{3,12})(?![\\d\\/,])';
+const PADROES=[
+ new RegExp('REQUISICAO\\s*(?:N[O\\u00BA\\u00B0.]*|NUMERO|NR\\.?)?\\s*[:#\\-]\\s*'+N),
+ new RegExp('\\bRDM\\s*(?:N[O\\u00BA\\u00B0.]*|NUMERO|NR\\.?)?\\s*[:#\\-]?\\s*'+N),
+ new RegExp('(?:N[O\\u00BA\\u00B0]\\.?|NUMERO|NR\\.?)\\s*(?:DA\\s+)?(?:REQUISICAO|REQ\\.?|RDM|DOCUMENTO|PEDIDO)\\s*[:#\\-]?\\s*'+N),
+ new RegExp('(?:REQUISICAO|RDM)\\s*(?:N[O\\u00BA\\u00B0.]*|NUMERO|NR\\.?)\\s*'+N),
+ new RegExp('(?:N[O\\u00BA\\u00B0]\\.?|NUMERO)\\s*[:#\\-]\\s*'+N),
+ new RegExp('REQUISICAO[^\\d\\n]{0,25}'+N)
+];
+window.extrairNumeroReq118=function(txt){
+  const T=up(txt);
+  for(const re of PADROES){const m=T.match(re);if(m)return m[1];}
+  const L=T.split(/\r?\n/);
+  for(let i=0;i<L.length;i++){
+    if(/(REQUISICAO|\bRDM\b|NUMERO|N[O\u00BA\u00B0]\.?\s*$)/.test(L[i])&&!/\d{3,}/.test(L[i])){
+      for(let j=i+1;j<=i+2&&j<L.length;j++){const m=L[j].match(new RegExp(N));if(m)return m[1];}
+    }
+  }
+  const f=String(window.__rqArquivoNome||'').match(/(\d{3,12})/);
+  return f?f[1]:'';
+};
+const parseAnt=window.parseRDM;
+if(typeof parseAnt==='function')window.parseRDM=function(txt){
+  let r;try{r=parseAnt.apply(this,arguments);}catch(e){console.error(e);r={num:'',itens:[]};}
+  r=r||{num:'',itens:[]};r.itens=r.itens||[];
+  if(!r.num)r.num=extrairNumeroReq118(txt);
+  if(r.num){setTimeout(()=>{const n=document.getElementById('rq-num');if(n&&!n.value.trim()){n.value=r.num;n.dispatchEvent(new Event('input'));}},60);}
+  return r;
+};
+/* ---------- 2. Bebidas alcoólicas não têm validade ---------- */
+const ALCOOL=/\b(vinho|vinhos|espumante|champagne|champanhe|prosecco|cava|sake|saque|whisky|whiskey|uisque|bourbon|cachaca|vodka|vodca|rum|gin|tequila|conhaque|cognac|licor|aguardente|pisco|grappa|brandy|steinhaeger|absinto|cointreau|campari|vermute|vermouth|marsala|porto|jerez|xerez|amarula|bebida alcoolica|bebidas alcoolicas|destilad[oa]s?)\b/;
+window.ehAlcoolico118=nome=>ALCOOL.test(nrm(nome))&&!/\bvinagre\b/.test(nrm(nome));
+const semAnt=window.semValidade116;
+window.semValidade116=function(nome,cat){
+  if(ehAlcoolico118(nome)||/alcoolica/.test(nrm(cat)))return true;
+  return typeof semAnt==='function'?semAnt(nome,cat):false;
+};
+const autoAnt=window.autoCategoria117;
+if(typeof autoAnt==='function')window.autoCategoria117=function(nome){
+  const n=nrm(nome);
+  if(ehAlcoolico118(nome)){try{const lote=estoque.find(i=>nrm(i.nome)===n);if(lote&&/alcoolica/.test(nrm(lote.categoria)))return lote.categoria;}catch(e){}return 'Bebidas alcoólicas destiladas';}
+  return autoAnt.apply(this,arguments);
+};
+const SV='N/A';
+const itemSemVal=i=>i&&(ehAlcoolico118(i.nome)||/alcoolica/.test(nrm(i.categoria)));
+function normalizar(){try{(estoque||[]).forEach(i=>{if(itemSemVal(i)&&!/^\d{4}-\d{2}-\d{2}$/.test(String(i.validade||'')))i.validade=SV;});}catch(e){}}
+const salvarAnt=window.salvarDados;
+if(typeof salvarAnt==='function')window.salvarDados=function(){normalizar();return salvarAnt.apply(this,arguments);};
+/* cadastro manual: validade opcional para bebidas alcoólicas */
+document.addEventListener('input',e=>{const t=e.target;if(!t||t.id!=='cad-nome')return;
+  const v=document.getElementById('cad-validade');if(!v)return;const sv=ehAlcoolico118(t.value);
+  v.required=!sv;v.disabled=sv;if(sv)v.value='';v.title=sv?'Bebida alcoólica: não possui data de validade':'';v.classList.toggle('opacity-60',sv);},true);
+function boot(){normalizar();try{localStorage.setItem(LS_E,JSON.stringify(estoque));}catch(e){}
+  try{atualizarStats();}catch(e){}try{renderEstoque();}catch(e){}try{renderPainel&&renderPainel();}catch(e){}try{mostrarAvisoVencimentos();}catch(e){}}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,300));else setTimeout(boot,300);
+})();
+</script>
 </body>
 </html>
