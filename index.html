@@ -8658,5 +8658,110 @@ function boot(){normalizar();try{localStorage.setItem(LS_E,JSON.stringify(estoqu
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,300));else setTimeout(boot,300);
 })();
 </script>
+<script id="patch-rdm-validade">
+(function(){
+const N=t=>String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+const KEY='rdmValidades';
+const load=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return{}}};
+const iso=(d,m,y)=>{y=String(y);if(y.length===2)y='20'+y;return y+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0')};
+const DT=/(\d{2})[\/.-](\d{2})[\/.-](\d{2,4})/g;
+function datas(l){const o=[];let m;if(/observa|atendimento|emiss|requisi/i.test(l))return o;DT.lastIndex=0;while((m=DT.exec(l)))o.push({v:iso(m[1],m[2],m[3]),i:m.index});if(!o.length){const MY=/(?:^|\s)(\d{2})[\/.-](\d{4})(?=\s|$)/g;while((m=MY.exec(l))){const ult=new Date(+m[2],+m[1],0).getDate();o.push({v:iso(ult,m[1],m[2]),i:m.index});}}return o;}
+function validadeDe(linhas,dataDoc){
+  const docISO=dataDoc&&/\d{2}\/\d{2}\/\d{2,4}/.test(dataDoc)?iso(...dataDoc.split('/')):'';
+  for(const l of linhas){const v=l.match(/(?:val(?:idade)?|venc(?:imento)?|v\.)\s*[:.]?\s*(\d{2})[\/.-](\d{2})[\/.-](\d{2,4})/i);if(v)return iso(v[1],v[2],v[3]);}
+  const ds=linhas.flatMap(datas).map(d=>d.v).filter(v=>v!==docISO&&!/atend|emiss|entrega/i.test(v));
+  return ds.length?ds.sort().pop():'';
+}
+function loteDe(linhas){for(const l of linhas){const m=l.match(/lote\s*[:.]?\s*([A-Za-z0-9\-\/]+)/i);if(m)return m[1];}return '';}
+const ant=window.parseRDM;
+if(typeof ant!=='function')return;
+window.parseRDM=function(txt){
+  const r=ant.apply(this,arguments)||{itens:[]};
+  try{
+    const L=String(txt).split(/\r?\n/);
+    const mapa=load();
+    (r.itens||[]).forEach(it=>{
+      let idx=-1;
+      if(it.cod)idx=L.findIndex(l=>new RegExp('(^|\\s)'+it.cod+'(\\s|$)').test(l));
+      if(idx<0&&it.descricao){const p=N(it.descricao).split(' ').slice(0,3).join(' ');idx=L.findIndex(l=>N(l).includes(p));}
+      if(idx<0)return;
+      const bloco=[L[idx]];
+      for(let j=idx+1;j<L.length&&j<=idx+3;j++){const l=L[j];if(!l.trim()||(it.cod&&/^\s*\d{3,}\s+\S/.test(l)))break;bloco.push(l);}
+      const val=it.validade||validadeDe(bloco,r.data);const lote=it.lote||loteDe(bloco);
+      if(val)it.validade=val;if(lote)it.lote=lote;
+      if(val||lote){const k=N(it.descricao||('Cód. '+it.cod));mapa[k]={validade:val,lote:lote||it.cod||'',num:r.num||''};}
+    });
+    localStorage.setItem(KEY,JSON.stringify(mapa));
+    const n=(r.itens||[]).filter(i=>i.validade).length;
+    if(n)setTimeout(()=>{const st=document.getElementById('rq-auto-status');if(st)st.insertAdjacentHTML('beforeend',' · Validade lida em <b>'+n+'</b> item(ns).');},120);
+  }catch(e){console.error(e);}
+  return r;
+};
+/* Persiste validade/lote junto à requisição salva */
+function anexar(){try{const mapa=load();(window.requisicoes||requisicoes||[]).forEach(r=>(r.itens||[]).forEach(i=>{const m=mapa[N(i.nome)];if(m&&(!m.num||!r.num||m.num===r.num)){if(!i.validadeRdm&&m.validade)i.validadeRdm=m.validade;if(!i.codigoLote&&m.lote)i.codigoLote=m.lote;}}));}catch(e){}}
+const salvar=window.salvarDados;
+if(typeof salvar==='function')window.salvarDados=function(){anexar();return salvar.apply(this,arguments);};
+/* Preenche a conferência automaticamente */
+const conf=window.abrirConferencia;
+if(typeof conf==='function')window.abrirConferencia=function(num){
+  anexar();
+  const ret=conf.apply(this,arguments);
+  try{const r=requisicoes.find(x=>x.num===num);
+    document.querySelectorAll('#modal-box [data-cf]').forEach(b=>{const i=r&&r.itens[Number(b.dataset.cf)];if(!i)return;
+      const v=b.querySelector('.cf-val'),c=b.querySelector('.cf-cod');
+      if(v&&!v.value&&i.validadeRdm){v.value=i.validadeRdm;v.classList.add('ring-2','ring-emerald-500');v.title='Preenchido a partir da RDM';}
+      if(c&&!c.value&&i.codigoLote)c.value=i.codigoLote;});
+  }catch(e){console.error(e);}
+  return ret;
+};
+})();
+</script>
+<script id="patch-rdm-validade-v3">
+/* v3 — leva a validade e o lote lidos da RDM para as linhas da requisição */
+(function(){
+const N=t=>String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+const DT=/(\d{2})\/(\d{2})\/(\d{4})/;
+let ultimos={};
+const ant=window.parseRDM;
+if(typeof ant==='function')window.parseRDM=function(txt){
+  const r=ant.apply(this,arguments)||{itens:[]};
+  try{
+    const L=String(txt).split(/\r?\n/);
+    (r.itens||[]).forEach(it=>{
+      if(!it.cod)return;
+      const idx=L.findIndex(l=>new RegExp('^\\s*'+it.cod+'\\s').test(l));if(idx<0)return;
+      const linha=L[idx];
+      /* continuação da descrição na linha seguinte (ex.: "IMA DE 1KG.") */
+      const prox=(L[idx+1]||'').trim();
+      if(prox&&!/^\d{3,}\s/.test(prox)&&!/:|\d+,\d{2}|Total|Empregado|Almoxarife/i.test(prox)&&N(it.descricao).indexOf(N(prox))<0){
+        it.descricao=(it.descricao+(/[A-Z]$/.test(it.descricao)&&/^[A-Z]{1,4}\s/.test(prox)?'':' ')+prox).replace(/\s+/g,' ').trim();}
+      /* após o valor total: lote e validade */
+      const m=linha.match(/\d,\d{2}\s+(.*)$/);
+      const cauda=linha.replace(/^.*\d+,\d{2}/,'');
+      const d=cauda.match(DT);
+      if(d&&!it.validade)it.validade=d[3]+'-'+d[2]+'-'+d[1];
+      if(!it.lote){const lt=cauda.replace(DT,'').trim().split(/\s{2,}/)[0];if(lt&&d&&cauda.indexOf(lt)<cauda.search(DT))it.lote=lt;}
+    });
+    ultimos={};(r.itens||[]).forEach(it=>{ultimos[N(it.descricao||('Cód. '+it.cod))]={validade:it.validade||'',lote:it.lote||''};});
+  }catch(e){console.error(e);}
+  return r;
+};
+/* se a RDM traz validade, o item tem validade (mesmo que o nome sugira o contrário) */
+const sv=window.semValidade116;
+if(typeof sv==='function')window.semValidade116=function(nome,cat){const u=ultimos[N(nome)];if(u&&u.validade)return false;return sv.apply(this,arguments);};
+const add=window.addLinhaReq;
+if(typeof add==='function')window.addLinhaReq=function(dados){
+  const d=Object.assign({},dados||{});
+  const u=ultimos[N(d.nome)];
+  if(u&&!d.validade&&!d.validadeRec&&u.validade)d.validade=u.validade;
+  const ret=add.call(this,d);
+  try{const rows=document.querySelectorAll('.rq-linha');const row=rows[rows.length-1];const v=row&&row.querySelector('.rq-val');
+    if(v&&d.validade&&v.type==='date'){if(!v.value)v.value=d.validade;v.classList.add('ring-2','ring-emerald-500');v.title='Validade lida da RDM'+(u&&u.lote?' · Lote '+u.lote:'');
+      const nm=row.querySelector('.rq-nome');if(nm)nm.addEventListener('input',()=>{if(v.type==='date'&&!v.value)v.value=d.validade;});}
+  }catch(e){}
+  return ret;
+};
+})();
+</script>
 </body>
 </html>
